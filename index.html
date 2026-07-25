@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Talaat — Computational Pharmaceutics &amp; Cheminformatics</title>
+<meta name="description" content="Muhammad Talaat, BPharm — computational pharmaceutics researcher working on open-source tools for cheminformatics, drug delivery system engineering, and CNS drug design. Publications, projects, and open-source software.">
+<meta name="keywords" content="computational pharmaceutics, cheminformatics, drug delivery system engineering, CNS drug delivery, RDKit, DeepChem, blood-brain barrier permeability, Muhammad Talaat, Ain Shams University Faculty of Pharmacy">
+<meta name="author" content="Muhammad Talaat">
+<link rel="canonical" href="https://mohamedtalaat-gif.github.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Muhammad Talaat — Computational Pharmaceutics & Cheminformatics">
+<meta property="og:description" content="Open-source tools and research in computational pharmaceutics, cheminformatics, and drug delivery system engineering.">
+<meta property="og:url" content="https://mohamedtalaat-gif.github.io/">
+<meta property="og:site_name" content="Muhammad Talaat">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Muhammad Talaat — Computational Pharmaceutics & Cheminformatics">
+<meta name="twitter:description" content="Open-source tools and research in computational pharmaceutics, cheminformatics, and drug delivery system engineering.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23060610' stroke='%23C9A84C' stroke-width='6'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23C9A84C' font-family='Georgia,serif'%3EMT%3C/text%3E%3C/svg%3E">
+
+<!-- JSON-LD structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Muhammad Talaat",
+  "alternateName": "Mohamed Talaat",
+  "url": "https://mohamedtalaat-gif.github.io/",
+  "jobTitle": "Computational Pharmaceutics Researcher",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "Faculty of Pharmacy, Ain Shams University"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Ain Shams University"
+  },
+  "sameAs": [
+    "https://github.com/mohamedtalaat-gif",
+    "https://orcid.org/0000-0002-9171-437X"
+  ],
+  "email": "mailto:mohamed.talaat@pharma.asu.edu.eg"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --void-01:#060610; --void-02:#0a0a1a; --void-panel:#0f2040;
+  --gold:#C9A84C; --gold-lt:#D4B563; --gold-dk:#B89A3F;
+  --gold-glow:rgba(201,168,76,.35); --gold-thin:rgba(201,168,76,.15);
+  --teal:#0D6E6E; --teal-lt:#5BA89B;
+  --text-1:#EDEFF7; --text-2:#9AA1B8; --text-3:#666d85;
+  --hr:rgba(255,255,255,.08); --glass:rgba(15,32,64,.35);
+  --r-sm:10px; --r-md:16px; --r-lg:24px;
+  --sans:'Outfit',system-ui,sans-serif;
+  --body:'DM Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--void-01); color:var(--text-1); font-family:var(--body);
+  line-height:1.6; overflow-x:hidden;
+}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-lt)}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+h1,h2,h3{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.15}
+h2{font-size:2rem;margin-bottom:36px;color:var(--text-1)}
+h2 .num{font-family:var(--mono);color:var(--gold);font-size:1rem;font-weight:500;display:block;margin-bottom:8px;letter-spacing:.08em}
+p{color:var(--text-2)}
+.eyebrow{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--gold)}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(6,6,16,.75);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hr);
+}
+.nav-inner{max-width:920px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--sans);font-weight:800;font-size:1.05rem;color:var(--text-1)}
+.brand span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;font-size:.88rem;font-weight:500}
+.nav-links a{color:var(--text-2)}
+.nav-links a:hover{color:var(--gold)}
+@media(max-width:640px){.nav-links{gap:16px;font-size:.8rem}}
+.hero{
+  padding:180px 0 96px;position:relative;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,168,76,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(13,110,110,.10), transparent 60%);
+}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:18px}
+.hero h1 .accent{color:var(--gold)}
+.hero .lead{font-size:1.15rem;max-width:640px;margin-bottom:32px}
+.hero .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.badge{
+  font-family:var(--mono);font-size:.76rem;padding:6px 14px;border-radius:20px;
+  border:1px solid var(--gold-thin);color:var(--text-2);background:var(--glass);
+}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.btn{
+  font-family:var(--sans);font-weight:700;font-size:.9rem;padding:13px 26px;
+  border-radius:var(--r-sm);display:inline-flex;align-items:center;gap:8px;
+}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dk),var(--gold));color:var(--void-01)}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:var(--void-01)}
+.btn-ghost{border:1px solid var(--gold-thin);color:var(--gold)}
+.btn-ghost:hover{border-color:var(--gold);background:var(--gold-thin)}
+.card{
+  background:var(--glass);border:1px solid var(--hr);border-radius:var(--r-md);
+  padding:28px; margin-bottom:18px; transition:border-color .2s, transform .2s;
+}
+.card:hover{border-color:var(--gold-thin);transform:translateY(-2px)}
+.card h3{font-size:1.15rem;margin-bottom:8px;color:var(--text-1)}
+.card .meta{font-family:var(--mono);font-size:.76rem;color:var(--teal-lt);margin-bottom:12px;display:block}
+.card p{font-size:.94rem}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{
+  font-family:var(--mono);font-size:.72rem;padding:4px 10px;border-radius:6px;
+  background:rgba(201,168,76,.08);color:var(--gold);border:1px solid var(--gold-thin);
+}
+.tag.teal{background:rgba(13,110,110,.12);color:var(--teal-lt);border-color:rgba(13,110,110,.3)}
+.status{
+  font-family:var(--mono);font-size:.74rem;padding:3px 10px;border-radius:6px;
+  display:inline-block; margin-left:8px;
+}
+.status.wip{background:rgba(245,124,0,.12);color:#F57C00;border:1px solid rgba(245,124,0,.3)}
+.pub{padding:18px 0;border-bottom:1px solid var(--hr)}
+.pub:last-child{border-bottom:none}
+.pub h3{font-size:1.02rem;font-weight:600;color:var(--text-1);margin-bottom:6px}
+.pub .venue{font-size:.86rem;color:var(--teal-lt)}
+.pub .links{margin-top:8px;font-size:.84rem}
+.pub .links a{margin-right:16px}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.skill-cat h4{font-family:var(--sans);font-size:.92rem;color:var(--gold);margin-bottom:10px;letter-spacing:.02em}
+.skill-cat ul{list-style:none;font-size:.88rem;color:var(--text-2)}
+.skill-cat li{padding:3px 0}
+footer{
+  border-top:1px solid var(--hr);padding:48px 0 64px;text-align:center;
+  color:var(--text-3);font-size:.84rem;
+}
+footer a{color:var(--text-2)}
+footer a:hover{color:var(--gold)}
+.foot-links{display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+.note{
+  background:rgba(201,168,76,.06);border:1px solid var(--gold-thin);
+  border-radius:var(--r-sm);padding:16px 20px;font-size:.86rem;color:var(--text-2);
+  margin-top:18px;
+}
+.note strong{color:var(--gold-lt)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">Muhammad <span>Talaat</span></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Computational Pharmaceutics</div>
+    <h1>Muhammad Talaat<br><span class="accent">Cheminformatics &amp; Drug Delivery System Engineering</span></h1>
+    <p class="lead">
+      BPharm, Faculty of Pharmacy — Ain Shams University. I build open-source
+      computational tools at the intersection of cheminformatics, machine
+      learning, and pharmaceutical formulation science, and publish
+      peer-reviewed research on nanomedicine and drug delivery.
+    </p>
+    <div class="badges">
+      <span class="badge">BPharm · Ain Shams University</span>
+      <span class="badge">RDKit · DeepChem · scikit-learn</span>
+      <span class="badge">Cairo, Egypt</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="https://github.com/mohamedtalaat-gif" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-ghost" href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID ↗</a>
+      <a class="btn btn-ghost" href="mailto:mohamed.talaat@pharma.asu.edu.eg">Email</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2><span class="num">01</span>About</h2>
+    <p style="max-width:680px;font-size:1rem">
+      I'm a pharmacist and computational researcher working on tools that
+      connect cheminformatics, machine learning, and pharmaceutical
+      formulation engineering — with a focus on CNS drug delivery and
+      nanomedicine. My long-term goal is to help build a coherent,
+      reproducible, open-source ecosystem for computational pharmaceutics:
+      software that pharmaceutical researchers can actually trust, verify,
+      and build on, not black-box tools with unverifiable claims. I care as
+      much about honest reporting of what a model does and doesn't do as I
+      do about the model itself.
+    </p>
+  </div>
+</section>
+
+<section id="research" style="background:var(--void-02)">
+  <div class="wrap">
+    <h2><span class="num">02</span>Research Interests</h2>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <h4>Cheminformatics</h4>
+        <ul>
+          <li>Molecular representation &amp; standardization</li>
+          <li>Molecular descriptors &amp; fingerprints</li>
+          <li>QSAR / ADMET modeling</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h4>Drug Delivery</h4>
+        <ul>
+          <li>Nanoparticle &amp; carrier formulation</li>
+          <li>Blood-brain barrier permeability</li>
+          <li>CNS-targeted delivery systems</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h4>Machine Learning</h4>
+        <ul>
+          <li>Molecular property prediction</li>
+          <li>Deep learning for cheminformatics</li>
+          <li>Formulation-parameter optimization</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h4>Open Science</h4>
+        <ul>
+          <li>Reproducible research software</li>
+          <li>Data curation &amp; quality control</li>
+          <li>Benchmarking &amp; honest reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2><span class="num">03</span>Projects</h2>
+
+    <div class="card">
+      <h3>CEREBRO-X <span class="status wip">Research Prototype</span></h3>
+      <span class="meta">Computational pipeline for CNS drug delivery system exploration</span>
+      <p>
+        An open-source pipeline that scores candidate drug-delivery-system
+        formulations against an in-house, transparently-documented
+        62-criterion rubric, and includes a real deep-learning blood-brain-
+        barrier permeability classifier (trained on the public BBBP
+        benchmark, ~90% held-out accuracy, RDKit + TensorFlow) plus a
+        genetic-algorithm formulation optimizer. Every computed value
+        carries an explicit tier, method, and citation — including which
+        parts are literature-grounded correlations versus in-house
+        heuristics not yet independently validated.
+      </p>
+      <div class="tag-row">
+        <span class="tag">Python</span>
+        <span class="tag">RDKit</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">AutoDock Vina</span>
+        <span class="tag teal">FastAPI</span>
+        <span class="tag teal">Docker</span>
+      </div>
+      <div class="note">
+        <strong>Status, honestly:</strong> research-stage, not clinically or
+        experimentally validated, and under active development. The full
+        engineering &amp; scientific-integrity audit is public in the repo.
+        I'd rather you read that than take a marketing description at face
+        value.
+      </div>
+      <p style="margin-top:16px"><a href="https://github.com/mohamedtalaat-gif/CEREBRO-X" target="_blank" rel="noopener">View on GitHub →</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="publications" style="background:var(--void-02)">
+  <div class="wrap">
+    <h2><span class="num">04</span>Publications</h2>
+
+    <div class="pub">
+      <h3>Nano-antioxidants for neurodegenerative disorders: a scoping review</h3>
+      <div class="venue">Discover Nano · 2025</div>
+      <div class="links">
+        <a href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID record ↗</a>
+      </div>
+    </div>
+
+    <div class="pub">
+      <h3>Biologically synthesized nanoparticles: barley-mediated silver and gold nanoparticles and caged gold nanoplatform for advanced drug delivery system engineering in medicine</h3>
+      <div class="venue">Discover Nano · 2024</div>
+      <div class="links">
+        <a href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID record ↗</a>
+      </div>
+    </div>
+
+    <p style="margin-top:24px;font-size:.9rem">Full, up-to-date list on <a href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID (0000-0002-9171-437X)</a>.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2><span class="num">05</span>Get in Touch</h2>
+    <p style="max-width:560px;margin-bottom:28px">
+      Open to research collaborations, PhD/postdoc opportunities, and
+      conversations about open-source computational pharmaceutics tooling.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="mailto:mohamed.talaat@pharma.asu.edu.eg">mohamed.talaat@pharma.asu.edu.eg</a>
+      <a class="btn btn-ghost" href="https://github.com/mohamedtalaat-gif" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="https://github.com/mohamedtalaat-gif" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://orcid.org/0000-0002-9171-437X" target="_blank" rel="noopener">ORCID</a>
+      <a href="mailto:mohamed.talaat@pharma.asu.edu.eg">Email</a>
+    </div>
+    <p>© 2026 Muhammad Talaat. Built with plain HTML/CSS, hosted on GitHub Pages.</p>
+  </div>
+</footer>
+
+</body>
+</html>
