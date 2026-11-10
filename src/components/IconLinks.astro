@@ -13,15 +13,18 @@ const items = profiles;
 <ul class={`iconlinks iconlinks--${layout}`}>
   {items.map((i) => (
     <li>
-      <a class="iconlink" href={i.href} rel={i.icon === 'mail' ? undefined : 'me noopener'}>
+      <a class="iconlink" href={i.href} title={i.label} aria-label={i.label} rel={i.icon === 'mail' ? undefined : 'me noopener'}>
         <Icon name={i.icon} />
-        <span>{i.label}</span>
+        {layout === 'list' && <span>{i.label}</span>}
       </a>
     </li>
   ))}
 </ul>
 
 <style is:global>
+  /* in a row the icon is enough: the name is in the tooltip and in the accessible label */
+  .iconlinks--row .iconlink { padding: 0.7rem; }
+  .iconlinks--row .icon { width: 1.7rem; height: 1.7rem; }
   .iconlinks--list { flex-direction: column; flex-wrap: nowrap; gap: 0.15rem; margin: 0; }
   .iconlinks--list .iconlink { border: 0; padding: 0.35rem 0; border-radius: 0; gap: 0.7rem; }
   .iconlinks--list .iconlink:hover { transform: translateX(3px); }
