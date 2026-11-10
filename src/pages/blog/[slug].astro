@@ -29,9 +29,19 @@ const older = posts[i + 1];
     <div class="prose">
       <Content />
     </div>
-    <nav class="report-nav" aria-label="Other posts">
-      {newer ? <a href={`/blog/${newer.slug}/`}>Newer: {newer.title}</a> : <span></span>}
-      {older ? <a href={`/blog/${older.slug}/`}>Older: {older.title}</a> : <span></span>}
+    <nav class="pager" aria-label="Other posts">
+      {newer && (
+        <a class="pager__link pager__link--newer" href={`/blog/${newer.slug}/`} rel="prev">
+          <span class="pager__dir">Newer</span>
+          <span class="pager__title">{newer.title}</span>
+        </a>
+      )}
+      {older && (
+        <a class="pager__link pager__link--older" href={`/blog/${older.slug}/`} rel="next">
+          <span class="pager__dir">Older</span>
+          <span class="pager__title">{older.title}</span>
+        </a>
+      )}
     </nav>
   </article>
 </Base>

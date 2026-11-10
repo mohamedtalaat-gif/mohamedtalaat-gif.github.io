@@ -476,3 +476,18 @@ main td, main th { text-align: left; hyphens: manual; }
 .sec__icon .glyph { width: 1.3rem; height: 1.3rem; }
 .sec:hover .sec__icon { border-color: var(--fe); transform: rotate(-4deg); }
 @media (max-width: 52rem) { .sec__title { align-items: center; } }
+
+/* newer and older neighbours at the foot of a post or a report: one block each, label above the title */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 2.5rem; margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.pager__link { display: grid; gap: 0.3rem; align-content: start; text-decoration: none; text-align: left; hyphens: none; }
+.pager__link--newer { grid-column: 1; }
+.pager__link--older { grid-column: 2; text-align: right; }
+/* a post with one neighbour only: its title may use the whole width */
+.pager__link:only-child { grid-column: 1 / -1; }
+.pager__dir { font-family: var(--font-ui); font-size: 0.98rem; color: var(--muted); }
+.pager__title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.pager__link:hover .pager__title { text-decoration-thickness: 2px; }
+@media (max-width: 40rem) {
+  .pager { grid-template-columns: 1fr; }
+  .pager__link--newer, .pager__link--older { grid-column: 1; text-align: left; }
+}

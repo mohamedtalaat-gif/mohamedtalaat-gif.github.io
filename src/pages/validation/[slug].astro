@@ -38,9 +38,19 @@ const prev = sortedReports[i - 1];
       <div><dt>Source</dt><dd><a href={r.source.href}>{r.source.label}</a>{r.related && <span> &middot; <a href={r.related.href}>{r.related.label}</a></span>}</dd></div>
     </dl>
 
-    <nav class="report-nav" aria-label="Other reports">
-      {prev ? <a href={`/validation/${prev.slug}/`}>Newer: {prev.title}</a> : <span></span>}
-      {next ? <a href={`/validation/${next.slug}/`}>Older: {next.title}</a> : <span></span>}
+    <nav class="pager" aria-label="Other reports">
+      {prev && (
+        <a class="pager__link pager__link--newer" href={`/validation/${prev.slug}/`} rel="prev">
+          <span class="pager__dir">Newer</span>
+          <span class="pager__title">{prev.title}</span>
+        </a>
+      )}
+      {next && (
+        <a class="pager__link pager__link--older" href={`/validation/${next.slug}/`} rel="next">
+          <span class="pager__dir">Older</span>
+          <span class="pager__title">{next.title}</span>
+        </a>
+      )}
     </nav>
   </div>
 </Base>
@@ -53,6 +63,5 @@ const prev = sortedReports[i - 1];
   .report-meta > div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--rule); }
   .report-meta dt { font-family: var(--font-ui); color: var(--muted); }
   .report-meta dd { margin: 0; }
-  .report-nav { display: flex; justify-content: space-between; gap: 2rem; margin-top: 3rem; font-family: var(--font-ui); }
-  @media (max-width: 40rem) { .report-meta > div { grid-template-columns: 1fr; gap: 0.2rem; } .report-nav { flex-direction: column; gap: 0.8rem; } }
+  @media (max-width: 40rem) { .report-meta > div { grid-template-columns: 1fr; gap: 0.2rem; } }
 </style>
