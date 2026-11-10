@@ -202,8 +202,8 @@ const latest = news.slice(0, 5);
   .card__role { font-family: var(--font-ui); color: var(--muted); margin: 0 0 1.2rem; font-size: 1.1rem; }
   .about p { max-width: none; }
   .about p:first-child { margin-top: 0; }
-  /* the first line of text starts level with the top of the portrait: cancel the half-leading above the first line */
-  @media (min-width: 52.01rem) { .about { margin-top: -0.55rem; } }
+  /* the text starts below the portrait, level with the name, so the portrait stands alone at the top of the card */
+  @media (min-width: 52.01rem) { .about { margin-top: calc(11rem + 1.1rem); } }
   @media (max-width: 52rem) { .home-about { grid-template-columns: 1fr; gap: 1.8rem; } }
 </style>
 
