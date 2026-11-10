@@ -1,0 +1,15 @@
+---
+import Glyph from './Glyph.astro';
+
+interface Props {
+  minutes: number;
+}
+const { minutes } = Astro.props;
+---
+
+<span class="readtime" title="Estimated reading time"><Glyph name="eye" /><span>{minutes} min read</span></span>
+
+<style is:global>
+  .readtime { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-ui); font-size: 0.95rem; color: var(--muted); white-space: nowrap; }
+  .readtime .glyph { width: 1.05rem; height: 1.05rem; }
+</style>

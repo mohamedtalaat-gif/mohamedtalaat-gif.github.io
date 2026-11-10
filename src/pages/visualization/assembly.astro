@@ -1,0 +1,259 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Surfactant assembly" description="Coarse-grained molecular dynamics of three surfactant systems, replayed in the browser with the aggregate size and radial profile alongside.">
+  <div class="page">
+    <h1>Surfactant assembly</h1>
+    <p class="page__lede">
+      Coarse-grained molecular dynamics of three surfactant systems from a personal-care formulation study. Press play to watch molecules find each other, and read the aggregate size beside the picture.
+    </p>
+
+    <div class="stage">
+      <div class="stage__view" id="view" role="img" aria-label="Three-dimensional view of coarse-grained surfactant beads aggregating over time"></div>
+      <div class="stage__bar">
+        <div class="seg" role="group" aria-label="System" id="systems">
+          <button type="button" data-sys="sls" aria-pressed="true">Sodium lauryl sulfate</button>
+          <button type="button" data-sys="aos_betaine" aria-pressed="false">AOS with cocobetaine</button>
+          <button type="button" data-sys="ester_quat" aria-pressed="false">Ester quat with cetyl alcohol</button>
+        </div>
+      </div>
+      <div class="stage__bar">
+        <button class="btn" type="button" id="play">Play</button>
+        <input type="range" id="frame" min="0" max="37" value="0" step="1" aria-label="Simulation time" class="range" />
+        <span class="ui" id="clock" aria-live="off">0.0 ns</span>
+        <label class="check"><input type="checkbox" id="l-spin" /> Rotate</label>
+        <span class="legend" id="legend"></span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">Aggregation</h2>
+      <div class="sec__body">
+        <div id="chart-agg" class="chart"></div>
+        <ul class="facts" id="facts"></ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">Radial profile</h2>
+      <div class="sec__body">
+        <div id="chart-rad" class="chart"></div>
+        <p class="meta">Bead number density against distance from the centre of mass of the largest aggregate, averaged over the run. Tails concentrate in the core; head groups and counter-ions sit outside it.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">Method</h2>
+      <div class="sec__body prose">
+        <p class="meta">The player on this page is available as a stand-alone web component: <a href="https://github.com/mohamedtalaat-gif/cg-assembly-player">cg-assembly-player</a>.</p>
+        <p>
+          Each molecule is a short chain of coarse-grained beads: tail beads (T) and one or two head beads that carry the charge or polarity. The runs use OpenMM, a 20 fs time step and 310 K, and start from molecules placed on a lattice in water. One random seed was run per system, so the curves show how aggregation proceeds in that run; they do not give an aggregation number with an error bar.
+        </p>
+        <p>
+          The code, the parameters and the notebooks are in the <a href="https://github.com/mohamedtalaat-gif/Stepan_Surfactant_Cheminformatics">Stepan surfactant repository</a> (MIT). The seminar material that motivated the study belongs to its owner and is not reproduced.
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+  .range { flex: 1 1 14rem; min-width: 10rem; accent-color: var(--n); }
+  .legend { display: inline-flex; flex-wrap: wrap; gap: 0.8rem; font-family: var(--font-ui); font-size: 0.95rem; color: var(--muted); }
+  .legend i { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 50%; margin-right: 0.35rem; vertical-align: -0.05em; }
+  .chart svg { width: 100%; max-width: 40rem; height: auto; display: block; overflow: visible; }
+  .chart text { font-family: var(--font-ui); font-size: 11px; fill: var(--muted); }
+</style>
+
+<script>
+  import * as mod from '3dmol';
+
+  const $3D: any = (mod as any).default?.createViewer ? (mod as any).default : mod;
+  const BASE = import.meta.env.BASE_URL;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  type Sys = any;
+  const LABEL: Record<string, Record<string, string>> = {
+    sls: { T: 'tail', A: 'sulfate' },
+    aos_betaine: { T: 'tail', A: 'sulfonate', C: 'quaternary N', N: 'hydroxyl' },
+    ester_quat: { T: 'tail', C: 'quaternary N', P: 'ester', N: 'amine' },
+  };
+  // Bead types are sent to 3Dmol as element letters so they can be coloured by a function.
+  const ELEM: Record<string, string> = { T: 'C', A: 'S', C: 'N', N: 'O', P: 'P' };
+  const palette = () => {
+    const light = document.documentElement.dataset.theme === 'light';
+    return light
+      ? { C: '#a9763a', S: '#2f5fd0', N: '#cf3f45', O: '#6b7a93', P: '#1f8f7a' }
+      : { C: '#d6a96e', S: '#5b8dff', N: '#ef6a70', O: '#a5b3c8', P: '#58c4a8' };
+  };
+
+  const el = document.getElementById('view')!;
+  const slider = document.getElementById('frame') as HTMLInputElement;
+  const clock = document.getElementById('clock')!;
+  const playBtn = document.getElementById('play')!;
+  const viewer = $3D.createViewer(el, { backgroundAlpha: 0, antialias: true });
+  new ResizeObserver(() => { viewer.resize(); viewer.render(); }).observe(el);
+
+  const cache = new Map<string, Sys>();
+  let sys: Sys | null = null;
+  let key = 'sls';
+  let frame = 0;
+  let playing = false;
+  let spinning = false;
+  let last = 0;
+  let acc = 0;
+
+  const load = async (k: string) => {
+    if (!cache.has(k)) cache.set(k, await (await fetch(`${BASE}data/md/${k}.json`)).json());
+    return cache.get(k)!;
+  };
+
+  const xyz = (s: Sys) =>
+    s.frames
+      .map((f: number[], i: number) => {
+        const lines = [String(s.beads.length), `t=${s.frame_t_ns[i]} ns`];
+        for (let b = 0; b < s.beads.length; b++) lines.push(`${ELEM[s.beads[b].type] ?? 'C'} ${f[3 * b]} ${f[3 * b + 1]} ${f[3 * b + 2]}`);
+        return lines.join('\n');
+      })
+      .join('\n');
+
+  function style() {
+    const p: any = palette();
+    viewer.setStyle({}, { sphere: { radius: 2.15, colorfunc: (a: any) => p[a.elem] ?? '#999' } });
+  }
+
+  function legend() {
+    const p: any = palette();
+    const used = new Set<string>(sys.beads.map((b: any) => b.type));
+    document.getElementById('legend')!.innerHTML = [...used].map((t) => `<span><i style="background:${p[ELEM[t]]}"></i>${LABEL[key][t] ?? t}</span>`).join('');
+  }
+
+  function setFrame(i: number) {
+    frame = i;
+    viewer.setFrame(i);
+    viewer.render();
+    slider.value = String(i);
+    clock.textContent = `${sys.frame_t_ns[i].toFixed(1)} ns`;
+    drawAgg();
+  }
+
+  const svgChart = (W: number, H: number, inner: string) => `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${inner}</svg>`;
+
+  function drawAgg() {
+    const s = sys!;
+    const W = 560, H = 260, L = 46, B = 36, T = 12, R = 14;
+    const tmax = s.series.t_ns[s.series.t_ns.length - 1];
+    const x = (t: number) => L + (t / tmax) * (W - L - R);
+    const y = (v: number) => H - B - (v / s.molecules) * (H - B - T);
+    let g = '';
+    for (const f of [0, 0.25, 0.5, 0.75, 1]) {
+      const v = f * s.molecules;
+      g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${Math.round(v)}</text>`;
+    }
+    for (let k = 0; k <= 4; k++) {
+      const t = (k / 4) * tmax;
+      g += `<text x="${x(t)}" y="${H - B + 18}" text-anchor="middle">${t.toFixed(0)}</text>`;
+    }
+    const path = (arr: number[], scale = 1) => arr.map((v, i) => `${i ? 'L' : 'M'}${x(s.series.t_ns[i]).toFixed(1)} ${y(v * scale).toFixed(1)}`).join('');
+    g += `<path d="${path(s.series.largest)}" fill="none" stroke="var(--n)" stroke-width="2"/>`;
+    g += `<path d="${path(s.series.free_fraction, s.molecules)}" fill="none" stroke="var(--fe)" stroke-width="1.6" stroke-dasharray="4 3"/>`;
+    const cur = s.frame_t_ns[frame];
+    g += `<line x1="${x(cur)}" x2="${x(cur)}" y1="${T}" y2="${H - B}" stroke="var(--text)" stroke-width="1" opacity="0.6"/>`;
+    g += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">Simulated time (ns)</text>`;
+    g += `<text x="${L + 8}" y="${T + 12}" style="fill:var(--n)">Largest aggregate (molecules)</text>`;
+    g += `<text x="${L + 8}" y="${T + 28}" style="fill:var(--fe)">Free molecules, scaled to the system (fraction x molecules)</text>`;
+    document.getElementById('chart-agg')!.innerHTML = svgChart(W, H, g);
+  }
+
+  function drawRad() {
+    const s = sys!;
+    const W = 560, H = 240, L = 46, B = 36, T = 12, R = 14;
+    const r = s.profile.r as number[];
+    const rmax = r[r.length - 1];
+    const series = [['tail', 'Tail beads', 'var(--n)'], ['head', 'Head beads', 'var(--fe)'], ['ion', 'Counter-ions', 'var(--muted)']] as const;
+    const vmax = Math.max(...series.map(([k]) => Math.max(...(s.profile[k] as number[]))));
+    const x = (v: number) => L + (v / rmax) * (W - L - R);
+    const y = (v: number) => H - B - (v / vmax) * (H - B - T);
+    let g = '';
+    for (let k = 0; k <= 4; k++) {
+      const v = (k / 4) * rmax;
+      g += `<text x="${x(v)}" y="${H - B + 18}" text-anchor="middle">${v.toFixed(1)}</text>`;
+    }
+    g += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--rule)"/>`;
+    series.forEach(([k, name, col], i) => {
+      const arr = s.profile[k] as number[];
+      g += `<path d="${arr.map((v, j) => `${j ? 'L' : 'M'}${x(r[j]).toFixed(1)} ${y(v).toFixed(1)}`).join('')}" fill="none" stroke="${col}" stroke-width="2"/>`;
+      g += `<text x="${L + 8}" y="${T + 12 + i * 15}" style="fill:${col}">${name}</text>`;
+    });
+    g += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">Distance from the centre of the aggregate (nm)</text>`;
+    document.getElementById('chart-rad')!.innerHTML = svgChart(W, H, g);
+  }
+
+  function facts() {
+    const s = sys!.summary;
+    const items = [
+      [String(s.molecules), 'molecules'],
+      [`${s.ns} ns`, 'simulated'],
+      [s.aggregation_number.toFixed(0), 'mean aggregate size at the end'],
+      [String(s.largest_aggregate), 'largest aggregate at the end'],
+      [`${s.rg_nm.toFixed(2)} nm`, 'radius of gyration'],
+      [s.asphericity.toFixed(2), 'asphericity'],
+    ];
+    document.getElementById('facts')!.innerHTML = items.map(([v, l]) => `<li><strong>${v}</strong><span>${l}</span></li>`).join('');
+  }
+
+  async function select(k: string) {
+    key = k;
+    playing = false;
+    playBtn.textContent = 'Play';
+    sys = await load(k);
+    viewer.clear();
+    viewer.setBackgroundColor(getComputedStyle(document.documentElement).getPropertyValue('--bg-deep').trim() || '#0b111b', 0);
+    viewer.addModelsAsFrames(xyz(sys), 'xyz');
+    style();
+    viewer.zoomTo();
+    viewer.setSlab(-200, 200);
+    viewer.zoom(1.4);
+    slider.max = String(sys.frames.length - 1);
+    legend();
+    facts();
+    drawRad();
+    setFrame(sys.frames.length - 1);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('#systems button').forEach((b) =>
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#systems button').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+      select(b.dataset.sys!);
+    })
+  );
+  slider.addEventListener('input', () => { playing = false; playBtn.textContent = 'Play'; setFrame(Number(slider.value)); });
+  playBtn.addEventListener('click', () => {
+    playing = !playing;
+    if (playing && frame >= sys!.frames.length - 1) setFrame(0);
+    playBtn.textContent = playing ? 'Pause' : 'Play';
+  });
+  document.getElementById('l-spin')!.addEventListener('change', (e) => (spinning = (e.target as HTMLInputElement).checked && !reduce));
+  document.addEventListener('themechange', () => { style(); viewer.render(); legend(); });
+
+  const tick = (t: number) => {
+    requestAnimationFrame(tick);
+    const dt = Math.min(t - last, 64);
+    last = t;
+    if (document.hidden) return;
+    let dirty = false;
+    if (playing) {
+      acc += dt;
+      if (acc > 110) {
+        acc = 0;
+        if (frame < sys!.frames.length - 1) setFrame(frame + 1);
+        else { playing = false; playBtn.textContent = 'Play'; }
+      }
+    }
+    if (spinning) { viewer.rotate(dt * 0.015, 'y', 0); dirty = true; }
+    if (dirty) viewer.render();
+  };
+  requestAnimationFrame(tick);
+  select('sls');
+</script>

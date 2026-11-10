@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const experiments = [
+  {
+    href: '/visualization/fe-n/',
+    kind: 'Structure',
+    title: 'The Fe–N bond in CYP3A4',
+    text: 'Two crystal structures of CYP3A4 with a nitrogen-donor inhibitor bound to the heme iron. The distance is computed from the deposited coordinates, and any other pair of atoms can be measured.',
+    data: 'RCSB PDB 2V0M, 3NXU',
+  },
+  {
+    href: '/visualization/poses/',
+    kind: 'Structure',
+    title: 'Submitted and released poses',
+    text: 'Twenty CYP3A4 ligands from the OpenADMET structure track. The released crystal pose and the submitted CYPMode pose are overlaid, with the heme contact measured on each and the challenge scores beside it.',
+    data: 'CYPMode outputs, OpenADMET released structures',
+  },
+  {
+    href: '/visualization/assembly/',
+    kind: 'Dynamics',
+    title: 'Surfactant assembly',
+    text: 'Coarse-grained molecular dynamics of sodium lauryl sulfate, an alpha-olefin sulfonate and betaine mixture, and an ester quat with cetyl alcohol, replayed with aggregate size and radial profile.',
+    data: 'OpenMM trajectories, Stepan surfactant repository',
+  },
+];
+---
+
+<Base title="Visualization experiments" description="Browser-based experiments from my own work: the heme Fe–N contact in CYP3A4, submitted against released poses, and surfactant assembly by coarse-grained molecular dynamics.">
+  <div class="page">
+    <h1>Visualization experiments</h1>
+    <p class="page__lede">
+      Each experiment runs in your browser from public data or from outputs I released with the code. Nothing is uploaded, and every number on the page is computed from the files it loads.
+    </p>
+    <ul class="rows">
+      {experiments.map((e) => (
+        <li class="row">
+          <span class="row__when">{e.kind}</span>
+          <div class="row__body">
+            <h3><a href={e.href}>{e.title}</a></h3>
+            <p>{e.text}</p>
+            <p class="meta">Data: {e.data}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

@@ -1,0 +1,261 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Submitted and released poses" description="Twenty CYP3A4 ligands from the OpenADMET structure challenge: the released crystal pose beside the submitted CYPMode pose, with the heme Fe–N distance measured from coordinates.">
+  <div class="page">
+    <h1>Submitted and released poses</h1>
+    <p class="page__lede">
+      Twenty CYP3A4 ligands from the OpenADMET structure track. Each view overlays the pose that was submitted for the challenge on the structure the organisers released after the deadline.
+    </p>
+
+    <div class="stage">
+      <div class="stage__view" id="view" role="img" aria-label="Three-dimensional view of a CYP3A4 pocket with the released ligand in teal and the submitted ligand in amber"></div>
+      <div class="stage__bar">
+        <label class="ui" for="pick-id">Compound</label>
+        <select id="pick-id" class="select"></select>
+        <label class="check"><input type="checkbox" id="l-rel" checked /> <span class="sw sw--rel"></span> Released</label>
+        <label class="check"><input type="checkbox" id="l-sub" checked /> <span class="sw sw--sub"></span> Submitted</label>
+        <label class="check"><input type="checkbox" id="l-pocket" checked /> Pocket</label>
+        <label class="check"><input type="checkbox" id="l-spin" /> Rotate</label>
+      </div>
+      <div class="stage__bar" aria-live="polite" id="facts"></div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">Fe–N contact</h2>
+      <div class="sec__body">
+        <p id="summary"></p>
+        <div id="scatter" class="scatter" role="img" aria-label="Scatter plot of the heme Fe to nitrogen distance in the submitted pose against the released pose"></div>
+        <p class="meta">Each point is one compound. The dashed line marks a coordinate bond (2.5 Å). Points below the diagonal are submitted poses that sit closer to the iron than the released pose does.</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">All twenty</h2>
+      <div class="sec__body">
+        <div class="table-wrap">
+          <table id="tbl">
+            <thead>
+              <tr>
+                <th data-k="id" scope="col">Compound</th>
+                <th data-k="lddtPli" scope="col" class="num">LDDT-PLI</th>
+                <th data-k="bisyRmsd" scope="col" class="num">BiSyRMSD (Å)</th>
+                <th data-k="feNReleased" scope="col" class="num">Fe–N released (Å)</th>
+                <th data-k="feNSubmitted" scope="col" class="num">Fe–N submitted (Å)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="sec__title">Method</h2>
+      <div class="sec__body prose">
+        <p class="meta">The viewer on this page is available as a stand-alone web component: <a href="https://github.com/mohamedtalaat-gif/pose-overlay">pose-overlay</a>.</p>
+        <p>
+          The submitted ligand was placed by a restrained co-folding run. For this page the submitted protein was superposed on the released one through their C-alpha atoms (a Kabsch fit), so both ligands are drawn in the released frame. LDDT-PLI and BiSyRMSD are the challenge scorer's values for the submitted pose. Each Fe–N distance is measured inside its own structure, from the heme iron to the nearest ligand nitrogen, so the dashed lines in the overlay can differ slightly from the values shown.
+        </p>
+        <p>
+          The released structures come from the challenge organisers and keep their own terms. The submitted poses and the metrics are outputs of CYPMode (<a href="https://github.com/mohamedtalaat-gif/CYPMode">code</a>, <a href="https://doi.org/10.5281/zenodo.23816450">archive</a>). The pocket is every residue within 9 Å of the released ligand, together with the heme.
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+  .select { font: inherit; font-family: var(--font-ui); background: var(--bg); color: var(--text); border: 1px solid var(--rule); border-radius: 6px; padding: 0.3rem 0.5rem; }
+  .sw { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 50%; vertical-align: -0.05em; }
+  .sw--rel { background: #4fc3b5; }
+  .sw--sub { background: #f0a24b; }
+  .table-wrap { overflow-x: auto; }
+  #tbl th { cursor: pointer; text-align: left; white-space: nowrap; }
+  #tbl th.num, #tbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  #tbl tbody tr { cursor: pointer; }
+  #tbl tbody tr:hover td { background: color-mix(in srgb, var(--n) 10%, transparent); }
+  #tbl tbody tr[aria-selected='true'] td { background: color-mix(in srgb, var(--n) 20%, transparent); }
+  .scatter svg { width: 100%; max-width: 34rem; height: auto; display: block; overflow: visible; }
+  .scatter text { font-family: var(--font-ui); font-size: 11px; fill: var(--muted); }
+  .scatter circle.pt { cursor: pointer; fill: var(--n); fill-opacity: 0.8; stroke: var(--bg); stroke-width: 1; }
+  .scatter circle.pt[data-on='true'] { fill: var(--fe); r: 7; }
+</style>
+
+<script>
+  import * as mod from '3dmol';
+
+  const $3D: any = (mod as any).default?.createViewer ? (mod as any).default : mod;
+  const BASE = import.meta.env.BASE_URL;
+
+  type Row = { id: string; lddtPli: number; bisyRmsd: number; feNReleased: number; feNSubmitted: number; caRmsd: number; heavyAtoms: number };
+
+  const el = document.getElementById('view')!;
+  const select = document.getElementById('pick-id') as HTMLSelectElement;
+  const facts = document.getElementById('facts')!;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const colors = () => {
+    const light = document.documentElement.dataset.theme === 'light';
+    return light
+      ? { rel: '#0b8f82', sub: '#d9760f', pocket: '#566581', heme: '#b6413c', fe: '#d9622a', cart: '#8c9bb5' }
+      : { rel: '#4fc3b5', sub: '#f0a24b', pocket: '#aab9cf', heme: '#d4726d', fe: '#f08a4b', cart: '#51628a' };
+  };
+
+  let rows: Row[] = [];
+  let current: Row | null = null;
+  let sortKey: keyof Row = 'lddtPli';
+  let sortDir = -1;
+  const show = { rel: true, sub: true, pocket: true };
+  let viewer: any;
+  let spinning = false;
+  let raf = 0;
+  let last = 0;
+  const cache = new Map<string, string>();
+
+  const dist = (a: any, b: any) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+
+  function nearestN(fe: any, atoms: any[]) {
+    let best: any = null;
+    for (const a of atoms) if (a.elem === 'N') {
+      const d = dist(fe, a);
+      if (!best || d < best.d) best = { a, d };
+    }
+    return best;
+  }
+
+  async function load(row: Row) {
+    current = row;
+    if (!cache.has(row.id)) cache.set(row.id, await (await fetch(`${BASE}data/poses/${row.id}.pdb`)).text());
+    const c = colors();
+    viewer.clear();
+    viewer.setBackgroundColor(getComputedStyle(document.documentElement).getPropertyValue('--bg-deep').trim() || '#0b111b', 0);
+    viewer.addModel(cache.get(row.id), 'pdb');
+    viewer.setStyle({}, {});
+    if (show.pocket) {
+      viewer.setStyle({ hetflag: false }, { stick: { radius: 0.09, colorscheme: { prop: 'elem', map: { C: c.pocket, N: '#6c97ff', O: '#e8575d', S: '#e8cf5a' } } } });
+    }
+    viewer.setStyle({ resn: 'HEM' }, { stick: { radius: 0.16, colorfunc: (a: any) => (a.elem === 'C' ? c.heme : a.elem === 'N' ? '#6c97ff' : a.elem === 'FE' ? c.fe : '#e8575d') } });
+    viewer.addStyle({ elem: 'Fe' }, { sphere: { radius: 0.6, color: c.fe } });
+    viewer.addStyle({ atom: 'FE' }, { sphere: { radius: 0.6, color: c.fe } });
+    const lig = (resn: string, base: string, on: boolean) => {
+      if (!on) { viewer.setStyle({ resn }, {}); return; }
+      viewer.setStyle({ resn }, {
+        stick: { radius: 0.17, colorfunc: (a: any) => (a.elem === 'C' ? base : a.elem === 'N' ? '#6c97ff' : a.elem === 'O' ? '#e8575d' : a.elem === 'S' ? '#e8cf5a' : '#ffffff') },
+        sphere: { scale: 0.24, colorfunc: (a: any) => (a.elem === 'C' ? base : a.elem === 'N' ? '#6c97ff' : a.elem === 'O' ? '#e8575d' : a.elem === 'S' ? '#e8cf5a' : '#ffffff') },
+      });
+    };
+    lig('LIG', c.rel, show.rel);
+    lig('PRD', c.sub, show.sub);
+
+    const all = viewer.getModel().selectedAtoms({});
+    const fe = all.find((a: any) => a.resn === 'HEM' && a.atom === 'FE');
+    viewer.addSphere({ center: { x: fe.x, y: fe.y, z: fe.z }, radius: 1.35, color: c.fe, alpha: 0.14 });
+    const line = (end: any, color: string) => {
+      viewer.addCylinder({ start: { x: fe.x, y: fe.y, z: fe.z }, end: { x: end.x, y: end.y, z: end.z }, radius: 0.06, color, dashed: true, fromCap: 1, toCap: 1 });
+    };
+    const nr = nearestN(fe, all.filter((a: any) => a.resn === 'LIG'));
+    const ns = nearestN(fe, all.filter((a: any) => a.resn === 'PRD'));
+    if (nr && show.rel) { line(nr.a, c.rel); }
+    if (ns && show.sub) { line(ns.a, c.sub); }
+    viewer.zoomTo({ resn: ['LIG', 'PRD', 'HEM'] });
+    viewer.setSlab(-30, 30);
+    viewer.zoom(0.82);
+    viewer.render();
+
+    facts.innerHTML = `<span><span class="sw sw--rel"></span> Fe–N released <strong class="readout-fe">${row.feNReleased.toFixed(2)} Å</strong></span>
+      <span><span class="sw sw--sub"></span> Fe–N submitted <strong class="readout-fe">${row.feNSubmitted.toFixed(2)} Å</strong></span>
+      <span>LDDT-PLI <strong>${row.lddtPli.toFixed(3)}</strong></span>
+      <span>BiSyRMSD <strong>${row.bisyRmsd.toFixed(2)} Å</strong></span>
+      <span>Protein C-alpha fit <strong>${row.caRmsd.toFixed(2)} Å</strong></span>`;
+    select.value = row.id;
+    document.querySelectorAll('#tbl tbody tr').forEach((tr) => tr.setAttribute('aria-selected', String((tr as HTMLElement).dataset.id === row.id)));
+    document.querySelectorAll('#scatter circle.pt').forEach((p) => p.setAttribute('data-on', String((p as SVGElement).dataset.id === row.id)));
+  }
+
+  function renderTable() {
+    const body = document.querySelector('#tbl tbody')!;
+    const sorted = [...rows].sort((a, b) => {
+      const x = a[sortKey] as any, y = b[sortKey] as any;
+      return (x < y ? -1 : x > y ? 1 : 0) * sortDir;
+    });
+    body.innerHTML = sorted
+      .map((r) => `<tr data-id="${r.id}" tabindex="0" aria-selected="${current?.id === r.id}"><td>${r.id}</td><td class="num">${r.lddtPli.toFixed(3)}</td><td class="num">${r.bisyRmsd.toFixed(2)}</td><td class="num">${r.feNReleased.toFixed(2)}</td><td class="num">${r.feNSubmitted.toFixed(2)}</td></tr>`)
+      .join('');
+    body.querySelectorAll('tr').forEach((tr) => {
+      const go = () => { const r = rows.find((x) => x.id === (tr as HTMLElement).dataset.id)!; load(r); el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); };
+      tr.addEventListener('click', go);
+      tr.addEventListener('keydown', (e) => { if ((e as KeyboardEvent).key === 'Enter') go(); });
+    });
+  }
+
+  function renderScatter() {
+    const W = 520, H = 400, L = 46, B = 40, T = 12, R = 14;
+    const max = 10;
+    const x = (v: number) => L + (Math.min(v, max) / max) * (W - L - R);
+    const y = (v: number) => H - B - (Math.min(v, max) / max) * (H - B - T);
+    const ticks = [0, 2, 4, 6, 8, 10];
+    let s = `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">`;
+    for (const t of ticks) {
+      s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--rule)" stroke-width="1"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
+      s += `<text x="${x(t)}" y="${H - B + 18}" text-anchor="middle">${t}</text>`;
+    }
+    s += `<line x1="${x(0)}" y1="${y(0)}" x2="${x(max)}" y2="${y(max)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4"/>`;
+    s += `<line x1="${x(2.5)}" x2="${x(2.5)}" y1="${y(0)}" y2="${y(max)}" stroke="var(--fe)" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>`;
+    s += `<line x1="${x(0)}" x2="${x(max)}" y1="${y(2.5)}" y2="${y(2.5)}" stroke="var(--fe)" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>`;
+    s += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">Fe–N in the released structure (Å)</text>`;
+    s += `<text transform="translate(12 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">Fe–N in the submitted pose (Å)</text>`;
+    for (const r of rows) {
+      s += `<circle class="pt" data-id="${r.id}" data-on="false" cx="${x(r.feNReleased)}" cy="${y(r.feNSubmitted)}" r="5.5"><title>${r.id}: released ${r.feNReleased.toFixed(2)} Å, submitted ${r.feNSubmitted.toFixed(2)} Å</title></circle>`;
+    }
+    s += '</svg>';
+    const box = document.getElementById('scatter')!;
+    box.innerHTML = s;
+    box.querySelectorAll('circle.pt').forEach((c) =>
+      c.addEventListener('click', () => load(rows.find((r) => r.id === (c as SVGElement).dataset.id)!))
+    );
+  }
+
+  async function init() {
+    rows = await (await fetch(`${BASE}data/poses/index.json`)).json();
+    select.innerHTML = rows.map((r) => `<option value="${r.id}">${r.id}</option>`).join('');
+    select.addEventListener('change', () => load(rows.find((r) => r.id === select.value)!));
+
+    const coordRel = rows.filter((r) => r.feNReleased <= 2.5).length;
+    const coordSub = rows.filter((r) => r.feNSubmitted <= 2.5).length;
+    const both = rows.filter((r) => r.feNReleased <= 2.5 && r.feNSubmitted <= 2.5).length;
+    document.getElementById('summary')!.textContent =
+      `In ${coordRel} of the ${rows.length} released structures a ligand nitrogen is within 2.5 Å of the heme iron. The submitted poses place a nitrogen that close in ${coordSub}: all ${both} of the true contacts, and ${coordSub - both} more that the released crystals do not show.`;
+
+    viewer = $3D.createViewer(el, { backgroundAlpha: 0, antialias: true });
+    new ResizeObserver(() => { viewer.resize(); viewer.render(); }).observe(el);
+    renderScatter();
+    renderTable();
+    document.querySelectorAll<HTMLElement>('#tbl th').forEach((th) =>
+      th.addEventListener('click', () => {
+        const k = th.dataset.k as keyof Row;
+        sortDir = k === sortKey ? -sortDir : k === 'id' ? 1 : -1;
+        sortKey = k;
+        renderTable();
+      })
+    );
+    const best = [...rows].sort((a, b) => b.lddtPli - a.lddtPli)[0];
+    await load(best);
+
+    const bind = (id: string, f: (on: boolean) => void) => document.getElementById(id)!.addEventListener('change', (e) => f((e.target as HTMLInputElement).checked));
+    bind('l-rel', (on) => { show.rel = on; load(current!); });
+    bind('l-sub', (on) => { show.sub = on; load(current!); });
+    bind('l-pocket', (on) => { show.pocket = on; load(current!); });
+    bind('l-spin', (on) => { spinning = on && !reduce; });
+    document.addEventListener('themechange', () => current && load(current));
+
+    const tick = (t: number) => {
+      raf = requestAnimationFrame(tick);
+      const dt = Math.min(t - last, 64);
+      last = t;
+      if (spinning && !document.hidden) { viewer.rotate(dt * 0.015, 'y', 0); viewer.render(); }
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  init();
+</script>

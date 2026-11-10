@@ -1,0 +1,127 @@
+---
+import '@fontsource/barlow-semi-condensed/400.css';
+import '@fontsource/barlow-semi-condensed/500.css';
+import '@fontsource/barlow-semi-condensed/600.css';
+import '@fontsource-variable/source-serif-4/index.css';
+import '../styles/global.css';
+import { person, nav } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  over?: boolean;
+}
+const { title, description, over = false } = Astro.props;
+const pageTitle = title ? `${title} · ${person.name} · ${person.lab}` : `${person.name} · ${person.lab}`;
+const desc =
+  description ??
+  `${person.name}: ${person.tagline}. Drug design, delivery and formulation, with open code, public validation and a failure ledger.`;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="author" content={person.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={person.lab} />
+    <meta property="og:url" content={new URL(path, Astro.site)} />
+    <meta property="og:image" content={new URL('/img/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Illustrated portrait of Muhammad Talaat beside the title IC50's Lab" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={new URL('/img/og.png', Astro.site)} />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/icon-512.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class={`site-header${over ? ' site-header--over' : ''}`}>
+      <div class="site-header__inner">
+        <a class="brand" href="/"><img class="brand__img brand__img--dark" src="/img/icon-bw-64.png" alt="" width="30" height="30" /><img class="brand__img brand__img--light" src="/img/icon-color-64.png" alt="" width="30" height="30" />{person.lab}</a>
+        <nav class="nav" id="nav" aria-label="Main">
+          {nav.map((item) =>
+            item.children ? (
+              <div class="nav__group">
+                <button class="nav__toggle" aria-expanded="false" aria-haspopup="true">{item.label}</button>
+                <div class="nav__menu">
+                  {item.children.map((c) => (
+                    <a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>{c.label}</a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} aria-current={isCurrent(item.href!) ? 'page' : undefined}>{item.label}</a>
+            )
+          )}
+        </nav>
+        <div class="site-header__tools">
+          <button class="icon-btn" id="theme-btn" aria-label="Switch between dark and light theme">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 3a6 6 0 0 1 0 12z" fill="currentColor"/></svg>
+          </button>
+          <button class="icon-btn menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <p>
+          {person.name}. This is an independent research site; it is not an institutional laboratory, and the work shown here is not endorsed by any employer or university.
+        </p>
+        <p>Text and figures are © {new Date().getFullYear()} {person.name}. Code in the repositories carries the licence stated on each page.</p>
+      </div>
+    </footer>
+    <script>
+      const root = document.documentElement;
+      document.getElementById('theme-btn')?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        document.dispatchEvent(new CustomEvent('themechange', { detail: next }));
+      });
+      const nav = document.getElementById('nav');
+      const btn = document.getElementById('menu-btn');
+      btn?.addEventListener('click', () => {
+        const open = nav?.dataset.open === 'true';
+        nav!.dataset.open = String(!open);
+        btn.setAttribute('aria-expanded', String(!open));
+      });
+      document.querySelectorAll<HTMLElement>('.nav__group').forEach((g) => {
+        const t = g.querySelector('button');
+        t?.addEventListener('click', () => {
+          const open = g.dataset.open === 'true';
+          g.dataset.open = String(!open);
+          t.setAttribute('aria-expanded', String(!open));
+        });
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') document.querySelectorAll<HTMLElement>('.nav__group').forEach((g) => (g.dataset.open = 'false'));
+      });
+    </script>
+  </body>
+</html>

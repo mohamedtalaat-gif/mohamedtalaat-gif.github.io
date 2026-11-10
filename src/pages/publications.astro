@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { links } from '../data/site';
+---
+
+<Base title="Publications" description="Peer-reviewed papers and archived software by Muhammad Talaat, with DOIs.">
+  <div class="page">
+    <h1>Publications</h1>
+    <p class="page__lede">Peer-reviewed papers and archived software. My <a href={links.orcid}>ORCID</a> and <a href={links.scholar}>Google Scholar</a> records list the same items.</p>
+
+    <Section id="papers" title="Papers" icon="papers">
+      <ul class="rows">
+        <li class="row">
+          <span class="row__when">2025</span>
+          <div class="row__body">
+            <h3><a href="https://doi.org/10.1186/s11671-025-04320-9">Nano-antioxidants for neurodegenerative disorders: a scoping review</a></h3>
+            <p>Talaat M, Hassan H, Mosilhy EA, Taha NA, Elsaid M, Sharafeldin MN, Ghallab YK, Lotfy MA, Abdelqawy MA, Ahmed AA, Soliman ME. <em>Discover Nano</em> 20, 194. First author.</p>
+          </div>
+        </li>
+        <li class="row">
+          <span class="row__when">2024</span>
+          <div class="row__body">
+            <h3><a href="https://doi.org/10.1186/s11671-024-04097-3">Biologically synthesized nanoparticles: barley-mediated silver and gold nanoparticles and caged gold nanoplatform for advanced drug delivery system engineering in medicine</a></h3>
+            <p>Talaat M. <em>Discover Nano</em> 19, 167. Sole author.</p>
+          </div>
+        </li>
+      </ul>
+    </Section>
+
+    <Section id="software" title="Software" icon="software">
+      <ul class="rows">
+        <li class="row">
+          <span class="row__when">2026</span>
+          <div class="row__body">
+            <h3><a href={links.cypmodeDoi}>CYPMode: time-dependent CYP inhibition and CYP3A4 structure prediction for the OpenADMET CYP blind challenge</a></h3>
+            <p>Talaat M. Version 0.3.1, DOI 10.5281/zenodo.23816450. AGPL-3.0-or-later; documents CC BY-NC-SA 4.0. Also archived on Software Heritage.</p>
+          </div>
+        </li>
+        <li class="row">
+          <span class="row__when">2026</span>
+          <div class="row__body">
+            <h3><a href="https://github.com/mohamedtalaat-gif/CEREBRO-X">CEREBRO-X: a pipeline that ranks delivery systems for central nervous system drugs</a></h3>
+            <p>Talaat M. Research prototype, MIT licence. Its limits and a public audit of its own bugs are documented in the repository.</p>
+          </div>
+        </li>
+        <li class="row">
+          <span class="row__when">2026</span>
+          <div class="row__body">
+            <h3><a href="https://github.com/mohamedtalaat-gif/PharmAMP">PharmAMP: developability metrics for AI-designed antimicrobial peptides</a></h3>
+            <p>Talaat M. Research prototype, MIT licence. Its limits are documented in the repository.</p>
+          </div>
+        </li>
+      </ul>
+    </Section>
+  </div>
+</Base>

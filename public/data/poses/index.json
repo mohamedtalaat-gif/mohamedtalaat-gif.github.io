@@ -1,0 +1,182 @@
+[
+ {
+  "id": "OCNT-2312554",
+  "lddtPli": 0.439,
+  "bisyRmsd": 3.43,
+  "feNReleased": 2.78,
+  "feNSubmitted": 2.04,
+  "caRmsd": 1.34,
+  "heavyAtoms": 42
+ },
+ {
+  "id": "OCNT-2312966",
+  "lddtPli": 0.339,
+  "bisyRmsd": 5.32,
+  "feNReleased": 6.19,
+  "feNSubmitted": 7.28,
+  "caRmsd": 0.61,
+  "heavyAtoms": 47
+ },
+ {
+  "id": "OCNT-2313038",
+  "lddtPli": 0.422,
+  "bisyRmsd": 3.61,
+  "feNReleased": 2.82,
+  "feNSubmitted": 2.05,
+  "caRmsd": 1.43,
+  "heavyAtoms": 48
+ },
+ {
+  "id": "OCNT-2313300",
+  "lddtPli": 0.224,
+  "bisyRmsd": 5.42,
+  "feNReleased": 3.02,
+  "feNSubmitted": 2.03,
+  "caRmsd": 0.65,
+  "heavyAtoms": 74
+ },
+ {
+  "id": "OCNT-2313397",
+  "lddtPli": 0.429,
+  "bisyRmsd": 3.64,
+  "feNReleased": 4.93,
+  "feNSubmitted": 2.16,
+  "caRmsd": 0.95,
+  "heavyAtoms": 46
+ },
+ {
+  "id": "OCNT-2313429",
+  "lddtPli": 0.305,
+  "bisyRmsd": 5.8,
+  "feNReleased": 5.23,
+  "feNSubmitted": 5.81,
+  "caRmsd": 0.88,
+  "heavyAtoms": 78
+ },
+ {
+  "id": "OCNT-2315379",
+  "lddtPli": 0.438,
+  "bisyRmsd": 3.93,
+  "feNReleased": 4.96,
+  "feNSubmitted": 5.23,
+  "caRmsd": 0.62,
+  "heavyAtoms": 54
+ },
+ {
+  "id": "OCNT-2395328",
+  "lddtPli": 0.266,
+  "bisyRmsd": 4.99,
+  "feNReleased": 7.11,
+  "feNSubmitted": 7.51,
+  "caRmsd": 0.73,
+  "heavyAtoms": 51
+ },
+ {
+  "id": "OCNT-2395342",
+  "lddtPli": 0.24,
+  "bisyRmsd": 5.68,
+  "feNReleased": 6.64,
+  "feNSubmitted": 9.12,
+  "caRmsd": 0.61,
+  "heavyAtoms": 52
+ },
+ {
+  "id": "OCNT-2395415",
+  "lddtPli": 0.385,
+  "bisyRmsd": 3.81,
+  "feNReleased": 2.85,
+  "feNSubmitted": 2.29,
+  "caRmsd": 0.56,
+  "heavyAtoms": 34
+ },
+ {
+  "id": "OCNT-2395436",
+  "lddtPli": 0.614,
+  "bisyRmsd": 2.58,
+  "feNReleased": 2.03,
+  "feNSubmitted": 2.03,
+  "caRmsd": 0.53,
+  "heavyAtoms": 23
+ },
+ {
+  "id": "OCNT-2395457",
+  "lddtPli": 0.453,
+  "bisyRmsd": 3.69,
+  "feNReleased": 2.99,
+  "feNSubmitted": 2.02,
+  "caRmsd": 0.74,
+  "heavyAtoms": 42
+ },
+ {
+  "id": "OCNT-2395460",
+  "lddtPli": 0.326,
+  "bisyRmsd": 4.6,
+  "feNReleased": 6.1,
+  "feNSubmitted": 5.46,
+  "caRmsd": 0.75,
+  "heavyAtoms": 47
+ },
+ {
+  "id": "OCNT-2395464",
+  "lddtPli": 0.728,
+  "bisyRmsd": 1.18,
+  "feNReleased": 2.49,
+  "feNSubmitted": 2.09,
+  "caRmsd": 0.69,
+  "heavyAtoms": 41
+ },
+ {
+  "id": "OCNT-2395503",
+  "lddtPli": 0.398,
+  "bisyRmsd": 3.72,
+  "feNReleased": 2.31,
+  "feNSubmitted": 2.06,
+  "caRmsd": 0.61,
+  "heavyAtoms": 38
+ },
+ {
+  "id": "OCNT-2395645",
+  "lddtPli": 0.396,
+  "bisyRmsd": 3.92,
+  "feNReleased": 6.83,
+  "feNSubmitted": 8.41,
+  "caRmsd": 0.62,
+  "heavyAtoms": 34
+ },
+ {
+  "id": "OCNT-2395712",
+  "lddtPli": 0.307,
+  "bisyRmsd": 5.1,
+  "feNReleased": 4.41,
+  "feNSubmitted": 2.45,
+  "caRmsd": 0.63,
+  "heavyAtoms": 47
+ },
+ {
+  "id": "OCNT-2395789",
+  "lddtPli": 0.474,
+  "bisyRmsd": 3.38,
+  "feNReleased": 2.75,
+  "feNSubmitted": 2.04,
+  "caRmsd": 0.61,
+  "heavyAtoms": 44
+ },
+ {
+  "id": "OCNT-2535422",
+  "lddtPli": 0.672,
+  "bisyRmsd": 1.7,
+  "feNReleased": 5.76,
+  "feNSubmitted": 4.1,
+  "caRmsd": 0.74,
+  "heavyAtoms": 37
+ },
+ {
+  "id": "OCNT-2535519",
+  "lddtPli": 0.401,
+  "bisyRmsd": 3.92,
+  "feNReleased": 2.48,
+  "feNSubmitted": 2.11,
+  "caRmsd": 0.68,
+  "heavyAtoms": 46
+ }
+]

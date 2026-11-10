@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="The Fe–N bond in CYP3A4" description="Interactive CYP3A4 active site from two public crystal structures, with the heme Fe–N distance computed from the coordinates.">
+  <div class="page">
+    <h1>The Fe–N bond in CYP3A4</h1>
+    <p class="page__lede">
+      Many CYP3A4 inhibitors bind the heme iron through a nitrogen. That contact, and not the potency alone, is what a binary inhibitor label leaves out.
+    </p>
+
+    <div class="stage">
+      <div class="stage__view" id="view" role="img" aria-label="Three-dimensional view of the CYP3A4 active site with a dashed line between the heme iron and a ligand nitrogen"></div>
+      <div class="stage__bar">
+        <div class="seg" role="group" aria-label="Structure">
+          <button type="button" data-code="2V0M" aria-pressed="true">Ketoconazole, 2V0M</button>
+          <button type="button" data-code="3NXU" aria-pressed="false">Ritonavir, 3NXU</button>
+        </div>
+        <label class="check"><input type="checkbox" id="l-cartoon" checked /> Backbone</label>
+        <label class="check"><input type="checkbox" id="l-pocket" checked /> Pocket residues</label>
+        <label class="check"><input type="checkbox" id="l-surface" /> Pocket surface</label>
+        <label class="check"><input type="checkbox" id="l-spin" /> Rotate</label>
+        <label class="check"><input type="checkbox" id="l-measure" /> Measure</label>
+        <button class="btn" type="button" id="clear">Clear</button>
+      </div>
+      <div class="stage__bar" aria-live="polite">
+        <span>Fe–N, from coordinates: <span class="readout-fe" id="fe-n">…</span></span>
+        <span id="pick" class="meta"></span>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:2.4rem">
+      <h2>What you are looking at</h2>
+      <p>
+        The heme sits at the bottom of the CYP3A4 pocket. A Type II ligand puts a nitrogen lone pair on the iron and displaces the water that normally completes the iron's coordination. In both crystals the nitrogen is close to 2.1 to 2.2 Å from the iron, the distance of a coordinate bond.
+      </p>
+      <p>
+        Tick <em>Measure</em>, then click two atoms to read the distance between them. The Fe–N value above is recomputed from the file each time you switch structure.
+      </p>
+      <h2>Data</h2>
+      <p>
+        Chain A of RCSB PDB entries <a href="https://www.rcsb.org/structure/2V0M">2V0M</a> and <a href="https://www.rcsb.org/structure/3NXU">3NXU</a>, trimmed to the protein, the heme and the ligand that coordinates the iron. Waters and the second ligand copy are removed, so surface and pocket views describe the site and not the crystal's solvent. Rendering uses 3Dmol.js.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { mountCypScene } from '../../scripts/cyp-scene';
+
+  const view = document.getElementById('view')!;
+  const feN = document.getElementById('fe-n')!;
+  const pick = document.getElementById('pick')!;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const show = (scene: { distance(): number }, name: string) => {
+    feN.textContent = `${scene.distance().toFixed(2)} Å (${name})`;
+  };
+
+  mountCypScene(view, {
+    variant: 'explorer',
+    code: '2V0M',
+    spin: !reduce,
+    onPick: (t) => (pick.textContent = t),
+  }).then((scene) => {
+    scene.setSpin(false);
+    show(scene, 'ketoconazole');
+    document.querySelectorAll<HTMLButtonElement>('.stage__bar .seg button').forEach((b) => {
+      b.addEventListener('click', async () => {
+        document.querySelectorAll('.stage__bar .seg button').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        await scene.setCode(b.dataset.code!);
+        show(scene, b.dataset.code === '2V0M' ? 'ketoconazole' : 'ritonavir');
+      });
+    });
+    const bind = (id: string, fn: (on: boolean) => void) =>
+      document.getElementById(id)!.addEventListener('change', (e) => fn((e.target as HTMLInputElement).checked));
+    bind('l-cartoon', (on) => scene.setLayer('cartoon', on));
+    bind('l-pocket', (on) => scene.setLayer('pocket', on));
+    bind('l-surface', (on) => scene.setLayer('surface', on));
+    bind('l-spin', (on) => scene.setSpin(on && !reduce));
+    bind('l-measure', (on) => scene.setMeasure(on));
+    document.getElementById('clear')!.addEventListener('click', () => scene.clearMeasures());
+  });
+</script>

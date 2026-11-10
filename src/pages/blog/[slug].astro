@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import ReadTime from '../../components/ReadTime.astro';
+import { posts } from '../../lib/posts';
+
+export function getStaticPaths() {
+  const modules = import.meta.glob('../../content/blog/*.md', { eager: true }) as Record<string, any>;
+  return Object.entries(modules)
+    .filter(([, m]) => !m.frontmatter.draft)
+    .map(([file, m]) => ({
+      params: { slug: file.split('/').pop()!.replace(/\.md$/, '') },
+      props: { post: m },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content, frontmatter } = post;
+const slug = Astro.params.slug;
+const info = posts.find((p) => p.slug === slug)!;
+const i = posts.findIndex((p) => p.slug === slug);
+const newer = posts[i - 1];
+const older = posts[i + 1];
+---
+
+<Base title={frontmatter.title} description={frontmatter.summary}>
+  <article class="page post">
+    <p class="meta"><a href="/blog/">Blog</a> / {info.date} &nbsp; <ReadTime minutes={info.minutes} /></p>
+    <h1 class="post-title">{frontmatter.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+    <nav class="report-nav" aria-label="Other posts">
+      {newer ? <a href={`/blog/${newer.slug}/`}>Newer: {newer.title}</a> : <span></span>}
+      {older ? <a href={`/blog/${older.slug}/`}>Older: {older.title}</a> : <span></span>}
+    </nav>
+  </article>
+</Base>
+
+<style is:global>
+  .post-title { font-size: clamp(2rem, 4.2vw, 3rem); max-width: 26ch; }
+  .prose p { margin: 0 0 1.1em; }
+</style>

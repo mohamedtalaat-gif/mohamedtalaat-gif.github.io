@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { record, courses, conferences } from '../data/site';
+---
+
+<Base title="Activities" description="Papers, awards, conferences and seminars attended, and courses, with links to the certificates that can be verified online.">
+  <div class="page">
+    <h1>Activities</h1>
+    <p class="page__lede">Papers, awards, conferences and courses. Dated updates are on the <a href="/news/">News</a> page.</p>
+
+    <Section id="record" title="Record" icon="award">
+      <ul class="rows">
+        {record.map((e) => (
+          <li class="row">
+            <span class="row__when">{e.date}</span>
+            <div class="row__body">
+              <h3>{e.href ? <a href={e.href}>{e.title}</a> : e.title}</h3>
+              <p>{e.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section id="conferences" title="Conferences and seminars" icon="calendar">
+      <ul class="rows">
+        {conferences.map((c) => (
+          <li class="row">
+            <span class="row__when">{c.date}</span>
+            <div class="row__body">
+              <h3>{c.title}</h3>
+              <p class="meta">{c.place}</p>
+              <p>{c.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section id="courses" title="Courses and certificates" icon="certificate">
+      <p>Where a certificate can be verified online, the title links to the verification page.</p>
+      <ul class="rows">
+        {courses.map((c) => (
+          <li class="row">
+            <span class="row__when">{c.year}</span>
+            <div class="row__body"><h3>{c.href ? <a href={c.href}>{c.title}</a> : c.title}</h3><p class="meta">{c.by}</p></div>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  </div>
+</Base>

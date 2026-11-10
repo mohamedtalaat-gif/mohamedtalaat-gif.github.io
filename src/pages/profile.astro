@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Toc from '../components/Toc.astro';
+import IconLinks from '../components/IconLinks.astro';
+import Location from '../components/Location.astro';
+import { person, education, employment, languages } from '../data/site';
+
+const toc = [
+  { id: 'research', label: 'Research' },
+  { id: 'methods', label: 'Methods' },
+  { id: 'education', label: 'Education' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+];
+
+const methods = [
+  {
+    name: 'Structure-based modelling',
+    text: 'Co-folding of protein–ligand complexes, semi-empirical (GFN2-xTB) checks of the heme–ligand geometry, and interaction distances measured on coordinates rather than inferred from labels.',
+  },
+  {
+    name: 'Predictive modelling',
+    text: 'Fingerprint and graph models evaluated by nested cross-validation and scaffold-aware splits, with calibration (expected calibration error) and applicability-domain checks. Acceptance gates are written before the result is known.',
+  },
+  {
+    name: 'Colloids and delivery systems',
+    text: 'Micellisation and bilayer assembly of surfactants by coarse-grained molecular dynamics in OpenMM, DLVO analysis of colloidal stability, and physiologically based pharmacokinetic (PBPK) models of exposure.',
+  },
+  {
+    name: 'Formulation development',
+    text: 'Solid, liquid, semi-solid and parenteral dosage forms, from pre-formulation through stability, scale-up transfer and registration dossiers.',
+  },
+];
+---
+
+<Base title="Profile" description="Muhammad Talaat: computational pharmaceutics, cheminformatics and ML. Structure-based modelling, validation and the engineering of drug delivery systems.">
+  <div class="page page--toc">
+    <div>
+      <header class="profile-head">
+        <div>
+          <h1>{person.name}</h1>
+          <p class="page__lede">{person.tagline}</p>
+          <Location />
+          <IconLinks />
+        </div>
+        <figure class="portrait">
+          <img class="portrait--dark" src="/img/portrait-bw.webp" alt="Ink portrait of Muhammad Talaat in a white lab coat, resting his chin on his hand" width="900" height="1350" />
+          <img class="portrait--light" src="/img/portrait-color.webp" alt="Watercolor portrait of Muhammad Talaat in a white lab coat, resting his chin on his hand" width="900" height="1350" />
+        </figure>
+      </header>
+
+      <Section id="research" icon="research" title="Research">
+        <p>
+          My work concerns the engineering of drug delivery systems from the molecular scale upward. I am interested in how molecular structure determines metabolic fate and inhibition by cytochrome P450 enzymes, how surfactants and excipients assemble into the colloidal structures that carry an active ingredient, and how both can be predicted before a formulation is prepared.
+        </p>
+        <p>
+          Current projects are an entry to the OpenADMET CYP inhibition blind challenge (time-dependent inhibition of CYP3A4 and CYP2D6, and co-folded CYP3A4 ligand complexes), CEREBRO-X, a pipeline that ranks delivery systems for central nervous system drugs, and developability metrics for antimicrobial peptides. Each is released with its code, its acceptance criteria and a record of what failed.
+        </p>
+        <p>
+          My training is in pharmacy (BPharm, Ain Shams University), followed by formulation development under GMP and clinical work in oncology pharmacy. I am building the computational side of that background toward graduate research in computational pharmaceutics and cheminformatics.
+        </p>
+      </Section>
+
+      <Section id="methods" icon="methods" title="Methods">
+        <ul class="rows">
+          {methods.map((m) => (
+            <li class="row"><div class="row__body"><h3>{m.name}</h3><p>{m.text}</p></div></li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="education" icon="education" title="Education">
+        <ul class="rows">
+          {education.map((e) => (
+            <li class="row"><span class="row__when">{e.when}</span><div class="row__body"><h3>{e.title}</h3><p>{e.where}</p></div></li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="experience" icon="experience" title="Experience">
+        <ul class="rows">
+          {employment.map((e) => (
+            <li class="row"><span class="row__when">{e.when}</span><div class="row__body"><h3>{e.title}</h3><p class="meta">{e.where}</p>{e.text && <p>{e.text}</p>}</div></li>
+          ))}
+        </ul>
+        <p class="meta">Languages: {languages}.</p>
+      </Section>
+
+      <Section id="contact" icon="contact" title="Contact">
+        <IconLinks />
+      </Section>
+    </div>
+    <Toc items={toc} />
+  </div>
+</Base>
+
+<style is:global>
+  .profile-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: 2.5rem; align-items: end; margin-bottom: 3rem; }
+  .portrait { margin: 0; }
+  .portrait img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 8px; display: block; }
+  .portrait--light { display: none !important; }
+  [data-theme='light'] .portrait--light { display: block !important; }
+  [data-theme='light'] .portrait--dark { display: none !important; }
+  @media (max-width: 40rem) {
+    .profile-head { grid-template-columns: 1fr; }
+    .portrait { max-width: 15rem; }
+  }
+</style>

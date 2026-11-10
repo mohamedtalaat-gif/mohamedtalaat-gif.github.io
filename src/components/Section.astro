@@ -1,0 +1,18 @@
+---
+import Glyph from './Glyph.astro';
+
+interface Props {
+  id?: string;
+  title: string;
+  icon?: string;
+}
+const { id, title, icon } = Astro.props;
+---
+
+<section class="sec" id={id}>
+  <h2 class="sec__title">
+    {icon && <span class="sec__icon"><Glyph name={icon} /></span>}
+    <span>{title}</span>
+  </h2>
+  <div class="sec__body"><slot /></div>
+</section>

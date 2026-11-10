@@ -1,0 +1,20 @@
+---
+import { icons } from '../data/icons';
+
+interface Props {
+  name: keyof typeof icons;
+  class?: string;
+}
+const { name, class: cls } = Astro.props;
+const i = icons[name];
+---
+
+<svg class={`icon icon--${name}${cls ? ' ' + cls : ''}`} viewBox={i.viewBox} aria-hidden="true" focusable="false" style={`color:${i.color}`}>
+  {i.backing === 'circle' && <circle cx="12" cy="12" r="10.6" fill="#fff" />}
+  {i.backing === 'square' && <rect x="26" y="58" width="396" height="396" fill="#fff" />}
+  <path d={i.d} fill="currentColor" />
+</svg>
+
+<style is:global>
+  .icon { width: 1.5rem; height: 1.5rem; flex: none; display: block; }
+</style>

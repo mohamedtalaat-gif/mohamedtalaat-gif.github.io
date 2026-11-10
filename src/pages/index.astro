@@ -1,0 +1,235 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Icon from '../components/Icon.astro';
+import IconLinks from '../components/IconLinks.astro';
+import Location from '../components/Location.astro';
+import ReadTime from '../components/ReadTime.astro';
+import { person, links } from '../data/site';
+import { news } from '../lib/posts';
+
+const latest = news.slice(0, 5);
+---
+
+<Base over>
+  <section class="hero" aria-label="Introduction">
+    <div class="hero__scene" id="scene" aria-hidden="true"></div>
+    <img class="hero__ghost ghost-dark" src="/img/ink-dark.webp" alt="" width="820" height="1228" />
+    <img class="hero__ghost ghost-light" src="/img/ink-light.webp" alt="" width="820" height="1228" />
+    <div class="hero__readout" id="readout" aria-hidden="true"><span class="readout-fe" id="readout-text"></span></div>
+
+    <div class="hero__title">
+      <h1>
+        <span class="lab">{person.name}</span>
+      </h1>
+      <p>{person.tagline}</p>
+    </div>
+
+    <div class="hero__ligand seg" role="group" aria-label="Crystal structure shown">
+      <button type="button" data-code="2V0M" aria-pressed="true">Ketoconazole, 2V0M</button>
+      <button type="button" data-code="3NXU" aria-pressed="false">Ritonavir, 3NXU</button>
+    </div>
+
+    <nav class="dock" aria-label="Profiles">
+      <a href="/profile/" class="dock__item" aria-label="Profile">
+        <img class="dock__avatar dock__avatar--dark" src="/img/avatar-bw.webp" alt="" width="640" height="640" />
+        <img class="dock__avatar dock__avatar--light" src="/img/avatar-color.webp" alt="" width="640" height="640" />
+      </a>
+      <a href={links.scholar} class="dock__item" aria-label="Google Scholar" title="Google Scholar"><Icon name="scholar" /></a>
+      <a href={links.github} class="dock__item" aria-label="GitHub" title="GitHub"><Icon name="github" /></a>
+      <a href={links.orcid} class="dock__item" aria-label="ORCID" title="ORCID"><Icon name="orcid" /></a>
+      <a href={links.linkedin} class="dock__item" aria-label="LinkedIn" title="LinkedIn"><Icon name="linkedin" /></a>
+    </nav>
+  </section>
+
+  <div class="page home">
+    <div class="home-about">
+      <aside class="card">
+        <img class="card__img card__img--dark" src="/img/avatar-bw.webp" alt="Illustrated portrait of Muhammad Talaat" width="640" height="640" />
+        <img class="card__img card__img--light" src="/img/avatar-color.webp" alt="Illustrated portrait of Muhammad Talaat" width="640" height="640" />
+        <h2 class="card__name">{person.name}</h2>
+        <p class="card__role">{person.tagline}</p>
+        <Location />
+        <IconLinks layout="list" />
+      </aside>
+      <div class="about">
+        <p>
+          I am a pharmacist working on computational pharmaceutics: predicting how a molecule is metabolised and how a formulation carries it, and testing those predictions on data the models have not seen. My projects are open. They include an entry to the OpenADMET CYP inhibition challenge, a pipeline that ranks delivery systems for central nervous system drugs, and developability metrics for antimicrobial peptides, each released with its code, its acceptance criteria and the record of what failed.
+        </p>
+        <p>
+          I trained in pharmacy at Ain Shams University and develop solid, liquid, semi-solid and parenteral dosage forms professionally, so the models on this site are built beside the measurements they are meant to predict. The <a href="/visualization/">Lab</a> collects experiments you can run, <a href="/validation/">validation reports</a> and bench work, and <a href="/dev/">Dev</a> collects the code.
+        </p>
+      </div>
+    </div>
+
+    <Section id="news" title="News" icon="news">
+      <ul class="rows">
+        {latest.map((e) => (
+          <li class="row">
+            <span class="row__when">{e.date}</span>
+            <div class="row__body">
+              <h3><a href={`/blog/${e.slug}/`}>{e.title}</a></h3>
+              <p>{e.summary}</p>
+              <p class="meta"><ReadTime minutes={e.minutes} /></p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p><a href="/news/">All news</a></p>
+    </Section>
+  </div>
+</Base>
+
+<style is:global>
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 36rem;
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+  .hero__scene {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* the lower third stays quiet so the name reads cleanly */
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, rgb(0 0 0 / 0.14) 86%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 56%, rgb(0 0 0 / 0.14) 86%);
+  }
+  .hero__scene canvas { touch-action: pan-y; }
+  .hero__ghost {
+    position: absolute;
+    right: max(3vw, 1rem);
+    bottom: 0;
+    height: min(94%, 64rem);
+    width: auto;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+  }
+  [data-theme='dark'] .ghost-light, [data-theme='light'] .ghost-dark { display: none; }
+  .dock__avatar--light { display: none; }
+  [data-theme='light'] .dock__avatar--light { display: block; }
+  [data-theme='light'] .dock__avatar--dark { display: none; }
+
+  .hero__title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 7rem;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero__title h1 { margin: 0; }
+  .hero__title .lab {
+    display: block;
+    font-size: clamp(2.7rem, 7.6vw, 6.4rem);
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+  }
+  .hero__title .who {
+    display: block;
+    margin-top: 0.8rem;
+    font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .hero__title p { margin: 0.9rem auto 0; color: var(--text); max-width: 38ch; }
+
+  .hero__ligand { z-index: 3; position: absolute; left: var(--gutter); top: 4.6rem; background: color-mix(in srgb, var(--bg-deep) 70%, transparent); font-family: var(--font-ui); font-size: 1rem; }
+  .hero__readout {
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -330%);
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    padding: 0.2rem 0.65rem;
+    background: color-mix(in srgb, var(--bg-deep) 88%, transparent);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .hero__readout.is-on { opacity: 1; }
+
+  .dock {
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.6rem;
+  }
+  .dock__item {
+    width: 3.1rem;
+    height: 3.1rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    color: var(--text);
+    text-decoration: none;
+    overflow: hidden;
+    transition: border-color 0.15s, transform 0.25s cubic-bezier(.3, 1.6, .5, 1);
+  }
+  .dock__item:hover { border-color: var(--fe); transform: translateY(-4px) rotate(-2deg); text-decoration: none; }
+  .dock__item:hover svg, .dock__item:hover .dock__glyph { animation: pop 0.45s cubic-bezier(.3, 1.6, .5, 1); }
+  .dock__avatar { width: 100%; height: 100%; object-fit: cover; }
+  .dock__item .icon { width: 1.6rem; height: 1.6rem; }
+
+  @media (max-width: 46rem) {
+    .hero__ghost { right: -16vw; height: 66%; opacity: 0.32; }
+    .hero__title .who { color: var(--text); }
+    .hero__title { bottom: 6.2rem; }
+    .hero__ligand { top: 4.4rem; }
+  }
+
+  .home-about { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 2.5rem 4rem; align-items: start; margin-bottom: 3.5rem; }
+  .card__img { width: 11rem; height: 11rem; border-radius: 50%; object-fit: cover; border: 1px solid var(--rule); display: block; margin-bottom: 1.1rem; }
+  .card__img--light { display: none; }
+  [data-theme='light'] .card__img--light { display: block; }
+  [data-theme='light'] .card__img--dark { display: none; }
+  .card__name { font: 600 1.7rem/1.1 var(--font-ui); margin: 0 0 0.35rem; }
+  .card__role { font-family: var(--font-ui); color: var(--muted); margin: 0 0 1.2rem; font-size: 1.1rem; }
+  .about p { max-width: none; }
+  .about p:first-child { margin-top: 0; }
+  @media (max-width: 52rem) { .home-about { grid-template-columns: 1fr; gap: 1.8rem; } }
+</style>
+
+<script>
+  import { mountCypScene } from '../scripts/cyp-scene';
+
+  const el = document.getElementById('scene')!;
+  const readout = document.getElementById('readout')!;
+  const text = document.getElementById('readout-text')!;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  mountCypScene(el, {
+    variant: 'hero',
+    code: '2V0M',
+    spin: !reduce,
+    onReadout: (x, y, d, name) => {
+      readout.style.left = `${x}px`;
+      readout.style.top = `${y}px`;
+      readout.classList.add('is-on');
+      text.textContent = `Fe–N ${d.toFixed(2)} Å, ${name}`;
+    },
+  }).then((scene) => {
+    document.querySelectorAll<HTMLButtonElement>('.hero__ligand button').forEach((b) => {
+      b.addEventListener('click', async () => {
+        document.querySelectorAll('.hero__ligand button').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        await scene.setCode(b.dataset.code!);
+      });
+    });
+  });
+</script>

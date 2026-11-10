@@ -1,0 +1,18 @@
+---
+import { glyphs } from '../data/glyphs';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+const { name, class: cls } = Astro.props;
+const paths = glyphs[name] ?? glyphs.atom;
+---
+
+<svg class={`glyph${cls ? ' ' + cls : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {paths.map((d) => <path d={d} />)}
+</svg>
+
+<style is:global>
+  .glyph { width: 1.5rem; height: 1.5rem; flex: none; display: block; }
+</style>

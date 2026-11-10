@@ -1,0 +1,11 @@
+---
+import Icon from './Icon.astro';
+import { person } from '../data/site';
+---
+
+<p class="location"><Icon name="pin" /><span>{person.location}</span></p>
+
+<style is:global>
+  .location { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.9rem; font-family: var(--font-ui); font-size: 1.05rem; color: var(--text); max-width: none; }
+  .location .icon { width: 1.05rem; height: 1.05rem; color: var(--muted); margin: 0 0.15rem; }
+</style>

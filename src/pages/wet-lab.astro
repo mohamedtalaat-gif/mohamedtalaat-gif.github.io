@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Toc from '../components/Toc.astro';
+import BrandAtoms from '../components/BrandAtoms.astro';
+
+const toc = [
+  { id: 'scope', label: 'Scope' },
+  { id: 'medicinal-chemistry', label: 'Medicinal chemistry' },
+  { id: 'selected-work', label: 'Selected work' },
+  { id: 'brands', label: 'Brands' },
+];
+---
+
+<Base title="Wet lab" description="Formulation development at the bench and in the plant: dosage forms, analysis, scale-up, quality systems and regulatory files.">
+  <div class="page page--toc">
+    <div>
+      <h1>Wet lab</h1>
+      <p class="page__lede">
+        Formulation development at the bench and in the plant, for pharmaceutical, cosmeceutical and cosmetic products.
+      </p>
+
+      <Section id="scope" icon="scope" title="Scope">
+        <table>
+          <tbody>
+            <tr><th scope="row">Dosage forms</th><td>Tablets, capsules, solutions, suspensions, emulsions, creams, gels, ointments and parenteral forms.</td></tr>
+            <tr><th scope="row">Development</th><td>Pre-formulation, API–excipient compatibility, literature review, pilot batches, scale-up and technology transfer, process troubleshooting on the production floor.</td></tr>
+            <tr><th scope="row">Analysis</th><td>HPLC, UV-Vis, GC-MS, particle size and zeta potential, Franz diffusion cells, high-pressure homogenisation, sonication and lyophilisation; liposomes, micro- and nanoemulsions.</td></tr>
+            <tr><th scope="row">Quality and regulatory</th><td>GMP and SOPs, master batch records, trial protocols, CTD sections, product specification sheets, deviation handling and registration files for the Egyptian Ministry of Health.</td></tr>
+          </tbody>
+        </table>
+      </Section>
+
+      <Section id="medicinal-chemistry" icon="research" title="Medicinal chemistry">
+        <table>
+          <tbody>
+            <tr><th scope="row">Synthesis</th><td>Synthetic organic chemistry of small molecules, the bench basis of medicinal chemistry: planning a route, running and following the reaction, working up and purifying the product, and confirming that it is the compound that was meant.</td></tr>
+            <tr><th scope="row">Medicinal chemistry</th><td>Making analogues of a lead and reading the series for structure and activity, in an ongoing research project on the development of antimicrobial agents.</td></tr>
+            <tr><th scope="row">Training</th><td>Medicinal Chemistry Research Internship Program (MCRI), Department of Pharmaceutical Chemistry, Faculty of Pharmacy, Ain Shams University: 26 January to 5 February and 1 July to 16 September 2017. The certificate is listed on the <a href="/activities/">Activities</a> page.</td></tr>
+          </tbody>
+        </table>
+      </Section>
+
+      <Section id="selected-work" icon="work" title="Selected work">
+        <ul class="rows">
+          <li class="row">
+            <span class="row__when">2024 to now</span>
+            <div class="row__body">
+              <h3>Private-label portfolio</h3>
+              <p>Solid, liquid, semi-solid and parenteral products, from the first compatibility study to commercial batch size and the registration dossier.</p>
+            </div>
+          </li>
+          <li class="row">
+            <span class="row__when">2020</span>
+            <div class="row__body">
+              <h3>Lung-targeted rifampicin microparticles for pulmonary tuberculosis</h3>
+              <p>Particle engineering for pulmonary delivery: size, pH, polymorphism and solubility, with LIMS-based sample governance and serial-trial regulatory documentation. Not involved in the in vivo trials.</p>
+            </div>
+          </li>
+          <li class="row">
+            <span class="row__when">2019</span>
+            <div class="row__body">
+              <h3>A natural-API formula for eczema and burns</h3>
+              <p>A topical formula based on a natural active ingredient. It won the Best Formulation Award at the 6th Volatile Oil Gallery, Faculty of Pharmacy, Ain Shams University.</p>
+            </div>
+          </li>
+        </ul>
+      </Section>
+
+      <Section id="brands" icon="brands" title="Brands">
+        <p>Products developed for these brands. A brand that belongs to a company is bonded to it.</p>
+        <BrandAtoms />
+      </Section>
+    </div>
+    <Toc items={toc} />
+  </div>
+</Base>

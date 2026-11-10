@@ -1,0 +1,136 @@
+---
+import type { Chart } from '../data/reports';
+
+interface Props {
+  chart: Chart;
+  alt: string;
+}
+const { chart, alt } = Astro.props;
+
+const W = 640;
+const L = 190; // label gutter
+const R = 24;
+const fmt = (v: number) => (Math.abs(v) < 0.1 && v !== 0 ? v.toFixed(3) : v.toFixed(2));
+---
+
+{chart.type === 'bars' && (() => {
+  const x = (v: number) => L + (v / chart.max) * (W - L - R);
+  const H = 30 + chart.items.length * 40 + 26;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => f * chart.max);
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
+      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="10" y2={H - 26} class="grid" /><text x={x(t)} y={H - 8} text-anchor="middle">{t.toFixed(2)}</text></g>))}
+      {chart.items.map((it, i) => (
+        <g>
+          <text x={L - 12} y={44 + i * 40} text-anchor="end" class="lbl">{it.label}</text>
+          <rect x={L} y={28 + i * 40} width={x(it.value) - L} height="22" rx="2" class="bar" />
+          <text x={x(it.value) + 8} y={44 + i * 40} class="val">{fmt(it.value)}</text>
+        </g>
+      ))}
+      {chart.ref && (<g><line x1={x(chart.ref.value)} x2={x(chart.ref.value)} y1="10" y2={H - 26} class="refline" /><text x={x(chart.ref.value) + 5} y="22" class="refl">{chart.ref.label}</text></g>)}
+    </svg>
+  );
+})()}
+
+{chart.type === 'pairs' && (() => {
+  const x = (v: number) => L + ((v - chart.min) / (chart.max - chart.min)) * (W - L - R);
+  const H = 50 + chart.items.length * 52 + 30;
+  const n = 5;
+  const ticks = Array.from({ length: n + 1 }, (_, i) => chart.min + (i / n) * (chart.max - chart.min));
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
+      <g class="legend">
+        <circle cx={L} cy="14" r="6" class="dot-a" /><text x={L + 12} y="18">{chart.aLabel}</text>
+        <circle cx={L + 200} cy="14" r="6" class="dot-b" /><text x={L + 212} y="18">{chart.bLabel}</text>
+      </g>
+      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(chart.max <= 0.5 ? 2 : 1)}</text></g>))}
+      {chart.items.map((it, i) => {
+        const cy = 62 + i * 52;
+        return (
+          <g>
+            <text x={L - 12} y={cy + 4} text-anchor="end" class="lbl">{it.label}</text>
+            {it.lo !== undefined && it.hi !== undefined && <line x1={x(it.lo)} x2={x(it.hi)} y1={cy} y2={cy} class="ci" />}
+            <line x1={x(it.a)} x2={x(it.b)} y1={cy} y2={cy} class="link" />
+            <circle cx={x(it.a)} cy={cy} r="6.5" class="dot-a" />
+            <circle cx={x(it.b)} cy={cy} r="6.5" class="dot-b" />
+            <text x={x(it.a)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.a)}</text>
+            <text x={x(it.b)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.b)}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+})()}
+
+{chart.type === 'intervals' && (() => {
+  const x = (v: number) => L + ((v - chart.min) / (chart.max - chart.min)) * (W - L - R);
+  const H = 50 + chart.items.length * 56 + 30;
+  const ticks = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6].filter((t) => t <= chart.max);
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
+      <g class="legend"><circle cx={L} cy="14" r="6" class="dot-a" /><text x={L + 12} y="18">estimate with its interval</text><rect x={L + 230} y="8" width="3" height="12" class="refmark" /><text x={L + 242} y="18">{chart.refLabel}</text></g>
+      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(1)}</text></g>))}
+      {chart.items.map((it, i) => {
+        const cy = 66 + i * 56;
+        return (
+          <g>
+            <text x={L - 12} y={cy + 4} text-anchor="end" class="lbl">{it.label}</text>
+            <line x1={x(it.lo)} x2={x(it.hi)} y1={cy} y2={cy} class="ci" />
+            <line x1={x(it.lo)} x2={x(it.lo)} y1={cy - 7} y2={cy + 7} class="ci" />
+            <line x1={x(it.hi)} x2={x(it.hi)} y1={cy - 7} y2={cy + 7} class="ci" />
+            <circle cx={x(it.est)} cy={cy} r="6.5" class="dot-a" />
+            <rect x={x(it.ref) - 1.5} y={cy - 12} width="3" height="24" class="refmark" />
+            <text x={x(it.est)} y={cy - 14} text-anchor="middle" class="val">{fmt(it.est)}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+})()}
+
+{chart.type === 'diverging' && (() => {
+  const zero = L + (W - L - R) / 2;
+  const half = (W - L - R) / 2;
+  const x = (v: number) => zero + (v / 0.5) * half;
+  const H = 30 + chart.items.length * 44 + 26;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
+      {[-0.4, -0.2, 0, 0.2, 0.4].map((t) => (<g><line x1={x(t)} x2={x(t)} y1="10" y2={H - 26} class={t === 0 ? 'refline' : 'grid'} /><text x={x(t)} y={H - 8} text-anchor="middle">{t.toFixed(1)}</text></g>))}
+      {chart.items.map((it, i) => (
+        <g>
+          <text x={L - 12} y={46 + i * 44} text-anchor="end" class="lbl">{it.label.length > 30 ? it.label.slice(0, 29) + '…' : it.label}<title>{it.label}</title></text>
+          <rect x={Math.min(zero, x(it.value))} y={30 + i * 44} width={Math.abs(x(it.value) - zero)} height="22" rx="2" class={it.value < 0 ? 'bar neg' : 'bar'} />
+          <text x={it.value < 0 ? x(it.value) - 8 : x(it.value) + 8} y={46 + i * 44} text-anchor={it.value < 0 ? 'end' : 'start'} class="val">{it.value > 0 ? '+' : '−'}{Math.abs(it.value).toFixed(2)}</text>
+        </g>
+      ))}
+    </svg>
+  );
+})()}
+
+{chart.type === 'gates' && (
+  <svg viewBox="0 0 720 300" role="img" aria-label={alt} class="rchart rchart--gates">
+    {Array.from({ length: chart.total }, (_, i) => (
+      <rect x={4 + (i % 21) * 33.8} y={4 + Math.floor(i / 21) * 32} width="28" height="26" rx="3" class={i < chart.met ? 'gate met' : 'gate'} />
+    ))}
+  </svg>
+)}
+
+<style is:global>
+  .rchart { width: 100%; max-width: 44rem; height: auto; display: block; overflow: visible; }
+  .rchart text { font-family: var(--font-ui); font-size: 13px; fill: var(--muted); }
+  .rchart .lbl { fill: var(--text); font-size: 14px; }
+  .rchart .val { fill: var(--text); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .rchart .grid { stroke: var(--rule); stroke-width: 1; }
+  .rchart .refline { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; }
+  .rchart .refl { fill: var(--muted); font-size: 12px; }
+  .rchart .bar { fill: var(--n); }
+  .rchart .bar.neg { fill: var(--fe); }
+  .rchart .dot-a { fill: var(--n); }
+  .rchart .dot-b { fill: var(--fe); }
+  .rchart .link { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .rchart .ci { stroke: var(--n); stroke-width: 2; opacity: 0.55; }
+  .rchart .refmark { fill: var(--fe); }
+  .rchart .legend text { font-size: 13px; }
+  .rchart .gate { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+  .rchart .gate.met { fill: var(--fe); stroke: var(--fe); }
+</style>

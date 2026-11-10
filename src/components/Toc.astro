@@ -1,0 +1,26 @@
+---
+interface Props {
+  items: { id: string; label: string }[];
+}
+const { items } = Astro.props;
+---
+
+<aside class="toc" aria-label="On this page">
+  {items.map((i, n) => (
+    <a href={`#${i.id}`} data-toc={i.id} aria-current={n === 0 ? 'true' : undefined}>{i.label}</a>
+  ))}
+</aside>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a'));
+  const sections = links.map((l) => document.getElementById(l.dataset.toc!)).filter(Boolean) as HTMLElement[];
+  const set = (id: string) => links.forEach((l) => (l.getAttribute('data-toc') === id ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current')));
+  const io = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) set(visible[0].target.id);
+    },
+    { rootMargin: '-15% 0px -70% 0px', threshold: 0 }
+  );
+  sections.forEach((s) => io.observe(s));
+</script>

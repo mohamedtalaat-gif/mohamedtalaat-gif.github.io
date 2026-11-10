@@ -1,0 +1,209 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Toc from '../components/Toc.astro';
+import { repos, links } from '../data/site';
+
+const modules = import.meta.glob('../content/blog/*.md', { eager: true }) as Record<string, any>;
+const posts = Object.entries(modules)
+  .map(([file, m]) => ({ slug: file.split('/').pop()!.replace(/\.md$/, ''), ...m.frontmatter }))
+  .filter((p) => !p.draft)
+  .sort((a, b) => (a.date < b.date ? 1 : -1))
+  .slice(0, 4);
+
+const toc = [
+  { id: 'environment', label: 'Dev environment' },
+  { id: 'activity', label: 'GitHub activity' },
+  { id: 'blog', label: 'Dev blog' },
+  { id: 'contributions', label: 'Contributions' },
+  { id: 'competitions', label: 'Competitions' },
+  { id: 'tools', label: 'Tools & extensions' },
+];
+
+const stack = [
+  { group: 'Languages', items: [['Py', 'Python'], ['TS', 'TypeScript'], ['JS', 'JavaScript']] },
+  { group: 'Chemistry and simulation', items: [['Rd', 'RDKit'], ['Om', 'OpenMM'], ['B2', 'Boltz-2'], ['Pb', 'PoseBusters']] },
+  { group: 'Physics-based ML', items: [['xT', 'GFN2-xTB features'], ['Pk', 'PBPK models'], ['Dl', 'DLVO colloid models'], ['Cg', 'Coarse-grained MD']] },
+  { group: 'Modelling', items: [['Sk', 'scikit-learn'], ['Pt', 'PyTorch'], ['Lg', 'LightGBM'], ['Cp', 'Chemprop'], ['Tf', 'TensorFlow and Keras']] },
+  { group: 'Data sources', items: [['Ch', 'ChEMBL'], ['Td', 'Therapeutics Data Commons'], ['Pd', 'RCSB PDB']] },
+  { group: 'Notebooks and web', items: [['Mo', 'marimo'], ['As', 'Astro'], ['3D', '3Dmol.js']] },
+  { group: 'Release and reproducibility', items: [['Gi', 'Git and GitHub'], ['Ts', 'Automated tests'], ['Ac', 'GitHub Actions and Pages'], ['Zn', 'Zenodo and Software Heritage']] },
+];
+
+const contributions = [
+  {
+    title: 'A public record of a challenge entry',
+    text: 'The CYPMode data record is deposited with a DOI under CC-BY-4.0, and the method report and the ledger of all 178 failed gates are published beside it, so others can check the claims and reuse the negative results.',
+    href: links.cypmodeDoi,
+  },
+  {
+    title: 'Metrics that plug into seqme',
+    text: 'PharmAMP computes aggregation propensity and solubility for designed antimicrobial peptides and is compatible with the seqme evaluation library.',
+    href: 'https://github.com/mohamedtalaat-gif/PharmAMP',
+  },
+  {
+    title: 'An audit of a tool’s own bugs',
+    text: 'CEREBRO-X is released as a research prototype together with a public audit of its own bugs.',
+    href: 'https://github.com/mohamedtalaat-gif/CEREBRO-X',
+  },
+];
+
+const tools = [
+  ...repos.map((r) => ({ name: r.name, href: r.href, text: r.text, status: 'Released', kind: r.tags.includes('marimo') ? 'Notebook' : 'Python', license: r.license })),
+  {
+    name: 'gh-spectrum',
+    href: 'https://github.com/mohamedtalaat-gif/gh-spectrum',
+    text: 'The GitHub activity card above, as a dependency-free web component: weekly commits as a spectrum, repositories as atoms.',
+    status: 'Released',
+    kind: 'Web',
+    license: 'MIT',
+  },
+  {
+    name: 'pose-overlay',
+    href: 'https://github.com/mohamedtalaat-gif/pose-overlay',
+    text: 'The pose viewer of this site as a web component: overlays a predicted ligand on a reference structure and measures the metal-donor distance in each from the coordinates.',
+    status: 'Released',
+    kind: 'Web',
+    license: 'MIT',
+  },
+  {
+    name: 'cg-assembly-player',
+    href: 'https://github.com/mohamedtalaat-gif/cg-assembly-player',
+    text: 'The assembly player of this site as a web component: replays a coarse-grained trajectory with aggregate size and radial profile beside it.',
+    status: 'Released',
+    kind: 'Web',
+    license: 'MIT',
+  },
+  {
+    name: 'validation-report-kit',
+    href: 'https://github.com/mohamedtalaat-gif/validation-report-kit',
+    text: 'The report pages of the validation section as a command-line tool: one JSON file becomes a hub with counters and a page per report, with five SVG chart types.',
+    status: 'Released',
+    kind: 'Node',
+    license: 'MIT',
+  },
+];
+const filters = ['All', 'Python', 'Notebook', 'Web', 'Node'];
+---
+
+<Base title="Dev" description="Open-source cheminformatics, validation and visualisation code for drug design and delivery by Muhammad Talaat.">
+  <div class="page page--toc">
+    <div>
+      <h1>Dev</h1>
+      <p class="page__lede">
+        Open-source cheminformatics, validation and visualisation code for drug design and delivery, released with tests, audits and licences.
+      </p>
+
+      <Section id="environment" icon="terminal" title="Dev environment">
+        <ul class="rows">
+          {stack.map((g) => (
+            <li class="row">
+              <span class="row__when">{g.group}</span>
+              <div class="row__body">
+                <ul class="stack">
+                  {g.items.map(([mono, name]) => (<li class="tool"><i aria-hidden="true">{mono}</i><span>{name}</span></li>))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="activity" icon="activity" title="GitHub activity">
+        <gh-activity user="mohamedtalaat-gif" show="repos"></gh-activity>
+        <p class="meta">The card is a separate project, <a href="https://github.com/mohamedtalaat-gif/gh-spectrum">gh-spectrum</a>, and runs in your browser against the public GitHub API.</p>
+      </Section>
+
+      <Section id="blog" icon="blog" title="Dev blog">
+        {posts.length > 0 ? (
+          <ul class="rows">
+            {posts.map((p) => (
+              <li class="row"><span class="row__when">{p.date}</span><div class="row__body"><h3><a href={`/blog/${p.slug}/`}>{p.title}</a></h3>{p.summary && <p>{p.summary}</p>}</div></li>
+            ))}
+          </ul>
+        ) : (
+          <p>Posts about the code appear here when they are published.</p>
+        )}
+        <p><a href="/blog/">All posts</a></p>
+      </Section>
+
+      <Section id="contributions" icon="contributions" title="Contributions">
+        <p>What others can reuse from my repositories.</p>
+        <ul class="rows">
+          {contributions.map((c) => (
+            <li class="row"><div class="row__body"><h3><a href={c.href}>{c.title}</a></h3><p>{c.text}</p></div></li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="competitions" icon="trophy" title="Competitions">
+        <ul class="rows">
+          <li class="row">
+            <span class="row__when">2026</span>
+            <div class="row__body">
+              <h3>OpenADMET CYP Inhibition Blind Challenge</h3>
+              <p>14th of 62 on time-dependent inhibition (macro MCC 0.372) and 15th of 38 on CYP3A4 structure prediction. <a href="/validation/">The validation reports</a> cover what worked and what did not.</p>
+            </div>
+          </li>
+        </ul>
+      </Section>
+
+      <Section id="tools" icon="tools" title="Tools & extensions">
+        <div class="chips" role="group" aria-label="Filter tools" id="tool-filters">
+          {filters.map((f, i) => (<button type="button" class="chip" aria-pressed={i === 0 ? 'true' : 'false'} data-f={f}>{f}</button>))}
+        </div>
+        <ul class="rows" id="tool-list">
+          {tools.map((t) => (
+            <li class="row" data-status={t.status} data-kind={t.kind}>
+              <span class="row__when">{t.status}</span>
+              <div class="row__body">
+                <h3><a href={t.href}>{t.name}</a></h3>
+                <p>{t.text}</p>
+                <p><span class="tag">{t.kind}</span>{t.license && <span class="tag">{t.license}</span>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p><a href={links.github}>All repositories on GitHub</a></p>
+      </Section>
+    </div>
+    <Toc items={toc} />
+  </div>
+</Base>
+
+<style is:global>
+  .stack { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin: 0; max-width: none; }
+  .tool {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 1.02rem;
+    transition: border-color 0.15s, transform 0.25s cubic-bezier(.3, 1.6, .5, 1);
+  }
+  .tool i { font-style: normal; font-weight: 600; font-size: 0.85rem; width: 1.8rem; height: 1.8rem; display: grid; place-items: center; border-radius: 6px; background: color-mix(in srgb, var(--n) 22%, transparent); color: var(--text); }
+  .tool:hover { border-color: var(--fe); transform: translateY(-2px) rotate(-1.2deg); }
+  .tool:hover i { animation: pop 0.45s cubic-bezier(.3, 1.6, .5, 1); }
+  gh-activity { --ghs-text: var(--text); --ghs-muted: var(--muted); --ghs-rule: var(--rule); --ghs-accent: var(--n); --ghs-hot: var(--fe); --ghs-font: var(--font-ui); max-width: 44rem; }
+  #tool-list .row[hidden] { display: none; }
+</style>
+
+<script>
+  import '../scripts/gh-spectrum.js';
+
+  const chips = document.querySelectorAll<HTMLButtonElement>('#tool-filters .chip');
+  const rows = document.querySelectorAll<HTMLElement>('#tool-list .row');
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      chips.forEach((o) => o.setAttribute('aria-pressed', String(o === c)));
+      const f = c.dataset.f!;
+      rows.forEach((r) => {
+        r.hidden = !(f === 'All' || r.dataset.status === f || r.dataset.kind === f);
+      });
+    })
+  );
+</script>

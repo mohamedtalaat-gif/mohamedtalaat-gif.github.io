@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import { person, links } from '../data/site';
+
+interface Props {
+  /** "row" wraps the links horizontally; "list" stacks them like a profile card. */
+  layout?: 'row' | 'list';
+}
+const { layout = 'row' } = Astro.props;
+const items = [
+  { icon: 'mail', label: 'Email', href: `mailto:${person.email}` },
+  { icon: 'scholar', label: 'Google Scholar', href: links.scholar },
+  { icon: 'researchgate', label: 'ResearchGate', href: links.researchgate },
+  { icon: 'github', label: 'GitHub', href: links.github },
+  { icon: 'orcid', label: 'ORCID', href: links.orcid },
+  { icon: 'linkedin', label: 'LinkedIn', href: links.linkedin },
+] as const;
+---
+
+<ul class={`iconlinks iconlinks--${layout}`}>
+  {items.map((i) => (
+    <li>
+      <a class="iconlink" href={i.href} rel={i.icon === 'mail' ? undefined : 'me noopener'}>
+        <Icon name={i.icon} />
+        <span>{i.label}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style is:global>
+  .iconlinks--list { flex-direction: column; flex-wrap: nowrap; gap: 0.15rem; margin: 0; }
+  .iconlinks--list .iconlink { border: 0; padding: 0.35rem 0; border-radius: 0; gap: 0.7rem; }
+  .iconlinks--list .iconlink:hover { transform: translateX(3px); }
+  .iconlinks--list .icon { width: 1.35rem; height: 1.35rem; }
+  .iconlink .icon--mail, .iconlink .icon--pin { color: var(--muted) !important; }
+</style>

@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import ReadTime from '../components/ReadTime.astro';
+import { news, yearsOf } from '../lib/posts';
+
+const years = yearsOf(news);
+---
+
+<Base title="News" description="Results, releases, certificates and milestones, newest first, each with a post that tells the story.">
+  <div class="page">
+    <h1>News</h1>
+    <p class="page__lede">Results, releases, courses and milestones, newest first. Each item opens the post behind it.</p>
+
+    {years.map((y) => (
+      <Section title={y} icon="calendar">
+        <ul class="rows">
+          {news
+            .filter((a) => a.date.startsWith(y))
+            .map((e) => (
+              <li class="row">
+                <span class="row__when">{e.date}</span>
+                <div class="row__body">
+                  <h3><a href={`/blog/${e.slug}/`}>{e.title}</a></h3>
+                  <p>{e.summary}</p>
+                  <p class="meta"><ReadTime minutes={e.minutes} /></p>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </Section>
+    ))}
+  </div>
+</Base>

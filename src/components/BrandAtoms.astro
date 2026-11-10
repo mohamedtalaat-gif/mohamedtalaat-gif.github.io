@@ -1,0 +1,168 @@
+---
+import { brands } from '../data/site';
+
+// Each brand is an atom; a brand that belongs to a company is bonded to a smaller atom for that company.
+// Positions are relaxed once at build time, so the markup is plain static SVG and the page needs no layout script.
+interface Node { id: string; label: string[]; r: number; kind: 'brand' | 'company'; href?: string; x: number; y: number; company?: string }
+const W = 640, H = 420;
+
+const wrap = (t: string): string[] => {
+  const w = t.split(' ');
+  if (t.length <= 11 || w.length === 1) return [t];
+  const mid = Math.ceil(t.length / 2);
+  let best = 1, d = 99;
+  for (let i = 1; i < w.length; i++) {
+    const len = w.slice(0, i).join(' ').length;
+    if (Math.abs(len - mid) < d) { d = Math.abs(len - mid); best = i; }
+  }
+  return [w.slice(0, best).join(' '), w.slice(best).join(' ')];
+};
+
+const nodes: Node[] = [];
+const bonds: [number, number][] = [];
+const companyIndex = new Map<string, number>();
+brands.forEach((b, i) => {
+  const label = wrap(b.name);
+  const r = Math.max(36, 17 + Math.max(...label.map((l) => l.length)) * 4.4);
+  nodes.push({ id: `b${i}`, label, r, kind: 'brand', href: b.href, x: 0, y: 0, company: b.company });
+  if (b.company) {
+    if (!companyIndex.has(b.company)) {
+      const cl = wrap(b.company);
+      companyIndex.set(b.company, nodes.length);
+      nodes.push({ id: `c${i}`, label: cl, r: Math.max(27, 12 + Math.max(...cl.map((l) => l.length)) * 3.4), kind: 'company', href: b.companyHref, x: 0, y: 0 });
+    }
+  }
+});
+brands.forEach((b, i) => {
+  if (!b.company) return;
+  const bi = nodes.findIndex((n) => n.id === `b${i}`);
+  bonds.push([bi, companyIndex.get(b.company)!]);
+});
+
+// deterministic start on a spiral, then a short force relaxation
+nodes.forEach((n, i) => {
+  const a = i * 2.399963;
+  const d = 22 * Math.sqrt(i + 1) * 3.4;
+  n.x = W / 2 + Math.cos(a) * d * 1.25;
+  n.y = H / 2 + Math.sin(a) * d * 0.8;
+});
+for (let step = 0; step < 420; step++) {
+  const k = 1 - step / 420;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j];
+      let dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.hypot(dx, dy) || 0.01;
+      const min = a.r + b.r + 14;
+      if (dist < min) {
+        const push = ((min - dist) / 2) * 0.6;
+        dx /= dist; dy /= dist;
+        a.x -= dx * push; a.y -= dy * push; b.x += dx * push; b.y += dy * push;
+      }
+    }
+  }
+  for (const [i, j] of bonds) {
+    const a = nodes[i], b = nodes[j];
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const dist = Math.hypot(dx, dy) || 0.01;
+    const target = a.r + b.r + 16;
+    const pull = (dist - target) * 0.08 * k;
+    a.x += (dx / dist) * pull; a.y += (dy / dist) * pull; b.x -= (dx / dist) * pull; b.y -= (dy / dist) * pull;
+  }
+  for (const n of nodes) {
+    n.x += (W / 2 - n.x) * 0.0015;
+    n.y += (H / 2 - n.y) * 0.0022;
+    n.x = Math.min(W - n.r - 4, Math.max(n.r + 4, n.x));
+    n.y = Math.min(H - n.r - 4, Math.max(n.r + 4, n.y));
+  }
+}
+const nbr = (i: number) => bonds.filter(([a, b]) => a === i || b === i).map(([a, b]) => (a === i ? b : a));
+---
+
+<figure class="atoms" data-atoms>
+  <svg viewBox={`0 0 ${W} ${H}`} role="group" aria-label="Brands as atoms; a brand that belongs to a company is bonded to that company">
+    {bonds.map(([a, b]) => (
+      <line class="bond" data-a={nodes[a].id} data-b={nodes[b].id} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} />
+    ))}
+    {nodes.map((n, i) => {
+      const lines = n.label;
+      const fs = n.kind === 'brand' ? 14 : 12;
+      return (
+        <g
+          class={`atom atom--${n.kind}${n.href ? ' has-link' : ''}`}
+          data-id={n.id}
+          data-near={nbr(i).map((j) => nodes[j].id).join(' ')}
+          data-href={n.href}
+          data-name={n.label.join(' ')}
+          data-company={n.company}
+          tabindex="0"
+          role={n.href ? 'link' : 'img'}
+          aria-label={n.label.join(' ') + (n.company ? `, a brand of ${n.company}` : '') + (n.href ? ', opens its website' : '')}
+          style={`--dx:${((i * 7) % 5) - 2}px; --dy:${((i * 11) % 5) - 2}px; --delay:${-(i * 0.73) % 6}s`}
+        >
+          <circle cx={n.x} cy={n.y} r={n.r} class="atom__disc" />
+          {n.href && <circle cx={n.x + n.r * 0.72} cy={n.y - n.r * 0.72} r="4.2" class="atom__link" />}
+          {lines.map((l, k) => (
+            <text x={n.x} y={n.y + (k - (lines.length - 1) / 2) * (fs + 2) + fs * 0.35} text-anchor="middle" style={`font-size:${fs}px`}>{l}</text>
+          ))}
+        </g>
+      );
+    })}
+  </svg>
+  <figcaption class="tip" aria-live="polite" data-tip>Hover or focus an atom. A dot marks a brand with a website; click to open it.</figcaption>
+</figure>
+
+<style is:global>
+  .atoms { margin: 0; }
+  .atoms svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .atoms .bond { stroke: var(--rule); stroke-width: 2; transition: opacity 0.2s; }
+  .atoms .atom { cursor: default; outline: none; animation: drift 9s ease-in-out infinite; animation-delay: var(--delay); transition: opacity 0.2s; }
+  .atoms .atom.has-link { cursor: pointer; }
+  .atoms .atom__disc { fill: color-mix(in srgb, var(--n) 16%, transparent); stroke: var(--n); stroke-width: 1.6; transition: fill 0.2s, stroke 0.2s; }
+  .atoms .atom--company .atom__disc { fill: color-mix(in srgb, var(--fe) 14%, transparent); stroke: var(--fe); }
+  .atoms .atom__link { fill: var(--fe); }
+  .atoms text { font-family: var(--font-ui); fill: var(--text); pointer-events: none; }
+  .atoms .atom:hover .atom__disc, .atoms .atom:focus-visible .atom__disc { fill: color-mix(in srgb, var(--n) 34%, transparent); stroke-width: 2.4; }
+  .atoms .atom--company:hover .atom__disc, .atoms .atom--company:focus-visible .atom__disc { fill: color-mix(in srgb, var(--fe) 32%, transparent); }
+  .atoms.is-hot .atom:not(.is-on) { opacity: 0.25; }
+  .atoms.is-hot .bond:not(.is-on) { opacity: 0.12; }
+  .atoms .bond.is-on { stroke: var(--fe); }
+  @keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(var(--dx), var(--dy)); } }
+  @media (prefers-reduced-motion: reduce) { .atoms .atom { animation: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-atoms]').forEach((root) => {
+    const tip = root.querySelector<HTMLElement>('[data-tip]')!;
+    const base = tip.textContent;
+    const atoms = [...root.querySelectorAll<SVGGElement>('.atom')];
+    const bonds = [...root.querySelectorAll<SVGLineElement>('.bond')];
+    const on = (a: SVGGElement) => {
+      const ids = new Set([a.dataset.id!, ...(a.dataset.near ?? '').split(' ').filter(Boolean)]);
+      root.classList.add('is-hot');
+      atoms.forEach((n) => n.classList.toggle('is-on', ids.has(n.dataset.id!)));
+      bonds.forEach((b) => b.classList.toggle('is-on', ids.has(b.dataset.a!) && ids.has(b.dataset.b!) && (b.dataset.a === a.dataset.id || b.dataset.b === a.dataset.id)));
+      const name = a.dataset.name!;
+      tip.textContent = a.dataset.company
+        ? `${name}, a brand of ${a.dataset.company}.${a.dataset.href ? ' Click to open its website.' : ''}`
+        : a.classList.contains('atom--company')
+          ? `${name}: company that owns the bonded brand${a.dataset.near!.includes(' ') ? 's' : ''}.${a.dataset.href ? ' Click to open its website.' : ''}`
+          : `${name}.${a.dataset.href ? ' Click to open its website.' : ''}`;
+    };
+    const off = () => {
+      root.classList.remove('is-hot');
+      atoms.forEach((n) => n.classList.remove('is-on'));
+      bonds.forEach((b) => b.classList.remove('is-on'));
+      tip.textContent = base;
+    };
+    atoms.forEach((a) => {
+      a.addEventListener('pointerenter', () => on(a));
+      a.addEventListener('pointerleave', off);
+      a.addEventListener('focus', () => on(a));
+      a.addEventListener('blur', off);
+      const go = () => { if (a.dataset.href) window.open(a.dataset.href, '_blank', 'noopener'); };
+      a.addEventListener('click', go);
+      a.addEventListener('keydown', (e) => { if ((e as KeyboardEvent).key === 'Enter') go(); });
+    });
+  });
+</script>
