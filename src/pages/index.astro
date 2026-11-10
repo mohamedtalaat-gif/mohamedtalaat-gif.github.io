@@ -5,7 +5,7 @@ import Icon from '../components/Icon.astro';
 import IconLinks from '../components/IconLinks.astro';
 import Location from '../components/Location.astro';
 import ReadTime from '../components/ReadTime.astro';
-import { person, links } from '../data/site';
+import { person, profiles } from '../data/site';
 import { news } from '../lib/posts';
 
 const latest = news.slice(0, 5);
@@ -35,11 +35,9 @@ const latest = news.slice(0, 5);
         <img class="dock__avatar dock__avatar--dark" src="/img/avatar-bw.webp" alt="" width="640" height="640" />
         <img class="dock__avatar dock__avatar--light" src="/img/avatar-color.webp" alt="" width="640" height="640" />
       </a>
-      <a href={links.scholar} class="dock__item" aria-label="Google Scholar" title="Google Scholar"><Icon name="scholar" /></a>
-      <a href={links.researchgate} class="dock__item" aria-label="ResearchGate" title="ResearchGate"><Icon name="researchgate" /></a>
-      <a href={links.github} class="dock__item" aria-label="GitHub" title="GitHub"><Icon name="github" /></a>
-      <a href={links.orcid} class="dock__item" aria-label="ORCID" title="ORCID"><Icon name="orcid" /></a>
-      <a href={links.linkedin} class="dock__item" aria-label="LinkedIn" title="LinkedIn"><Icon name="linkedin" /></a>
+      {profiles.filter((x) => x.icon !== 'mail').map((x) => (
+        <a href={x.href} class="dock__item" aria-label={x.label} title={x.label}><Icon name={x.icon} /></a>
+      ))}
     </nav>
   </section>
 

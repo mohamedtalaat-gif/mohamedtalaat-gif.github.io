@@ -1,20 +1,13 @@
 ---
 import Icon from './Icon.astro';
-import { person, links } from '../data/site';
+import { profiles } from '../data/site';
 
 interface Props {
   /** "row" wraps the links horizontally; "list" stacks them like a profile card. */
   layout?: 'row' | 'list';
 }
 const { layout = 'row' } = Astro.props;
-const items = [
-  { icon: 'mail', label: 'Email', href: `mailto:${person.email}` },
-  { icon: 'scholar', label: 'Google Scholar', href: links.scholar },
-  { icon: 'researchgate', label: 'ResearchGate', href: links.researchgate },
-  { icon: 'github', label: 'GitHub', href: links.github },
-  { icon: 'orcid', label: 'ORCID', href: links.orcid },
-  { icon: 'linkedin', label: 'LinkedIn', href: links.linkedin },
-] as const;
+const items = profiles;
 ---
 
 <ul class={`iconlinks iconlinks--${layout}`}>

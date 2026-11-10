@@ -19,6 +19,17 @@ export const links = {
   cypmodeDoi: 'https://doi.org/10.5281/zenodo.23816450',
 };
 
+// The one order of the profile links, used by the home dock, the profile card and every list of links on the site:
+// contact first, then the research identities (publications, persistent identifier, papers), then code, then the professional profile.
+export const profiles = [
+  { icon: 'mail', label: 'Email', href: `mailto:${person.email}` },
+  { icon: 'scholar', label: 'Google Scholar', href: links.scholar },
+  { icon: 'orcid', label: 'ORCID', href: links.orcid },
+  { icon: 'researchgate', label: 'ResearchGate', href: links.researchgate },
+  { icon: 'github', label: 'GitHub', href: links.github },
+  { icon: 'linkedin', label: 'LinkedIn', href: links.linkedin },
+] as const;
+
 export const nav = [
   { href: '/news/', label: 'News' },
   { href: '/blog/', label: 'Blog' },
