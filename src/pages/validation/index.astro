@@ -5,7 +5,7 @@ import { sortedReports, reports, uniq } from '../../data/reports';
 
 const counts = [
   { n: reports.length, label: 'reports', hint: 'Reports in this collection.' },
-  { n: new Set(reports.map((r) => r.project)).size, label: 'studies', hint: 'Projects the reports come from: CYPMode, CEREBRO-X and PharmAMP.' },
+  { n: new Set(reports.map((r) => r.project)).size, label: 'studies', hint: 'Projects the reports come from: CYPMode, CEREBRO-X, and PharmAMP.' },
   { n: uniq((r) => r.methods), label: 'methods', hint: 'Distinct validation methods, meaning procedures that test a model. Modelling techniques are not counted.' },
   { n: uniq((r) => r.endpoints), label: 'endpoints', hint: 'Distinct quantities that a model predicts or a report evaluates.' },
   { n: uniq((r) => r.datasets), label: 'datasets', hint: 'Distinct data sources the reports test against.' },
@@ -22,13 +22,13 @@ const lists = [
 const rules = [
   { name: 'Gates before results', text: 'An idea is accepted only if it beats its reference under a rule written before the run. Failed gates are published with the passed ones.' },
   { name: 'Splits that match the use', text: 'Nested cross-validation on the population that will be scored, and scaffold splits when the model will meet new chemistry, with the random-split number shown beside it.' },
-  { name: 'Uncertainty on every number', text: 'Intervals, the size of the held-out set and the fraction of censored values are reported with each estimate.' },
+  { name: 'Uncertainty on every number', text: 'Intervals, the size of the held-out set, and the fraction of censored values are reported with each estimate.' },
   { name: 'Controls that can fail', text: 'Permuted-label controls and independent data that the method was never fitted to, so that a leak or a weak metric shows up.' },
   { name: 'Regenerated from the data', text: 'Each figure here is produced from files in a public repository, and an audit rebuilds the reported numbers and compares them with the text.' },
 ];
 ---
 
-<Base title="Model validation" description="Validation reports for my models: nested cross-validation, scaffold splits, calibration, permutation controls and a public ledger of failed gates.">
+<Base title="Model validation" description="Validation reports for my models: nested cross-validation, scaffold splits, calibration, permutation controls, and a public ledger of failed gates.">
   <div class="page">
     <h1>Model validation</h1>
     <p class="page__lede">
@@ -39,7 +39,7 @@ const rules = [
       {counts.map((c) => (<li title={c.hint}><strong>{c.n}</strong><span>{c.label}</span></li>))}
     </ul>
 
-    <p class="meta counters-note">Counted from the reports below by distinct name: studies are projects, methods are validation procedures, endpoints are the quantities evaluated and datasets are the data sources tested against. The pages are built with <a href="https://github.com/mohamedtalaat-gif/validation-report-kit">validation-report-kit</a>.</p>
+    <p class="meta counters-note">Counted from the reports below by distinct name: studies are projects, methods are validation procedures, endpoints are the quantities evaluated, and datasets are the data sources tested against. The pages are built with <a href="https://github.com/mohamedtalaat-gif/validation-report-kit">validation-report-kit</a>.</p>
 
     <details class="counted">
       <summary>What is counted</summary>

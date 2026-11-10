@@ -67,7 +67,7 @@ export const activities: Entry[] = [
     date: '2026-11-05',
     kind: 'release',
     title: 'CYPMode 0.3.1 archived',
-    text: 'The code, method report, audit and the analysis against the released labels are archived on Zenodo with a DOI, and on Software Heritage.',
+    text: 'The code, method report, audit, and the analysis against the released labels are archived on Zenodo with a DOI, and on Software Heritage.',
     href: links.cypmodeDoi,
   },
   {
@@ -151,7 +151,7 @@ export const repos = [
     name: 'CEREBRO-X',
     href: 'https://github.com/mohamedtalaat-gif/CEREBRO-X',
     license: 'MIT',
-    text: 'A pipeline that scores candidate delivery systems for CNS drugs on a 62-criterion rubric with PBPK, DLVO colloidal stability and ChEMBL-trained QSAR. Released as a research prototype with a public audit of its own bugs.',
+    text: 'A pipeline that scores candidate delivery systems for CNS drugs on a 62-criterion rubric with PBPK, DLVO colloidal stability, and ChEMBL-trained QSAR. Released as a research prototype with a public audit of its own bugs.',
     tags: ['drug delivery', 'PBPK', 'QSAR'],
   },
   {
@@ -165,7 +165,7 @@ export const repos = [
     name: 'Stepan Surfactant Cheminformatics',
     href: 'https://github.com/mohamedtalaat-gif/Stepan_Surfactant_Cheminformatics',
     license: 'MIT',
-    text: 'Surfactants and conditioning actives of a personal-care seminar as structures, physical chemistry and coarse-grained molecular dynamics, built in marimo with RDKit and OpenMM. The seminar decks belong to Stepan and are not redistributed.',
+    text: 'Surfactants and conditioning actives of a personal-care seminar as structures, physical chemistry, and coarse-grained molecular dynamics, built in marimo with RDKit and OpenMM. The seminar decks belong to Stepan and are not redistributed.',
     tags: ['formulation', 'molecular dynamics', 'marimo'],
   },
 ];
@@ -177,9 +177,9 @@ export const education = [
 ];
 
 export const employment = [
-  { when: 'Dec 2024 to now', title: 'R&D Supervisor and Project Lead', where: 'Label Rock, private-label pharmaceutical and cosmetic manufacturing, Cairo', text: 'Formulation development for private-label clients across solid, liquid, semi-solid and parenteral dosage forms; leads the R&D team; prepares master batch records, CTD sections and Ministry of Health registration files.' },
-  { when: '2024 to now', title: 'Oncology and chemotherapy preparation pharmacist', where: 'El Demerdash Hospital, Ain Shams University', text: 'Aseptic chemotherapy preparation, cytotoxic inventory and sterility compliance, counselling with oncology and nursing teams.' },
-  { when: 'Jul 2023 to Jul 2024', title: 'R&D researcher', where: 'BRAND for Pharmaceutical Industries, Giza', text: 'GLP formulation trials, stability studies, scale-up transfers and MOH registration files.' },
+  { when: 'Dec 2024 to now', title: 'R&D Supervisor and Project Lead', where: 'Label Rock, private-label pharmaceutical and cosmetic manufacturing, Cairo', text: 'Formulation development for private-label clients across solid, liquid, semi-solid, and parenteral dosage forms; leads the R&D team; prepares master batch records, CTD sections, and Ministry of Health registration files.' },
+  { when: '2024 to now', title: 'Oncology and chemotherapy preparation pharmacist', where: 'El Demerdash Hospital, Ain Shams University', text: 'Aseptic chemotherapy preparation, cytotoxic inventory, sterility compliance, and counselling with oncology and nursing teams.' },
+  { when: 'Jul 2023 to Jul 2024', title: 'R&D researcher', where: 'BRAND for Pharmaceutical Industries, Giza', text: 'GLP formulation trials, stability studies, scale-up transfers, and MOH registration files.' },
   { when: '2021 to 2023', title: 'Emergency and clinical pharmacist, mandatory service', where: 'Egyptian Military Medical Unit, 3rd Field Army Headquarters, Suez', text: '' },
   { when: '2017 to 2021', title: 'Undergraduate research assistant and formulation projects', where: 'Faculty of Pharmacy, Ain Shams University', text: 'Best Formulation Award (2019) and lung-targeted rifampicin microparticles (2020).' },
 ];

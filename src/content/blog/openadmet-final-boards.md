@@ -18,7 +18,7 @@ After the organisers released the labels and the 20 structures I scored my own e
 
 **The contact restraint was too generous.** It found all four coordinated ligands and called eight more coordinated that the released structures place beyond my 2.6 Å cut-off, at 2.75 to 4.93 Å from the iron, six of them within 3.1 Å, in maps of 3.0 to 3.6 Å resolution.
 
-Of 187 ideas tested against gates written before their results, nine passed, and the 178 that did not are in the repository. I would rather publish that ledger than a cleaner story. The code, the method report and the audit are archived at [10.5281/zenodo.23816450](https://doi.org/10.5281/zenodo.23816450).
+Of 187 ideas tested against gates written before their results, nine passed, and the 178 that did not are in the repository. I would rather publish that ledger than a cleaner story. The code, the method report, and the audit are archived at [10.5281/zenodo.23816450](https://doi.org/10.5281/zenodo.23816450).
 
 **What the two scores measure.** The time-dependent inhibition track is scored by a macro Matthews correlation coefficient, which averages the coefficient over the endpoints so that no single one can carry the score. A value of 0 is chance and 1 is perfect agreement, so 0.372 is a modest but real signal. The structure track is scored by LDDT-PLI, which compares the distances between the ligand and nearby protein atoms in the predicted and released structures, so a pose that sits in the right place but with a wrong orientation loses points. Neither score is forgiving, and I find that clarifying.
 

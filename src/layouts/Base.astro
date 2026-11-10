@@ -15,7 +15,7 @@ const { title, description, over = false } = Astro.props;
 const pageTitle = title ? `${title} · ${person.name} · ${person.lab}` : `${person.name} · ${person.lab}`;
 const desc =
   description ??
-  `${person.name}: ${person.tagline}. Drug design, delivery and formulation, with open code, public validation and a failure ledger.`;
+  `${person.name}: ${person.tagline}. Drug design, delivery, and formulation, with open code, public validation, and a failure ledger.`;
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---

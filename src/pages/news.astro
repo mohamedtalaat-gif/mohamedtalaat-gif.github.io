@@ -7,10 +7,10 @@ import { news, yearsOf } from '../lib/posts';
 const years = yearsOf(news);
 ---
 
-<Base title="News" description="Results, releases, certificates and milestones, newest first, each with a post that tells the story.">
+<Base title="News" description="Results, releases, certificates, and milestones, newest first, each with a post that tells the story.">
   <div class="page">
     <h1>News</h1>
-    <p class="page__lede">Results, releases, courses and milestones, newest first. Each item opens the post behind it.</p>
+    <p class="page__lede">Results, releases, courses, and milestones, newest first. Each item opens the post behind it.</p>
 
     {years.map((y) => (
       <Section title={y} icon="calendar">

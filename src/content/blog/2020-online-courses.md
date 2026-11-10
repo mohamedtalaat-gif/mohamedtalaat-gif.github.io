@@ -1,7 +1,7 @@
 ---
-title: Courses in scientific writing, Python, genomics and pharmacovigilance
+title: Courses in scientific writing, Python, genomics, and pharmacovigilance
 date: "2020"
-summary: Five Coursera certificates and one pharmacovigilance certificate, taken to add writing, programming, data and drug-safety skills to a pharmacy degree.
+summary: Five Coursera certificates and one pharmacovigilance certificate, taken to add writing, programming, data, and drug-safety skills to a pharmacy degree.
 topic: course
 news: false
 ---
@@ -10,7 +10,7 @@ During 2020 I completed six online courses alongside my degree. Five were on Cou
 
 The first was "How to Write and Publish a Scientific Paper" from École Polytechnique. A pharmacy degree trains you to read papers, and almost never to write one. The course treats a manuscript as an argument with a fixed shape: a question that matters, a method that could answer it, results that stand apart from interpretation, and a discussion that says what follows and what does not. That is the shape I have followed in my sole-author paper in 2024 and in the scoping review I led in 2025.
 
-The second, "Programming for Everybody (Getting Started with Python)" from the University of Michigan, is the one with the longest reach. It taught the basics: variables, loops, functions, files and data structures. Everything I have released since is written in Python, from the cheminformatics pipelines to the validation audits. The course did not make me a programmer, but it removed the first barrier and gave me a language in which to keep learning.
+The second, "Programming for Everybody (Getting Started with Python)" from the University of Michigan, is the one with the longest reach. It taught the basics: variables, loops, functions, files, and data structures. Everything I have released since is written in Python, from the cheminformatics pipelines to the validation audits. The course did not make me a programmer, but it removed the first barrier and gave me a language in which to keep learning.
 
 Two courses from Johns Hopkins University, "Introduction to Genomic Technologies" and "Genomic Data Science with Galaxy", moved in a different direction. They covered how sequencing data are produced and how they are analysed in a workflow platform without writing code. I do not work on genomic data now, but the courses were my first view of an analysis pipeline as a series of explicit, repeatable steps whose parameters are recorded. That idea of a recorded, repeatable workflow is the same one my repositories rely on.
 
