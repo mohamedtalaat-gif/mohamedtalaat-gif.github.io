@@ -247,7 +247,7 @@ small, .meta { color: var(--muted); font-size: 0.92rem; }
   display: grid;
   gap: 0.5rem;
 }
-.site-footer p { margin: 0; max-width: 78ch; }
+.site-footer p { margin: 0; max-width: none; text-align: justify; text-justify: inter-word; hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 6 3 3; }
 
 /* ---------- lists and tables ---------- */
 .rows { list-style: none; padding: 0; max-width: none; }
