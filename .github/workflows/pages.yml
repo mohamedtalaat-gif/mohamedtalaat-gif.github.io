@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '17 5 * * 1' # every Monday, so that the activity card below is redrawn
+    - cron: '17 */6 * * *' # every six hours, so that the activity card and its repository count below follow the account
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: mohamedtalaat-gif/gh-spectrum
-          ref: 1.1.0
+          ref: 1.2.0
           path: .tools/gh-spectrum
       - run: node .tools/gh-spectrum/bin/gh-spectrum.js mohamedtalaat-gif --out-dir dist --show repos
         env:
