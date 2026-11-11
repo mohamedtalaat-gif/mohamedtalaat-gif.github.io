@@ -27,6 +27,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # Link previews: a screenshot of every built page, then a second build that carries them (scripts/og-images.mjs).
+      # If this step fails, the build above is deployed and every page uses the home page picture kept in the repository.
+      - name: Draw the link previews
+        continue-on-error: true
+        run: |
+          node scripts/og-images.mjs
+          npm run build
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
       # The activity card for the profile README: the same card as on the Dev page, drawn as a static image.
       - uses: actions/checkout@v4
         with:
