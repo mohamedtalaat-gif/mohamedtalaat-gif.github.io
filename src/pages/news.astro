@@ -1,10 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
-import ReadTime from '../components/ReadTime.astro';
+import ItemMeta from '../components/ItemMeta.astro';
 import { yearsOf } from '../lib/posts';
 import { news } from '../lib/feed';
-import { kindLabel } from '../lib/news.js';
 
 const years = yearsOf(news);
 ---
@@ -25,7 +24,7 @@ const years = yearsOf(news);
                 <div class="row__body">
                   <h3><a href={e.href}>{e.title}</a></h3>
                   <p>{e.summary}</p>
-                  <p class="meta">{e.minutes ? <ReadTime minutes={e.minutes} /> : kindLabel(e)}</p>
+                  <p class="meta"><ItemMeta kind={e.kind} minutes={e.minutes} /></p>
                 </div>
               </li>
             ))}

@@ -3,7 +3,6 @@ title: Attending the Badr University Conference of Pharmaceutical Sciences
 date: "2024"
 summary: Taking part as an attendee in a conference whose topics included machine learning in drug delivery, and what it confirmed about the direction of my work.
 topic: event
-news: false
 ---
 
 In 2024 I attended the Badr University Conference of Pharmaceutical Sciences (BUCPS) in Badr, Egypt, and followed the session on machine learning methods in drug delivery: a novel pharmaceutics informatics approach. It is listed under conferences and seminars on my Activities page, and I describe here what a conference like that offers someone working between formulation and computation.

@@ -3,7 +3,6 @@ title: Courses in scientific writing, Python, genomics, and pharmacovigilance
 date: "2020"
 summary: Five Coursera certificates and one pharmacovigilance certificate, taken to add writing, programming, data, and drug-safety skills to a pharmacy degree.
 topic: course
-news: false
 ---
 
 During 2020 I completed six online courses alongside my degree. Five were on Coursera and one, on pharmacovigilance, came from the Uppsala Monitoring Centre. The Coursera certificates can be verified online, and the links are on the Activities page.

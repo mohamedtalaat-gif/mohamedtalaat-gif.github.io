@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ReadTime from '../../components/ReadTime.astro';
+import ItemMeta from '../../components/ItemMeta.astro';
 import { posts } from '../../lib/posts';
 
 export function getStaticPaths() {
@@ -24,7 +24,7 @@ const older = posts[i + 1];
 
 <Base title={frontmatter.title} description={frontmatter.summary}>
   <article class="page post">
-    <p class="meta"><a href="/blog/">Blog</a> / {info.date} &nbsp; <ReadTime minutes={info.minutes} /></p>
+    <p class="meta"><a href="/blog/">Blog</a> / {info.date} &nbsp; <ItemMeta kind={info.topic ?? 'post'} minutes={info.minutes} /></p>
     <h1 class="post-title">{frontmatter.title}</h1>
     <div class="prose">
       <Content />

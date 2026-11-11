@@ -3,7 +3,6 @@ title: Diplomas in organic skincare and haircare formulation
 date: "2024"
 summary: Two formulation diplomas from Formula Botanica that added cosmetic formulation to a pharmaceutical background.
 topic: course
-news: false
 ---
 
 In 2024 I completed the organic skincare and organic haircare formulation diplomas at Formula Botanica. They are online programmes for cosmetic formulators, and I took them to add cosmetic science to a pharmaceutical background.

@@ -3,7 +3,6 @@ title: The Medicinal Chemistry Research Internship at Ain Shams
 date: "2017"
 summary: A hands-on internship in the Pharmaceutical Chemistry Department, working on synthetic and medicinal chemistry for an antimicrobial-agent project.
 topic: course
-news: false
 ---
 
 In 2017 I completed the Medicinal Chemistry Research Internship Program (MCRI), provided by the Department of Pharmaceutical Chemistry at the Faculty of Pharmacy, Ain Shams University. It ran during two periods of 2017, from 26 January to 5 February, in the mid-semester break, and from 1 July to 16 September, in the summer vacation. The certificate describes it as hands-on training in synthetic organic chemistry and medicinal chemistry, through taking an effective part in an ongoing research project on the development of antimicrobial agents.

@@ -3,7 +3,6 @@ title: Freelance scientific writing for PharmaCores
 date: "2024-12"
 summary: Part-time writing of scientific and pharmaceutical content for a knowledge platform, and the discipline of explaining technical work to non-specialists.
 topic: role
-news: false
 ---
 
 In December 2024 I started writing part time as a freelance scientific writer for PharmaCores, a knowledge platform. The assignment is scientific and pharmaceutical content, and the aim is to explain technical work to readers who are not specialists in it.

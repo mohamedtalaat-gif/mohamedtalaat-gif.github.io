@@ -1,0 +1,19 @@
+---
+import ReadTime from './ReadTime.astro';
+import { kindLabel } from '../lib/news.js';
+
+interface Props {
+  /** award, course, event, paper, release, result, role, report ... */
+  kind: string;
+  /** reading time of a post; left out for an entry that has no text on this site */
+  minutes?: number;
+}
+const { kind, minutes } = Astro.props;
+---
+
+<span class="itemmeta"><span class="itemmeta__kind">{kindLabel({ kind })}</span>{minutes ? <ReadTime minutes={minutes} /> : null}</span>
+
+<style is:global>
+  .itemmeta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.9rem; }
+  .itemmeta__kind { font-family: var(--font-ui); font-size: 0.9rem; color: var(--muted); border: 1px solid var(--rule); border-radius: 99px; padding: 0.02rem 0.7rem; white-space: nowrap; }
+</style>

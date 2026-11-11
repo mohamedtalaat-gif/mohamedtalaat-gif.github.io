@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
-import ReadTime from '../../components/ReadTime.astro';
+import ItemMeta from '../../components/ItemMeta.astro';
 import { posts, yearsOf } from '../../lib/posts';
 
 const years = yearsOf(posts);
@@ -23,7 +23,7 @@ const years = yearsOf(posts);
                 <div class="row__body">
                   <h3><a href={`/blog/${p.slug}/`}>{p.title}</a></h3>
                   <p>{p.summary}</p>
-                  <p class="meta"><ReadTime minutes={p.minutes} /></p>
+                  <p class="meta"><ItemMeta kind={p.topic ?? 'post'} minutes={p.minutes} /></p>
                 </div>
               </li>
             ))}

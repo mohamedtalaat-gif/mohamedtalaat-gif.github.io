@@ -3,7 +3,6 @@ title: Emergency and clinical pharmacy during national service in Suez
 date: "2021"
 summary: Two years as an emergency and clinical pharmacist at the Egyptian Military Medical Unit of the 3rd Field Army Headquarters in Suez, followed by community pharmacy in Cairo.
 topic: role
-news: false
 ---
 
 From 2021 to 2023 I served as an emergency and clinical pharmacist at the Egyptian Military Medical Unit, 3rd Field Army Headquarters, in Suez. The post was my mandatory national service after graduation. When it ended I worked in a community pharmacy in Cairo as a pharmacist and shift manager.
