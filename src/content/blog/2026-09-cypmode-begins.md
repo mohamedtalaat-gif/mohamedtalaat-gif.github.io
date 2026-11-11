@@ -3,7 +3,6 @@ title: CYPMode begins as a heme-coordination screen
 date: "2026-09"
 summary: A look at how many labelled CYP inhibitors carry any motif that could bind the heme iron, which became the starting point for an entry to the OpenADMET CYP challenge.
 topic: project
-news: true
 ---
 
 In September 2026 I started CYPMode. It began as a narrow question about CYP inhibition labels and grew into my entry for the OpenADMET CYP Inhibition Blind Challenge, which I describe in later posts.

@@ -3,7 +3,6 @@ title: Lung-targeted rifampicin microparticles
 date: "2020"
 summary: Particle engineering for pulmonary delivery of rifampicin, with LIMS-based sample governance and serial-trial regulatory documentation.
 topic: project
-news: true
 ---
 
 In 2020 I worked on a formulation project aimed at delivering rifampicin to the lungs for pulmonary tuberculosis. My part was formulation engineering: designing and characterising the microparticles, organising the samples, and keeping the regulatory documentation for a series of trials. I was not involved in the in vivo trials.

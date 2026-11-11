@@ -3,7 +3,6 @@ title: A sole-author commentary on barley-mediated silver and gold nanoparticles
 date: "2024-10-07"
 summary: Published in Discover Nano, a commentary on green synthesis of silver and gold nanoparticles from barley and on caged gold nanoplatforms for drug delivery.
 topic: paper
-news: true
 ---
 
 On 7 October 2024 Discover Nano published my commentary "Biologically synthesized nanoparticles: barley-mediated silver and gold nanoparticles and caged gold nanoplatform for advanced drug delivery system engineering in medicine" (volume 19, article 167). It is my first sole-author paper, and the DOI is 10.1186/s11671-024-04097-3.

@@ -6,7 +6,8 @@ import IconLinks from '../components/IconLinks.astro';
 import Location from '../components/Location.astro';
 import ReadTime from '../components/ReadTime.astro';
 import { person, profiles } from '../data/site';
-import { news } from '../lib/posts';
+import { news } from '../lib/feed';
+import { kindLabel } from '../lib/news.js';
 
 const latest = news.slice(0, 5);
 ---
@@ -67,9 +68,9 @@ const latest = news.slice(0, 5);
           <li class="row">
             <span class="row__when">{e.date}</span>
             <div class="row__body">
-              <h3><a href={`/blog/${e.slug}/`}>{e.title}</a></h3>
+              <h3><a href={e.href}>{e.title}</a></h3>
               <p>{e.summary}</p>
-              <p class="meta"><ReadTime minutes={e.minutes} /></p>
+              <p class="meta">{e.minutes ? <ReadTime minutes={e.minutes} /> : kindLabel(e)}</p>
             </div>
           </li>
         ))}

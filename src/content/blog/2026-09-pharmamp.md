@@ -3,7 +3,6 @@ title: PharmAMP, developability metrics for designed antimicrobial peptides
 date: "2026-09"
 summary: Aggregation-propensity and solubility metrics compatible with seqme, checked against measured safety data for designed peptides, with the limits stated.
 topic: release
-news: true
 ---
 
 In September 2026 I released PharmAMP, a small open-source package that computes developability metrics for antimicrobial peptides designed by generative models. It is released under the MIT licence and its documentation states what it can and cannot tell you.

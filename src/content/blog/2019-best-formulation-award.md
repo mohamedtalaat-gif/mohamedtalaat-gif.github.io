@@ -3,7 +3,6 @@ title: Best Formulation Award at the 6th Volatile Oil Gallery
 date: "2019"
 summary: A topical formula based on a natural active ingredient, built as a student project, won the Best Formulation Award at the Faculty of Pharmacy, Ain Shams University.
 topic: award
-news: true
 ---
 
 In 2019 a formulation I developed as an undergraduate won the Best Formulation Award at the 6th Volatile Oil Gallery, held at the Faculty of Pharmacy, Ain Shams University. The formula was a topical product for eczema and burns, based on a natural active ingredient.

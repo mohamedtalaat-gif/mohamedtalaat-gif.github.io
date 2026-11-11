@@ -3,7 +3,6 @@ title: What the final OpenADMET boards say about CYPMode
 date: "2026-11-05"
 summary: Fourteenth of 62 on time-dependent inhibition, fifteenth of 38 on structure. What the released labels show about each entry, including where the entry did no better than the baseline.
 topic: result
-news: true
 ---
 
 The final leaderboards of the OpenADMET CYP Inhibition Blind Challenge came out on 5 November. CYPMode placed 14th of 62 on time-dependent inhibition, with a macro MCC of 0.372 ± 0.038, and 15th of 38 on the CYP3A4 structure track, with an LDDT-PLI of 0.413 ± 0.030.

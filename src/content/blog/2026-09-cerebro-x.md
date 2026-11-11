@@ -3,7 +3,6 @@ title: CEREBRO-X, a pipeline for ranking CNS delivery systems
 date: "2026-09"
 summary: An open research prototype that scores delivery systems for central nervous system drugs on a 62-criterion rubric, released with a public audit of its own bugs.
 topic: release
-news: true
 ---
 
 In September 2026 I released CEREBRO-X, an open-source pipeline that ranks delivery systems for drugs that have to act in the central nervous system. It is a research prototype under the MIT licence, and it ships with a public audit of its own bugs and limits.

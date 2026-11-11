@@ -3,7 +3,6 @@ title: CYPMode 0.3.1 archived with a DOI
 date: "2026-11-05"
 summary: The code, method report, audit, and the analysis against the released labels are archived on Zenodo with a DOI and on Software Heritage.
 topic: release
-news: true
 ---
 
 On 5 November 2026 I archived release 0.3.1 of CYPMode on Zenodo under the DOI 10.5281/zenodo.23816450. The same release is kept in the Software Heritage archive. The archived version contains the code, the method report, the negative-results ledger, the audit, and the analysis of the entries against the labels and structures that the organisers released after the deadline.

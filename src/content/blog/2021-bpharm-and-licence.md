@@ -3,7 +3,6 @@ title: Graduating in pharmaceutical sciences and joining the Pharmacists Syndica
 date: "2021"
 summary: A BPharm in pharmaceutical sciences from Ain Shams University, and registration as a certified pharmacist with the Egyptian Pharmacists Syndicate.
 topic: milestone
-news: true
 ---
 
 In 2021 I finished my Bachelor of Pharmacy in Pharmaceutical Sciences at the Faculty of Pharmacy, Ain Shams University in Cairo, and registered as a certified pharmacist with the Egyptian Pharmacists Syndicate. The degree is the foundation for everything else on this site, and the licence is what lets me practise.

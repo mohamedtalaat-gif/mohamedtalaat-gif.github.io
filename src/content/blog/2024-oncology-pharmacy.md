@@ -3,7 +3,6 @@ title: Chemotherapy preparation at El Demerdash Hospital
 date: "2024"
 summary: Aseptic preparation of chemotherapy, cytotoxic inventory, sterility compliance, and counselling alongside oncology and nursing teams.
 topic: role
-news: true
 ---
 
 In 2024 I began working part time as an oncology and chemotherapy preparation pharmacist at El Demerdash Hospital, part of the Faculty of Medicine at Ain Shams University. I continue in the role alongside my formulation work.

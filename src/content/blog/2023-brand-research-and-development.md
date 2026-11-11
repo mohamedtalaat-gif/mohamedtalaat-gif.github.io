@@ -3,7 +3,6 @@ title: Joining BRAND for Pharmaceutical Industries as an R&D researcher
 date: "2023-07"
 summary: A year of formulation trials, stability studies, scale-up transfers, and registration files at a pharmaceutical manufacturer in Giza.
 topic: role
-news: true
 ---
 
 In July 2023 I started as an R&D researcher at BRAND for Pharmaceutical Industries in Giza, and I stayed until July 2024. It was my first full-time position in industrial formulation, and it taught me how a formulation behaves when it leaves the bench.

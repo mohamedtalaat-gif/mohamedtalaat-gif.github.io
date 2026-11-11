@@ -26,6 +26,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm test
       - run: npm run build
       # Link previews: a screenshot of every built page, then a second build that carries them (scripts/og-images.mjs).
       # If this step fails, the build above is deployed and every page uses the home page picture kept in the repository.

@@ -3,7 +3,6 @@ title: A scoping review of nano-antioxidants for neurodegenerative disorders
 date: "2025-10-29"
 summary: First-author scoping review in Discover Nano of 171 preclinical studies on nanocarriers for antioxidants in neurodegenerative disease, with gaps in nanoplatforms and comparative designs.
 topic: paper
-news: true
 ---
 
 On 29 October 2025 Discover Nano published "Nano-antioxidants for neurodegenerative disorders: a scoping review" (volume 20, article 194). I am the first author, and the paper was written with ten co-authors. Its DOI is 10.1186/s11671-025-04320-9.

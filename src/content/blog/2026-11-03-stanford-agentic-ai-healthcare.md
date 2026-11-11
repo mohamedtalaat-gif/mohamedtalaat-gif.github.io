@@ -3,7 +3,6 @@ title: Stanford Medicine Data Ocean course on agentic AI in healthcare
 date: "2026-11-03"
 summary: A forty-hour online certificate from the Department of Genetics at Stanford Medicine on agentic AI in healthcare.
 topic: course
-news: true
 ---
 
 On 3 November 2026 I received the certificate for "Agentic AI in Healthcare", a forty-hour online course from Stanford Medicine Data Ocean, offered by the Department of Genetics. It is the second certificate I have earned from this programme, after the course on data science in precision medicine in March 2025. The verification page for the certificate is linked on the Activities page.

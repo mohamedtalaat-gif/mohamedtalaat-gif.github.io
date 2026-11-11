@@ -3,7 +3,6 @@ title: Stanford Medicine Data Ocean course on data science in precision medicine
 date: "2025-03-17"
 summary: A forty-hour online certificate from the Department of Genetics at Stanford Medicine on the fundamentals of data science in precision medicine and cloud computing.
 topic: course
-news: true
 ---
 
 On 17 March 2025 I received the certificate for "Fundamentals of Data Science in Precision Medicine and Cloud Computing", a forty-hour online course from Stanford Medicine Data Ocean, run by the Department of Genetics. The certificate can be checked online through its verification page, which is linked on the Activities page.

@@ -3,7 +3,6 @@ title: A surfactant dry lab rebuilt from a personal-care seminar
 date: "2026-10"
 summary: Forty charts as data, thirty-four formulas with calculators, twenty-seven structures in 3D, and coarse-grained molecular dynamics of micelle and bilayer assembly, built in marimo.
 topic: release
-news: true
 ---
 
 In October 2026 I released the Stepan Surfactant Cheminformatics notebook, an independent educational dry lab built from a personal-care seminar. It reconstructs the seminar's material as data, calculators, structures, and simulations that a reader can run. The code is under the MIT licence. The seminar decks themselves belong to Stepan and are not redistributed.

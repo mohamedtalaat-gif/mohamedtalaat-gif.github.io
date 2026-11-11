@@ -2,15 +2,17 @@
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import ReadTime from '../components/ReadTime.astro';
-import { news, yearsOf } from '../lib/posts';
+import { yearsOf } from '../lib/posts';
+import { news } from '../lib/feed';
+import { kindLabel } from '../lib/news.js';
 
 const years = yearsOf(news);
 ---
 
-<Base title="News" description="Results, releases, certificates, and milestones, newest first, each with a post that tells the story.">
+<Base title="News" description="Results, releases, papers, certificates, conferences, and milestones, newest first.">
   <div class="page">
     <h1>News</h1>
-    <p class="page__lede">Results, releases, courses, and milestones, newest first. Each item opens the post behind it.</p>
+    <p class="page__lede">Everything with a date on this site, newest first: posts, papers, courses, conferences, and validation reports. Each item opens its page.</p>
 
     {years.map((y) => (
       <Section title={y} icon="calendar">
@@ -21,9 +23,9 @@ const years = yearsOf(news);
               <li class="row">
                 <span class="row__when">{e.date}</span>
                 <div class="row__body">
-                  <h3><a href={`/blog/${e.slug}/`}>{e.title}</a></h3>
+                  <h3><a href={e.href}>{e.title}</a></h3>
                   <p>{e.summary}</p>
-                  <p class="meta"><ReadTime minutes={e.minutes} /></p>
+                  <p class="meta">{e.minutes ? <ReadTime minutes={e.minutes} /> : kindLabel(e)}</p>
                 </div>
               </li>
             ))}

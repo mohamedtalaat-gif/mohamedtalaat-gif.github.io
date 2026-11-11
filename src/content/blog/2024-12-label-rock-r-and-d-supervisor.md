@@ -3,7 +3,6 @@ title: Leading R&D at Label Rock
 date: "2024-12"
 summary: Taking on formulation development for private-label clients across solid, liquid, and parenteral products, leading a team of researchers, and writing the registration documents.
 topic: role
-news: true
 ---
 
 In December 2024 I became R&D Supervisor and Project Lead at Label Rock, a private-label pharmaceutical and cosmetic manufacturer in Cairo. It is a full-time position, and I hold it today. It is the role in which my formulation work is the most varied.
