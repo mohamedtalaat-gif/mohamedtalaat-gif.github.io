@@ -1,7 +1,7 @@
 ---
 title: Attending the 16th Breast Gynecological International Cancer Conference
 date: "2024-01-19"
-summary: A day at BGICC in Cairo, including the Pfizer "Meet the Experts" breast workshop and the "Creation and Innovation" session, and why an oncology pharmacist belongs in that room.
+summary: A day at BGICC in Cairo, including the Pfizer “Meet the Experts” breast workshop and the “Creation and Innovation” session, and why an oncology pharmacist belongs in that room.
 topic: event
 ---
 

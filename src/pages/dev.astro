@@ -17,7 +17,7 @@ const toc = [
   { id: 'blog', label: 'Dev blog' },
   { id: 'contributions', label: 'Contributions' },
   { id: 'competitions', label: 'Competitions' },
-  { id: 'tools', label: 'Tools & extensions' },
+  { id: 'tools', label: 'Tools and extensions' },
 ];
 
 const stack = [
@@ -33,7 +33,7 @@ const stack = [
 const contributions = [
   {
     title: 'A public record of a challenge entry',
-    text: 'The CYPMode data record is deposited with a DOI under CC-BY-4.0, and the method report and the ledger of all 178 failed gates are published beside it, so others can check the claims and reuse the negative results.',
+    text: 'The CYPMode data record is deposited with a DOI under CC BY 4.0, and the method report and the ledger of all 178 failed gates are published beside it, so others can check the claims and reuse the negative results.',
     href: links.cypmodeDoi,
   },
   {
@@ -61,7 +61,7 @@ const tools = [
   {
     name: 'pose-overlay',
     href: 'https://github.com/mohamedtalaat-gif/pose-overlay',
-    text: 'The pose viewer of this site as a web component: overlays a predicted ligand on a reference structure and measures the metal-donor distance in each from the coordinates.',
+    text: 'The pose viewer of this site as a web component: overlays a predicted ligand on a reference structure and measures the metal–donor distance in each from the coordinates.',
     status: 'Released',
     kind: 'Web',
     license: 'MIT',
@@ -148,7 +148,7 @@ const filters = ['All', 'Python', 'Notebook', 'Web', 'Node'];
         </ul>
       </Section>
 
-      <Section id="tools" icon="tools" title="Tools & extensions">
+      <Section id="tools" icon="tools" title="Tools and extensions">
         <div class="chips" role="group" aria-label="Filter tools" id="tool-filters">
           {filters.map((f, i) => (<button type="button" class="chip" aria-pressed={i === 0 ? 'true' : 'false'} data-f={f}>{f}</button>))}
         </div>

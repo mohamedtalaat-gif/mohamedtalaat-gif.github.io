@@ -68,7 +68,7 @@ export const reports: Report[] = [
     date: '2026-11-05',
     title: 'Time-dependent inhibition: nested cross-validation and the final board',
     project: 'CYPMode',
-    summary: 'Nested cross-validation on the scored population gives AUC 0.73 to 0.86; the blind board scored macro MCC 0.372 and 14th of 62.',
+    summary: 'Nested cross-validation on the scored population gives AUC 0.73 to 0.86; the blind board gave a macro MCC of 0.372 and a rank of 14th of 62.',
     endpoints: ['Time-dependent CYP inhibition'],
     datasets: [OA],
     methods: ['Nested cross-validation', 'Held-out external data'],

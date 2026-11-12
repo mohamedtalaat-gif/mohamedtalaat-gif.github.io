@@ -5,7 +5,7 @@ summary: Particle engineering for pulmonary delivery of rifampicin, with LIMS-ba
 topic: project
 ---
 
-In 2020 I worked on a formulation project aimed at delivering rifampicin to the lungs for pulmonary tuberculosis. My part was formulation engineering: designing and characterising the microparticles, organising the samples, and keeping the regulatory documentation for a series of trials. I was not involved in the in vivo trials.
+In 2020 I worked on a formulation project aimed at delivering rifampicin to the lungs for pulmonary tuberculosis. My part was formulation engineering: designing and characterising the microparticles, organising the samples, and keeping the regulatory documentation for a series of trials. I was not involved in the *in vivo* trials.
 
 The case for pulmonary delivery is simple. Tuberculosis in the lung is treated with drugs given by mouth, and the drug has to travel through the gut, the liver, and the blood before a fraction of it reaches the infected tissue. A powder inhaled into the lung puts the drug at the site directly, which in principle allows a higher local concentration for a lower systemic dose. Rifampicin is a good candidate because it is potent against the organism, but its use is limited by systemic exposure, so a route that favours the lung is attractive.
 

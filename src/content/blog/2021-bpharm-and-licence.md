@@ -5,7 +5,7 @@ summary: A BPharm in pharmaceutical sciences from Ain Shams University, and regi
 topic: milestone
 ---
 
-In 2021 I finished my Bachelor of Pharmacy in Pharmaceutical Sciences at the Faculty of Pharmacy, Ain Shams University in Cairo, and registered as a certified pharmacist with the Egyptian Pharmacists Syndicate. The degree is the foundation for everything else on this site, and the licence is what lets me practise.
+In 2021 I finished my Bachelor of Pharmacy in Pharmaceutical Sciences at the Faculty of Pharmacy, Ain Shams University in Cairo and registered as a certified pharmacist with the Egyptian Pharmacists Syndicate. The degree is the foundation for everything else on this site, and the licence is what lets me practise.
 
 The degree covers the sciences around a medicine: chemistry, pharmacology, pharmaceutics, pharmacognosy, analysis, and clinical practice. For a student interested in how drugs behave, its value lies in how these subjects interlock. A drug's structure decides its properties. Its properties decide how it can be formulated. The formulation decides how much reaches the site of action, and pharmacology and clinical practice decide what that amount does. A pharmacist is trained to hold all of those links in mind at once, and that habit is what I later wanted to express quantitatively.
 

@@ -2,7 +2,7 @@
 
 export const person = {
   name: 'Muhammad Talaat',
-  lab: "IC50's Lab",
+  lab: "IC50’s Lab",
   // The specialty shown under the name on the home page, the profile and in search snippets.
   tagline: 'Computational Pharmaceutics, Cheminformatics, ML',
   // Shown beside the pin icon. Change this one line when you move or travel.
@@ -39,7 +39,7 @@ export const nav = [
   {
     label: 'Lab',
     children: [
-      { href: '/visualization/', label: 'Visualization experiments' },
+      { href: '/visualization/', label: 'Visualisation experiments' },
       { href: '/validation/', label: 'Model validation' },
       { href: '/wet-lab/', label: 'Wet lab' },
     ],
@@ -123,7 +123,7 @@ export const record = activities.filter((a) => ['paper', 'award'].includes(a.kin
 
 // Conferences and seminars attended.
 export const conferences = [
-  { date: '19 Jan 2024', place: 'Cairo, Egypt', title: 'BGICC: Breast Gynecological International Cancer Conference, 16th edition', text: 'Pfizer "Meet the Experts" breast workshop; "Creation and Innovation" session.' },
+  { date: '2024-01-19', place: 'Cairo, Egypt', title: 'BGICC: Breast Gynecological International Cancer Conference, 16th edition', text: 'Pfizer “Meet the Experts” breast workshop; “Creation and Innovation” session.' },
   { date: '2024', place: 'Badr, Egypt', title: 'BUCPS: Badr University Conference of Pharmaceutical Sciences', text: 'Session: Machine Learning Methods in Drug Delivery: Novel Pharmaceutics Informatics Approach.' },
 ];
 
@@ -134,7 +134,7 @@ export const courses = [
   { year: 2020, title: 'Programming for Everybody (Getting Started with Python)', by: 'University of Michigan, Coursera', href: 'https://coursera.org/verify/FV9WGQLN858S' },
   { year: 2020, title: 'Introduction to Genomic Technologies', by: 'Johns Hopkins University, Coursera', href: 'https://coursera.org/verify/UYJPU6NCUGNY' },
   { year: 2020, title: 'Genomic Data Science with Galaxy', by: 'Johns Hopkins University, Coursera', href: 'https://coursera.org/verify/W6JV5VHFA4ED' },
-  { year: 2020, title: 'Mindshift: Break Through Obstacles to Learning', by: 'McMaster University, Coursera (with honors)', href: 'https://coursera.org/verify/YJETCZXFAXJ5' },
+  { year: 2020, title: 'Mindshift: Break Through Obstacles to Learning', by: 'McMaster University, Coursera (with honours)', href: 'https://coursera.org/verify/YJETCZXFAXJ5' },
   { year: 2020, title: 'Introduction to Pharmacovigilance', by: 'Uppsala Monitoring Centre' },
   { year: 2017, title: 'Medicinal Chemistry Research Internship Program (MCRI)', by: 'Department of Pharmaceutical Chemistry, Faculty of Pharmacy, Ain Shams University. 26 January to 5 February and 1 July to 16 September 2017.' },
 ];
@@ -151,7 +151,7 @@ export const repos = [
     name: 'CEREBRO-X',
     href: 'https://github.com/mohamedtalaat-gif/CEREBRO-X',
     license: 'MIT',
-    text: 'A pipeline that scores candidate delivery systems for CNS drugs on a 62-criterion rubric with PBPK, DLVO colloidal stability, and ChEMBL-trained QSAR. Released as a research prototype with a public audit of its own bugs.',
+    text: 'A pipeline that scores candidate delivery systems for central nervous system (CNS) drugs on a 62-criterion rubric that uses physiologically based pharmacokinetic (PBPK) models, DLVO colloidal stability, and ChEMBL-trained QSAR (quantitative structure–activity relationship) models. Released as a research prototype with a public audit of its own bugs.',
     tags: ['drug delivery', 'PBPK', 'QSAR'],
   },
   {
@@ -179,7 +179,7 @@ export const education = [
 export const employment = [
   { when: 'Dec 2024 to now', title: 'R&D Supervisor and Project Lead', where: 'Label Rock, private-label pharmaceutical and cosmetic manufacturing, Cairo', text: 'Formulation development for private-label clients across solid, liquid, semi-solid, and parenteral dosage forms; leads the R&D team; prepares master batch records, CTD sections, and Ministry of Health registration files.' },
   { when: '2024 to now', title: 'Oncology and chemotherapy preparation pharmacist', where: 'El Demerdash Hospital, Ain Shams University', text: 'Aseptic chemotherapy preparation, cytotoxic inventory, sterility compliance, and counselling with oncology and nursing teams.' },
-  { when: 'Jul 2023 to Jul 2024', title: 'R&D researcher', where: 'BRAND for Pharmaceutical Industries, Giza', text: 'GLP formulation trials, stability studies, scale-up transfers, and MOH registration files.' },
+  { when: 'Jul 2023 to Jul 2024', title: 'R&D researcher', where: 'BRAND for Pharmaceutical Industries, Giza', text: 'Formulation trials under good laboratory practice, stability studies, scale-up transfers, and Ministry of Health registration files.' },
   { when: '2021 to 2023', title: 'Emergency and clinical pharmacist, mandatory service', where: 'Egyptian Military Medical Unit, 3rd Field Army Headquarters, Suez', text: '' },
   { when: '2017 to 2021', title: 'Undergraduate research assistant and formulation projects', where: 'Faculty of Pharmacy, Ain Shams University', text: 'Best Formulation Award (2019) and lung-targeted rifampicin microparticles (2020).' },
 ];
