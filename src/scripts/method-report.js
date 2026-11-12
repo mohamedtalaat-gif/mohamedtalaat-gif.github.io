@@ -10,6 +10,7 @@ function start(root) {
   const sections = [...root.querySelectorAll('details.mr-sec')];
   toolbar(sections);
   syncEmbeds();
+  renderDiagrams();
   root.querySelectorAll('table').forEach(enhanceTable);
   addLinks(root);
   openFromHash();
@@ -203,4 +204,42 @@ function syncEmbeds() {
     apply(frame);
   });
   new MutationObserver(() => frames.forEach(apply)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+}
+
+/** The Mermaid diagrams of the report are drawn on the page, with the theme of the site, and drawn again when the theme changes. The library is loaded only on a page that has a diagram,
+ * and a diagram that cannot be drawn is left as its source, in the section that holds it. */
+async function renderDiagrams() {
+  const blocks = [...document.querySelectorAll('details.mr-mermaid')];
+  if (!blocks.length) return;
+  let mermaid;
+  try {
+    ({ default: mermaid } = await import('mermaid'));
+  } catch {
+    blocks.forEach((block) => (block.open = true));
+    return;
+  }
+  const sources = blocks.map((block) => (block.querySelector('pre')?.textContent ?? '').trim());
+  let drawing = Promise.resolve();
+  const draw = () => {
+    drawing = drawing.then(async () => {
+      const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+      mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: dark ? 'dark' : 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true } });
+      for (const [i, block] of blocks.entries()) {
+        let holder = block.previousElementSibling?.classList.contains('mr-diagram') ? block.previousElementSibling : null;
+        try {
+          const { svg } = await mermaid.render(`mr-diagram-${i}-${Math.random().toString(36).slice(2, 8)}`, sources[i]);
+          if (!holder) {
+            holder = el('div', { className: 'mr-diagram' });
+            block.before(holder);
+          }
+          holder.innerHTML = svg;
+        } catch {
+          holder?.remove();
+          block.open = true;
+        }
+      }
+    });
+  };
+  draw();
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 }
