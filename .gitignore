@@ -6,3 +6,5 @@ dist/
 # link previews are drawn at deploy; only the home page picture is kept, as the fallback
 public/og/*
 !public/og/index.jpg
+# the interactive method report is written at build from METHOD_REPORT.md of the CYPMode repository (scripts/sync-method-report.mjs)
+src/content/blog/cypmode-interactive-method-report.md
