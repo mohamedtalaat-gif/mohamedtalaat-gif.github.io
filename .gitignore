@@ -10,3 +10,6 @@ public/og/*
 src/content/blog/cypmode-interactive-method-report.md
 # the figures of the interactive method report are fetched at build (scripts/sync-method-report.mjs)
 public/method-report/
+# the interactive notebook is written at build around the web edition in the CYPMode repository (scripts/sync-notebook.mjs); a local copy of that edition is served at /CYPMode/notebook/ of the dev server
+src/content/blog/cypmode-interactive-notebook.md
+public/CYPMode/

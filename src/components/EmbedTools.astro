@@ -1,0 +1,13 @@
+---
+// The frame of a post that wraps a page of the project (the interactive notebook): the script opens it in the theme of the site, and the styles let it use the width of the screen.
+---
+
+<script>
+  import '../scripts/embed.js';
+</script>
+
+<style is:global>
+  .nb-source { color: var(--muted); font-family: var(--font-ui); font-size: 1.02rem; max-width: none; }
+  .nb-embed { position: relative; left: 50%; width: min(1400px, calc(100vw - 2rem)); margin: 1.4rem 0 1.2rem; transform: translateX(-50%); }
+  .nb-frame { display: block; width: 100%; height: calc(100vh - 7rem); min-height: 520px; background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; }
+</style>

@@ -1,7 +1,7 @@
 import { readingMinutes } from './reading';
 
 // Every blog post, with its reading time computed from the text. Adding a markdown file to src/content/blog is enough:
-// the blog, the News page (src/lib/feed.ts) and the home page pick it up and show the minutes automatically.
+// the blog, the News page (src/lib/feed.ts) and the home page pick it up and show the minutes automatically. A post that frames another page (the interactive notebook) states its minutes in its front matter.
 const meta = import.meta.glob('../content/blog/*.md', { eager: true }) as Record<string, any>;
 const raw = import.meta.glob('../content/blog/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>;
 
@@ -29,7 +29,7 @@ export const posts: Post[] = Object.entries(meta)
     summary: m.frontmatter.summary ?? '',
     news: m.frontmatter.news !== false,
     topic: m.frontmatter.topic,
-    minutes: readingMinutes(raw[file]),
+    minutes: typeof m.frontmatter.minutes === 'number' ? m.frontmatter.minutes : readingMinutes(raw[file]),
     text: raw[file],
   }))
   .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : a.title.localeCompare(b.title)));

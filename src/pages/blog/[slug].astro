@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PostMain from '../../components/PostMain.astro';
 import Toc from '../../components/Toc.astro';
 import ReportTools from '../../components/ReportTools.astro';
+import EmbedTools from '../../components/EmbedTools.astro';
 import { posts } from '../../lib/posts';
 
 export function getStaticPaths() {
@@ -45,6 +46,7 @@ const toc: { id: string; label: string }[] = frontmatter.sections ?? [];
       <PostMain title={frontmatter.title} date={info.date} kind={info.topic ?? 'post'} minutes={info.minutes} newer={newer} older={older}>
         <Content />
       </PostMain>
+      {frontmatter.embed && <EmbedTools />}
     </article>
   )}
 </Base>
