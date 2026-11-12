@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 export const REPOSITORY = 'mohamedtalaat-gif/CYPMode';
 export const SOURCE_URL = `https://raw.githubusercontent.com/${REPOSITORY}/main/METHOD_REPORT.md`;
 export const BLOB_URL = `https://github.com/${REPOSITORY}/blob/main/`;
+export const RAW_URL = `https://raw.githubusercontent.com/${REPOSITORY}/main/`;
 export const PUBLISHED = '2026-11-12';
 export const WORDS_PER_MINUTE = 200;
 
@@ -109,6 +110,74 @@ export function typographicMinus(markdown) {
     .join('\n');
 }
 
+/** The catalogue of the figures of the repository (docs/figures/CATALOG.md): each "### id: title" entry, with its directory and its first paragraph. */
+export function parseCatalog(markdown) {
+  const figures = new Map();
+  let dir = '';
+  let current = null;
+  for (const line of markdown.split('\n')) {
+    let m;
+    if ((m = line.match(/^## (\S+)\s*$/))) {
+      dir = m[1];
+      current = null;
+    } else if ((m = line.match(/^### ([A-Za-z0-9_]+): (.+?)\s*$/))) {
+      current = { id: m[1], title: m[2], dir, description: '' };
+      figures.set(current.id, current);
+    } else if (current && !current.description && line.trim() && !line.startsWith('- ') && !line.startsWith('#')) {
+      current.description = line.trim();
+    }
+  }
+  return figures;
+}
+
+/** The figures that a piece of text names: a file name such as `docs/figures/architecture/arch_a-light.png` (with or without the folder), or the words figure `id`. */
+export function findFigureIds(text, catalog) {
+  const ids = [];
+  const add = (id) => {
+    if (catalog.has(id) && !ids.includes(id)) ids.push(id);
+  };
+  for (const m of text.matchAll(/`(?:[\w./-]*\/)?([A-Za-z0-9_]+)-(?:light|dark)\.(?:png|svg)`/g)) add(m[1]);
+  for (const m of text.matchAll(/\bfigures? `([A-Za-z0-9_]+)`/g)) add(m[1]);
+  return ids;
+}
+
+const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** The first sentence of a description, so that a caption stays short. */
+export function shortCaption(text) {
+  const m = text.match(/^(.{40,320}?[.!?])(\s|$)/);
+  return m ? m[1] : text.slice(0, 320);
+}
+
+/** A figure with both of its variants; the stylesheet shows the one that matches the theme of the site. */
+export function figureHtml(id, figure) {
+  const alt = escapeHtml(figure.title);
+  const picture = (theme) => `<a class="mr-fig__${theme}" href="/method-report/${id}-${theme}.svg" target="_blank" rel="noopener"><img src="/method-report/${id}-${theme}.svg" alt="${alt}" loading="lazy"></a>`;
+  const caption = `<strong>${alt}.</strong> ${escapeHtml(shortCaption(figure.description))}`;
+  return `<figure class="mr-fig">\n${picture('light')}\n${picture('dark')}\n<figcaption>${caption} <span class="mr-fig__file">docs/figures/${figure.dir}/${id}</span></figcaption>\n</figure>`;
+}
+
+/** Put each figure that the report names after the first paragraph that names it. Paragraphs inside a code fence are left alone. */
+export function insertFigures(markdown, figures) {
+  if (!figures.size) return markdown;
+  const used = new Set();
+  const out = [];
+  let fence = false;
+  for (const paragraph of markdown.split(/\n{2,}/)) {
+    out.push(paragraph);
+    const markers = (paragraph.match(/^\s*(```|~~~)/gm) ?? []).length;
+    const inside = fence;
+    if (markers % 2) fence = !fence;
+    if (inside || markers) continue;
+    for (const id of findFigureIds(paragraph, figures)) {
+      if (used.has(id)) continue;
+      used.add(id);
+      out.push(figureHtml(id, figures.get(id)));
+    }
+  }
+  return out.join('\n\n');
+}
+
 const countTables = (markdown) => (markdown.match(/^\|[ :\-|]+\|\s*$/gm) ?? []).length;
 const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 /** House style for counts in prose: words for one to nine, numerals with a thousands separator from ten. */
@@ -125,8 +194,8 @@ export const longDate = (iso) => {
  * heading, so that a reader can open one section at a time; the script of the page (src/scripts/method-report.js) adds the search, the
  * buttons, and the tools of the tables. Without the script every section still opens and closes.
  */
-export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT.md' } = {}) {
-  const report = parse(typographicMinus(absoluteLinks(markdown)));
+export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT.md', figures = new Map() } = {}) {
+  const report = parse(typographicMinus(absoluteLinks(insertFigures(markdown, figures))));
   const used = new Set();
   const sections = report.sections.map((s) => {
     const { number, title } = numbered(s.title);
@@ -150,9 +219,9 @@ export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT
   ];
   const from = revision ? ` at revision <a href="${BLOB_URL.replace('/blob/main/', '')}/commit/${revision.sha}"><code>${revision.sha.slice(0, 7)}</code></a>, committed on ${longDate(revision.date)}` : '';
   const body = [
-    `This is the interactive edition of the method report of CYPMode. The text is the report itself: this site reads [${sourceLabel}](${BLOB_URL}${sourceLabel}) from the repository whenever it is built, so a change to the report in the repository appears on this page without any further step. The sections open and close, the tables can be filtered and sorted, and the search box finds a word anywhere in the report.`,
+    `This is the interactive edition of the method report of CYPMode. The text is the report itself: this site reads [${sourceLabel}](${BLOB_URL}${sourceLabel}) from the repository whenever it is built, so a change to the report in the repository appears on this page without any further step. The sections open and close, the tables can be filtered and sorted, and the figures follow the light or dark theme of the site.`,
     '',
-    `<p class="mr-source">Source: <a href="${BLOB_URL}${sourceLabel}">${sourceLabel}</a>${from}. ${plural(totalWords, 'word')}, ${plural(sections.length, 'section')}, and ${plural(countTables(markdown), 'table')}. The report is released under CC BY-NC-SA 4.0.</p>`,
+    `<p class="mr-source">Source: <a href="${BLOB_URL}${sourceLabel}">${sourceLabel}</a>${from}. ${plural(totalWords, 'word')}, ${plural(sections.length, 'section')}, ${figures.size ? `${plural(countTables(markdown), 'table')}, and ${plural(figures.size, 'figure')}` : `and ${plural(countTables(markdown), 'table')}`}. The report is released under CC BY-NC-SA 4.0.</p>`,
     '',
     '<div id="mr-toolbar" class="mr-toolbar"></div>',
     '',
@@ -171,13 +240,19 @@ export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT
     '</div>',
     '',
   ];
-  return { text: `${front.join('\n')}\n\n${body.join('\n')}`, sections, words: totalWords };
+  return { text: `${front.join('\n')}\n\n${body.join('\n')}`, sections, words: totalWords, figures: figures.size };
 }
 
-async function fetchText(url) {
-  const response = await fetch(url, { signal: AbortSignal.timeout(20000), headers: { 'user-agent': 'mohamedtalaat-gif.github.io method-report sync' } });
-  if (!response.ok) throw new Error(`${url} answered ${response.status}`);
-  return response.text();
+async function fetchText(url, attempts = 2) {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(20000), headers: { 'user-agent': 'mohamedtalaat-gif.github.io method-report sync' } });
+      if (!response.ok) throw new Error(`${url} answered ${response.status}`);
+      return await response.text();
+    } catch (error) {
+      if (attempt >= attempts) throw error; // one more try for a timeout or a dropped connection
+    }
+  }
 }
 
 /** The latest commit that touched the report, for the line under the title. Failure only drops that line. */
@@ -192,6 +267,40 @@ async function latestRevision() {
   } catch {
     return null;
   }
+}
+
+/** The figures that the report names, from the repository: both variants of each are saved in public/method-report. A figure that cannot be fetched is left out. */
+async function loadFigures(markdown) {
+  const available = new Map();
+  try {
+    const catalog = parseCatalog(await fetchText(`${RAW_URL}docs/figures/CATALOG.md`));
+    const folder = path.join(ROOT, 'public/method-report');
+    await mkdir(folder, { recursive: true });
+    for (const id of findFigureIds(markdown, catalog)) {
+      const figure = catalog.get(id);
+      try {
+        for (const theme of ['light', 'dark']) {
+          const file = path.join(folder, `${id}-${theme}.svg`);
+          let svg = null;
+          try {
+            svg = await fetchText(`${RAW_URL}docs/figures/${figure.dir}/${id}-${theme}.svg`);
+          } catch (error) {
+            if (!existsSync(file)) throw error; // the copy of an earlier build is used when the repository cannot be read
+          }
+          if (svg !== null) {
+            if (!svg.includes('<svg') || /<script|\son\w+\s*=|javascript:/i.test(svg)) throw new Error('not a plain SVG');
+            await writeFile(file, svg);
+          }
+        }
+        available.set(id, figure);
+      } catch (error) {
+        console.warn(`method report: the figure ${id} is left out (${error.message})`);
+      }
+    }
+  } catch (error) {
+    console.warn(`method report: the figures are left out (${error.message})`);
+  }
+  return available;
 }
 
 async function main() {
@@ -224,9 +333,9 @@ async function main() {
     console.warn('method report: no copy is available, the post is not written');
     return;
   }
-  const { text, sections, words: total } = render(markdown, { revision });
+  const { text, sections, words: total, figures } = render(markdown, { revision, figures: await loadFigures(markdown) });
   await writeFile(OUTPUT, text);
-  console.log(`method report: wrote the post (${total} words, ${sections.length} sections)`);
+  console.log(`method report: wrote the post (${total} words, ${sections.length} sections, ${figures} figures)`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

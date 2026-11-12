@@ -8,7 +8,7 @@ if (root) start(root);
 
 function start(root) {
   const sections = [...root.querySelectorAll('details.mr-sec')];
-  const count = toolbar(root, sections);
+  toolbar(sections);
   root.querySelectorAll('table').forEach(enhanceTable);
   addLinks(root);
   openFromHash();
@@ -20,13 +20,6 @@ function start(root) {
     sections.forEach((s) => (s.open = true));
   });
   window.addEventListener('afterprint', () => sections.forEach((s, i) => (s.open = wasOpen[i] ?? s.open)));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '')) {
-      e.preventDefault();
-      document.querySelector('#mr-toolbar input')?.focus();
-    }
-  });
-  return count;
 }
 
 function el(tag, props = {}, ...children) {
@@ -35,91 +28,15 @@ function el(tag, props = {}, ...children) {
   return node;
 }
 
-/** The search box, the count of matches, and the two buttons that open or close every section. */
-function toolbar(root, sections) {
+/** The two buttons that open or close every section. */
+function toolbar(sections) {
   const slot = document.getElementById('mr-toolbar');
-  if (!slot) return null;
-  const input = el('input', { type: 'search', placeholder: 'Search the report ( / )', ariaLabel: 'Search the report', autocomplete: 'off', spellcheck: false });
-  const status = el('span', { className: 'mr-count', role: 'status' });
-  status.setAttribute('aria-live', 'polite');
+  if (!slot) return;
   const open = el('button', { type: 'button', className: 'mr-btn', textContent: 'Expand all' });
   const close = el('button', { type: 'button', className: 'mr-btn', textContent: 'Collapse all' });
-  open.addEventListener('click', () => sections.filter((s) => !s.hidden).forEach((s) => (s.open = true)));
+  open.addEventListener('click', () => sections.forEach((s) => (s.open = true)));
   close.addEventListener('click', () => sections.forEach((s) => (s.open = false)));
-  let timer = 0;
-  input.addEventListener('input', () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => search(root, sections, input.value, status), 160);
-  });
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      input.value = '';
-      search(root, sections, '', status);
-    }
-  });
-  slot.append(el('label', { className: 'mr-search' }, input), status, open, close);
-  return status;
-}
-
-function clearMarks(root) {
-  root.querySelectorAll('mark.mr-hit').forEach((m) => {
-    const parent = m.parentNode;
-    m.replaceWith(document.createTextNode(m.textContent));
-    parent.normalize();
-  });
-}
-
-const LIMIT = 600; // marks per search, so that a one-letter query cannot freeze the page
-
-/** Wrap each occurrence of the query inside a section in <mark>; returns how many were wrapped. */
-function mark(section, query) {
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(escaped, 'gi');
-  const present = new RegExp(escaped, 'i'); // a pattern without the g flag, because a global pattern remembers where its last test ended
-  const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT, {
-    acceptNode: (n) => (n.parentElement.closest('mark, script, style, button') || !present.test(n.nodeValue) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
-  });
-  const nodes = [];
-  for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n);
-  let made = 0;
-  for (const node of nodes) {
-    if (made >= LIMIT) break;
-    const fragment = document.createDocumentFragment();
-    let last = 0;
-    const text = node.nodeValue;
-    pattern.lastIndex = 0;
-    for (let m = pattern.exec(text); m && made < LIMIT; m = pattern.exec(text)) {
-      fragment.append(text.slice(last, m.index), el('mark', { className: 'mr-hit', textContent: m[0] }));
-      last = m.index + m[0].length;
-      made += 1;
-    }
-    fragment.append(text.slice(last));
-    node.replaceWith(fragment);
-  }
-  return made;
-}
-
-function search(root, sections, raw, status) {
-  clearMarks(root);
-  const query = raw.trim();
-  if (query.length < 2) {
-    sections.forEach((s) => (s.hidden = false));
-    status.textContent = '';
-    return;
-  }
-  const needle = query.toLowerCase();
-  let hits = 0;
-  let total = 0;
-  for (const s of sections) {
-    const found = s.textContent.toLowerCase().includes(needle);
-    s.hidden = !found;
-    if (found) {
-      s.open = true;
-      hits += 1;
-      total += mark(s, query);
-    }
-  }
-  status.textContent = hits ? `${total}${total >= LIMIT ? '+' : ''} matches in ${hits} of ${sections.length} sections` : 'No section contains this text';
+  slot.append(open, close);
 }
 
 /** A table that scrolls sideways, sorts by a column, filters its rows, and draws one numeric column as bars. */

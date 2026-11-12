@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { absoluteLinks, longDate, looksLikeTheReport, numbered, parse, plural, render, shortLabel, slugify, typographicMinus, words } from '../scripts/sync-method-report.mjs';
+import { absoluteLinks, figureHtml, findFigureIds, insertFigures, longDate, looksLikeTheReport, numbered, parse, parseCatalog, plural, render, shortCaption, shortLabel, slugify, typographicMinus, words } from '../scripts/sync-method-report.mjs';
 import { toNumber } from '../src/scripts/table-numbers.js';
 
 const REPORT = `# Method report: a title
@@ -119,4 +119,41 @@ test('a negative number gets the minus sign, but a range, a date, a code span, a
   const out = typographicMinus('| a | -0.0069 | 2026-11-05 |\nThe mean rho -0.214, +0.042, (-0.071) and 5-fold in 2-3 years, and \`-0.5\`.\n\`\`\`\nx = -1\n\`\`\`');
   assert.ok(out.includes('| \u22120.0069 |') && out.includes('rho \u22120.214') && out.includes('(\u22120.071)'));
   assert.ok(out.includes('2026-11-05') && out.includes('5-fold') && out.includes('2-3 years') && out.includes('`-0.5`') && out.includes('x = -1'));
+});
+
+const CATALOG = parseCatalog('# Figure catalog\n\n## architecture\n\n### arch_a: The first pipeline\n\nThe first pipeline runs from the file to the calls. It has two steps.\n\n- files: arch_a-light.svg, arch_a-dark.svg\n\n## data\n\n### data_b: A rate <recovered> from "boards"\n\nA description that is long enough to be a caption of its own, and it ends here.\n\n- files: data_b-light.svg\n');
+
+test('the catalogue gives the folder, the title, and the first paragraph of each figure', () => {
+  assert.deepEqual([...CATALOG.keys()], ['arch_a', 'data_b']);
+  assert.equal(CATALOG.get('arch_a').dir, 'architecture');
+  assert.equal(CATALOG.get('data_b').dir, 'data');
+  assert.equal(CATALOG.get('arch_a').description, 'The first pipeline runs from the file to the calls. It has two steps.');
+});
+
+test('a figure is found by its file name, with or without the folder, and by the words figure and its id', () => {
+  assert.deepEqual(findFigureIds('Figures: `docs/figures/architecture/arch_a-light.png` and `data_b-light.png` (dark versions beside them).', CATALOG), ['arch_a', 'data_b']);
+  assert.deepEqual(findFigureIds('see the figure `data_b` and `unknown-light.png` and the figure `nothing`', CATALOG), ['data_b']);
+  assert.deepEqual(findFigureIds('no figure here', CATALOG), []);
+});
+
+test('a caption is the first sentence of the description, and the figure carries both variants and escapes its title', () => {
+  assert.equal(shortCaption('The first pipeline runs from the file to the calls. It has two steps.'), 'The first pipeline runs from the file to the calls.');
+  const html = figureHtml('data_b', CATALOG.get('data_b'));
+  assert.ok(html.includes('class="mr-fig__light"') && html.includes('class="mr-fig__dark"') && html.includes('/method-report/data_b-light.svg') && html.includes('/method-report/data_b-dark.svg'));
+  assert.ok(html.includes('A rate &lt;recovered&gt; from &quot;boards&quot;') && html.includes('docs/figures/data/data_b'));
+});
+
+test('each figure follows the first paragraph that names it, and a code fence is left alone', () => {
+  const text = 'One paragraph names `arch_a-light.png`.\n\nAnother names it again: `arch_a-light.png`.\n\n```\nfigure `data_b`\n\nstill the fence `data_b-light.png`\n```\n\nAfter the fence, figure `data_b` is named.';
+  const out = insertFigures(text, CATALOG);
+  assert.equal((out.match(/<figure class="mr-fig">/g) ?? []).length, 2);
+  assert.ok(out.indexOf('<figure') > out.indexOf('One paragraph') && out.indexOf('<figure') < out.indexOf('Another names it again'));
+  assert.ok(out.lastIndexOf('<figure') > out.indexOf('After the fence'));
+  assert.equal(insertFigures(text, new Map()), text);
+});
+
+test('the post counts its figures and carries them inside the section that names them', () => {
+  const { text, figures } = render('# Method report\n\n## 1. One\n\nThe figure `arch_a-light.png` shows it.\n\n## 2. Two\n\nText.\n', { figures: new Map([['arch_a', CATALOG.get('arch_a')]]) });
+  assert.equal(figures, 1);
+  assert.match(text, /two sections, zero tables, and one figure\./);
 });

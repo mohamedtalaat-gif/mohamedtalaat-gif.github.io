@@ -8,3 +8,5 @@ public/og/*
 !public/og/index.jpg
 # the interactive method report is written at build from METHOD_REPORT.md of the CYPMode repository (scripts/sync-method-report.mjs)
 src/content/blog/cypmode-interactive-method-report.md
+# the figures of the interactive method report are fetched at build (scripts/sync-method-report.mjs)
+public/method-report/
