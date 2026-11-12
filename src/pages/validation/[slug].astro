@@ -1,6 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ReportChart from '../../components/ReportChart.astro';
+import ReportExplore from '../../components/ReportExplore.astro';
+import { chartTable } from '../../lib/charts.js';
+import { exploreFromChart } from '../../lib/explore.js';
+import { explores } from '../../data/validation/explore';
 import { reports, sortedReports } from '../../data/reports';
 
 export function getStaticPaths() {
@@ -10,6 +14,10 @@ const { report: r } = Astro.props;
 const i = sortedReports.findIndex((x) => x.slug === r.slug);
 const next = sortedReports[i + 1];
 const prev = sortedReports[i - 1];
+const explore = explores[r.slug];
+const interactive = Boolean(explore?.controls?.length);
+const tableOnly = Boolean(explore) && !interactive;
+const replacesFigure = interactive && explore.position !== 'after'; // some reports keep their own figure and show the explorer after the text
 ---
 
 <Base title={r.title} description={r.summary}>
@@ -22,14 +30,24 @@ const prev = sortedReports[i - 1];
       {r.headline.map((h) => (<li><strong>{h.value}</strong><span>{h.label}</span></li>))}
     </ul>
 
-    <figure class="report-fig">
-      <ReportChart chart={r.chart} alt={r.caption} />
-      <figcaption class="meta">{r.caption}</figcaption>
-    </figure>
+    {replacesFigure ? (
+      <figure class="report-fig report-fig--rx">
+        <ReportExplore explore={explore} alt={r.caption} title={explore.title} source={explore.source} caption={r.caption} />
+      </figure>
+    ) : (
+      <figure class="report-fig">
+        <ReportChart chart={r.chart} alt={r.caption} />
+        <figcaption class="meta">{r.caption}</figcaption>
+      </figure>
+    )}
 
     <div class="prose">
       {r.body.map((p) => (<p>{p}</p>))}
     </div>
+
+    {interactive && !replacesFigure && <ReportExplore explore={explore} alt={r.caption} title={explore.title} source={explore.source} />}
+    {tableOnly && <ReportExplore explore={explore} alt={r.caption} title="Data" source={explore.source} />}
+    {!explore && <ReportExplore explore={exploreFromChart(r.chart, chartTable)} alt={r.caption} title="Data" />}
 
     <dl class="report-meta">
       <div><dt>Endpoint</dt><dd>{r.endpoints.join('; ')}</dd></div>
@@ -59,6 +77,8 @@ const prev = sortedReports[i - 1];
   .report-title { font-size: clamp(2rem, 4.2vw, 3rem); max-width: 24ch; }
   .report-fig { margin: 2.4rem 0 2.2rem; }
   .report-fig figcaption { margin-top: 0.6rem; max-width: 56ch; }
+  .report-fig--rx { margin-top: 1.6rem; }
+  .report-fig--rx .rx { margin-top: 0; }
   .report-meta { margin: 2.6rem 0 0; display: grid; gap: 0; border-top: 1px solid var(--rule); max-width: 46rem; }
   .report-meta > div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--rule); }
   .report-meta dt { font-family: var(--font-ui); color: var(--muted); }

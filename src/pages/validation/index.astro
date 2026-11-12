@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import { sortedReports, reports, uniq } from '../../data/reports';
+import { datasets } from '../../data/datasets';
+import { models, questions } from '../../data/validation/coverage';
 
 const counts = [
   { n: reports.length, label: 'reports', hint: 'Reports in this collection.' },
@@ -17,6 +19,16 @@ const lists = [
   { label: 'methods', items: distinct((r) => r.methods) },
   { label: 'endpoints', items: distinct((r) => r.endpoints) },
   { label: 'datasets', items: distinct((r) => r.datasets) },
+];
+
+const bySlug = new Map(reports.map((r) => [r.slug, r]));
+const short = (slug: string) => bySlug.get(slug)?.title ?? slug;
+const usedBy = (name: string) => reports.filter((r) => r.datasets.includes(name));
+const filters = [
+  { id: 'project', label: 'Study', items: distinct((r) => r.project) },
+  { id: 'endpoint', label: 'Endpoint', items: distinct((r) => r.endpoints) },
+  { id: 'method', label: 'Method', items: distinct((r) => r.methods) },
+  { id: 'dataset', label: 'Dataset', items: distinct((r) => r.datasets) },
 ];
 
 const rules = [
@@ -49,9 +61,22 @@ const rules = [
     </details>
 
     <Section title="Reports" icon="report">
+      <div class="vfilter" data-vfilter>
+        <label class="vfilter__search"><span>Search</span><input type="search" placeholder="A word of a title or a summary" data-vsearch /></label>
+        {filters.map((f) => (
+          <label class="vfilter__select">
+            <span>{f.label}</span>
+            <select data-vfilter-key={f.id}>
+              <option value="">All</option>
+              {f.items.map((item) => (<option value={item}>{item}</option>))}
+            </select>
+          </label>
+        ))}
+      </div>
+      <p class="meta vfilter__count" aria-live="polite" data-vcount>{reports.length} of {reports.length} reports</p>
       <ul class="rows reports">
         {sortedReports.map((r) => (
-          <li class="row">
+          <li class="row" data-report data-project={r.project} data-endpoint={JSON.stringify(r.endpoints)} data-method={JSON.stringify(r.methods)} data-dataset={JSON.stringify(r.datasets)} data-text={`${r.title} ${r.summary}`.toLowerCase()}>
             <span class="row__when">{r.date}</span>
             <div class="row__body">
               <h3><a href={`/validation/${r.slug}/`}>{r.title}</a></h3>
@@ -61,6 +86,53 @@ const rules = [
           </li>
         ))}
       </ul>
+    </Section>
+
+    <Section title="What a complete validation asks" icon="scales">
+      <p>A model validation is complete when it answers a fixed set of questions for each model. Each cell lists the reports that answer the question for that model; an empty cell is a question that no report here answers yet.</p>
+      <div class="coverage" role="region" aria-label="Questions of a model validation against the models" tabindex="0">
+        <table>
+          <thead>
+            <tr><th scope="col">Question</th>{models.map((m) => (<th scope="col">{m.label}</th>))}</tr>
+          </thead>
+          <tbody>
+            {questions.map((q) => (
+              <tr>
+                <th scope="row"><strong>{q.question}</strong><span>{q.asks}</span></th>
+                {models.map((m) => (
+                  <td>
+                    {(q.cells[m.id] ?? []).length ? (
+                      <ul>{(q.cells[m.id] ?? []).map((slug) => (<li><a href={`/validation/${slug}/`}>{short(slug)}</a></li>))}</ul>
+                    ) : (
+                      <span class="coverage__none" aria-label="No report">&ndash;</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Section>
+
+    <Section title="Datasets" icon="research">
+      <p>The data that the reports test against, and two sources that sit behind the models and are not tested against (no report is listed for them). The licence is the one that the source states; a licence that the sources do not state is left out.</p>
+      <div class="dtable" role="region" aria-label="Datasets" tabindex="0">
+        <table>
+          <thead><tr><th scope="col">Dataset</th><th scope="col">Role</th><th scope="col">Size</th><th scope="col">Licence</th><th scope="col">Reports</th></tr></thead>
+          <tbody>
+            {datasets.map((d) => (
+              <tr>
+                <th scope="row"><a href={d.source.href}>{d.name}</a><span>{d.what}</span></th>
+                <td>{d.role}</td>
+                <td>{d.size ?? ''}</td>
+                <td>{d.licence ?? ''}</td>
+                <td>{usedBy(d.name).length ? (<ul>{usedBy(d.name).map((r) => (<li><a href={`/validation/${r.slug}/`}>{r.title}</a></li>))}</ul>) : ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Section>
 
     <Section title="What makes these comparable" icon="scales">
@@ -74,7 +146,30 @@ const rules = [
   </div>
 </Base>
 
+<script>
+  import '../../scripts/validation-index.js';
+</script>
+
 <style is:global>
+  .vfilter { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin: 0 0 0.6rem; font-family: var(--font-ui); }
+  .vfilter label { display: grid; gap: 0.25rem; color: var(--muted); font-size: 0.95rem; }
+  .vfilter select, .vfilter input { font: inherit; font-size: 1rem; color: var(--text); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 0.4rem 0.7rem; }
+  .vfilter select { max-width: 17rem; }
+  .vfilter input { min-width: 15rem; }
+  .vfilter__count { margin: 0 0 0.8rem; }
+  .reports .row[hidden] { display: none; }
+  .sec__body { min-width: 0; }
+  .coverage, .dtable { margin: 1.2rem 0 0; max-width: 100%; overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; }
+  .coverage table, .dtable table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+  .coverage th, .coverage td, .dtable th, .dtable td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  .coverage thead th, .dtable thead th { background: var(--bg-deep); color: var(--muted); font-family: var(--font-ui); font-weight: 600; white-space: nowrap; }
+  .coverage tbody th, .dtable tbody th { font-weight: 400; min-width: 15rem; max-width: 22rem; }
+  .coverage tbody th strong { display: block; font-family: var(--font-ui); }
+  .coverage tbody th span, .dtable tbody th span { display: block; margin-top: 0.2rem; color: var(--muted); font-size: 0.9rem; }
+  .coverage ul, .dtable ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+  .coverage td { min-width: 12rem; }
+  .coverage li, .dtable li { margin: 0; max-width: none; }
+  .coverage__none { color: var(--muted); }
   .counters { display: flex; flex-wrap: wrap; gap: 0.6rem 2.8rem; list-style: none; padding: 0; margin: 2rem 0 0.9rem; max-width: none; }
   .counters-note { margin: 0 0 0.8rem; max-width: none; }
   .counted { margin: 0 0 3rem; font-family: var(--font-ui); }

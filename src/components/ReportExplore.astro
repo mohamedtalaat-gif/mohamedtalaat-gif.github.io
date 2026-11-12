@@ -1,0 +1,80 @@
+---
+// The interactive part of a validation report: controls that filter and sort a table of rows, a chart that is drawn from the rows that remain, the table itself, and its download as CSV. The page is built
+// with the first view (so that it reads without a script), and src/scripts/report-explore.js draws the same chart and table again when a control changes. A report that has no table of its own gets the
+// values of its chart as a table (no controls).
+import { chartSvg } from '../lib/charts.js';
+import { chartOf, initialValues, rowsOf, summaryOf, tableHtml } from '../lib/explore.js';
+
+interface Props {
+  explore: any;
+  alt: string;
+  title?: string;
+  source?: string;
+  caption?: string;
+}
+const { explore, alt, title = 'Explore the data', source, caption } = Astro.props;
+const controls = explore.controls ?? [];
+const values = initialValues(explore);
+const rows = rowsOf(explore, values);
+const chart = controls.length ? chartOf(explore, values, rows) : null;
+const json = JSON.stringify({ ...explore, alt }).replace(/</g, '\\u003c');
+---
+
+<section class="rx" data-rx aria-label={title}>
+  {controls.length > 0 && <h2 class="rx-title">{title}</h2>}
+  {explore.lede && controls.length > 0 && <p class="meta rx-lede">{explore.lede}</p>}
+  {controls.length > 0 && (
+    <div class="rx-controls">
+      {controls.map((c: any) => (
+        <label class="rx-control">
+          <span>{c.label}</span>
+          <select data-control={c.id}>
+            {c.options.map((o: any) => (<option value={o.value} selected={o.value === values[c.id]}>{o.label}</option>))}
+          </select>
+        </label>
+      ))}
+    </div>
+  )}
+  {chart && <div class="rx-chart" set:html={chartSvg(chart, alt)} />}
+  {controls.length > 0 && <p class="meta rx-summary" aria-live="polite">{summaryOf(explore, rows)}</p>}
+  {caption && controls.length > 0 && <p class="meta rx-caption">{caption}</p>}
+  <details class="rx-data" open={controls.length > 0}>
+    <summary>{controls.length > 0 ? 'Data table of this view' : 'Data table'}</summary>
+    <div class="rx-tablewrap" set:html={tableHtml(explore, rows)} />
+    <p class="meta rx-foot">
+      <button type="button" class="rx-csv">Download as CSV</button>
+      {source && <span> Read from <code>{source}</code>.</span>}
+    </p>
+  </details>
+  <script type="application/json" class="rx-json" set:html={json} />
+</section>
+
+<style is:global>
+  .rx { margin: 2.4rem 0 0; }
+  .rx-title { font-size: 1.5rem; margin: 0 0 0.4rem; }
+  .rx-lede { max-width: 56ch; margin: 0 0 1rem; }
+  .rx-controls { display: flex; flex-wrap: wrap; gap: 0.8rem 1.4rem; margin: 0.8rem 0 1.2rem; font-family: var(--font-ui); }
+  .rx-control { display: grid; gap: 0.25rem; font-size: 0.95rem; color: var(--muted); }
+  .rx-control select { font: inherit; font-size: 1rem; color: var(--text); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 0.4rem 0.7rem; min-width: 11rem; }
+  .rx-control select:focus-visible { outline: 2px solid var(--n); outline-offset: 1px; }
+  .rx-chart { margin: 0.4rem 0 0.2rem; }
+  .rx-summary { margin: 0.3rem 0 0.4rem; }
+  .rx-caption { margin: 0 0 1rem; max-width: 56ch; }
+  .rx-data { margin: 1rem 0 0; font-family: var(--font-ui); }
+  .rx-data > summary { cursor: pointer; color: var(--muted); }
+  .rx-tablewrap { margin: 0.8rem 0 0; overflow-x: auto; max-height: 28rem; overflow-y: auto; border: 1px solid var(--rule); border-radius: 6px; }
+  .rx-table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  .rx-table th, .rx-table td { padding: 0.35rem 0.7rem; text-align: left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  .rx-table td { max-width: 26rem; overflow: hidden; text-overflow: ellipsis; }
+  .rx-table th { position: sticky; top: 0; background: var(--bg-deep); color: var(--muted); font-weight: 600; cursor: pointer; user-select: none; }
+  .rx-table th[aria-sort="ascending"]::after { content: ' \25B2'; font-size: 0.75em; }
+  .rx-table th[aria-sort="descending"]::after { content: ' \25BC'; font-size: 0.75em; }
+  .rx-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .rx-foot { margin: 0.6rem 0 0; }
+  .rx-csv { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 0.3rem 0.8rem; cursor: pointer; }
+  .rx-csv:hover { border-color: var(--n); }
+</style>
+
+<script>
+  import '../scripts/report-explore.js';
+</script>

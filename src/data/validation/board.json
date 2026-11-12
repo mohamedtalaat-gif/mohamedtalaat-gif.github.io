@@ -1,0 +1,47 @@
+{
+ "source": "explorer/full/data/pd_gate.csv (data/post_deadline/outputs/tdi_gate.json and structure_gate.json)",
+ "rows": [
+  {
+   "track": "TDI",
+   "entry": "candidate A",
+   "metric": "macro MCC",
+   "scored": 0.3722973127856141,
+   "board": 0.3722973127856141
+  },
+  {
+   "track": "TDI",
+   "entry": "candidate B",
+   "metric": "macro MCC",
+   "scored": 0.3724780773970101,
+   "board": 0.3722973127856141
+  },
+  {
+   "track": "structure",
+   "entry": "submitted archive",
+   "metric": "LDDT-PLI",
+   "scored": 0.4127756305426359,
+   "board": 0.4133490815684199
+  },
+  {
+   "track": "structure",
+   "entry": "submitted archive",
+   "metric": "BiSyRMSD",
+   "scored": 3.972440913015604,
+   "board": 3.969566656285525
+  },
+  {
+   "track": "structure",
+   "entry": "published poses of the first entry",
+   "metric": "LDDT-PLI",
+   "scored": 0.4814705651164055,
+   "board": 0.4814189480096101
+  },
+  {
+   "track": "structure",
+   "entry": "published poses of the first entry",
+   "metric": "BiSyRMSD",
+   "scored": 3.4374632632791995,
+   "board": 3.437463089060784
+  }
+ ]
+}

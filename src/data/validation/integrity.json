@@ -1,0 +1,107 @@
+{
+ "source": "METHOD_REPORT.md, section 2 (audit extract: data integrity)",
+ "rows": [
+  {
+   "group": "files",
+   "check": "invalid SMILES (train)",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "invalid SMILES (test)",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "duplicate Molecule_Name (train)",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "duplicate canonical SMILES (train)",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "test compounds whose canonical SMILES is also in train",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "test compounds whose Molecule_Name is also in train",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "files",
+   "check": "label columns present in the test file",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "label rule, CYP3A4",
+   "check": "label-rule mismatches in 2,334 rows with both measurements",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "label rule, CYP2D6",
+   "check": "label-rule mismatches in 1,493 rows with both measurements",
+   "result": "0",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP3A4",
+   "check": "training and evaluation folds are disjoint",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP3A4",
+   "check": "training and evaluation folds cover the pool",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP3A4",
+   "check": "external compounds are not in the pool",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP3A4",
+   "check": "inner folds lie inside the outer training fold",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP2D6",
+   "check": "training and evaluation folds are disjoint",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP2D6",
+   "check": "training and evaluation folds cover the pool",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP2D6",
+   "check": "external compounds are not in the pool",
+   "result": "true",
+   "status": "passed"
+  },
+  {
+   "group": "nested plan, CYP2D6",
+   "check": "inner folds lie inside the outer training fold",
+   "result": "true",
+   "status": "passed"
+  }
+ ]
+}

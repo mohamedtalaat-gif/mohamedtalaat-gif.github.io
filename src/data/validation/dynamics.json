@@ -1,0 +1,245 @@
+{
+ "source": "data/structure_track/outputs/cyp3a4/logs/ligand_dynamics.log",
+ "rows": [
+  {
+   "ligand": "2QH",
+   "score": "dynamic_pharmacophore",
+   "poses": 11,
+   "rho": -0.33
+  },
+  {
+   "ligand": "2QH",
+   "score": "stability",
+   "poses": 11,
+   "rho": 0.4
+  },
+  {
+   "ligand": "2QH",
+   "score": "dynamic_combined",
+   "poses": 11,
+   "rho": -0.032
+  },
+  {
+   "ligand": "2QH",
+   "score": "static_pharmacophore_model",
+   "poses": 11,
+   "rho": 0.218
+  },
+  {
+   "ligand": "A1A4S",
+   "score": "dynamic_pharmacophore",
+   "poses": 11,
+   "rho": 0.073
+  },
+  {
+   "ligand": "A1A4S",
+   "score": "stability",
+   "poses": 11,
+   "rho": 0.264
+  },
+  {
+   "ligand": "A1A4S",
+   "score": "dynamic_combined",
+   "poses": 11,
+   "rho": 0.124
+  },
+  {
+   "ligand": "A1A4S",
+   "score": "static_pharmacophore_model",
+   "poses": 11,
+   "rho": -0.323
+  },
+  {
+   "ligand": "A1ASV",
+   "score": "dynamic_pharmacophore",
+   "poses": 11,
+   "rho": -0.818
+  },
+  {
+   "ligand": "A1ASV",
+   "score": "stability",
+   "poses": 11,
+   "rho": -0.636
+  },
+  {
+   "ligand": "A1ASV",
+   "score": "dynamic_combined",
+   "poses": 11,
+   "rho": -0.851
+  },
+  {
+   "ligand": "A1ASV",
+   "score": "static_pharmacophore_model",
+   "poses": 11,
+   "rho": -0.873
+  },
+  {
+   "ligand": "A1CIW",
+   "score": "dynamic_pharmacophore",
+   "poses": 11,
+   "rho": 0.182
+  },
+  {
+   "ligand": "A1CIW",
+   "score": "stability",
+   "poses": 11,
+   "rho": 0.045
+  },
+  {
+   "ligand": "A1CIW",
+   "score": "dynamic_combined",
+   "poses": 11,
+   "rho": 0.046
+  },
+  {
+   "ligand": "A1CIW",
+   "score": "static_pharmacophore_model",
+   "poses": 11,
+   "rho": 0.118
+  },
+  {
+   "ligand": "MWS",
+   "score": "dynamic_pharmacophore",
+   "poses": 5,
+   "rho": -0.1
+  },
+  {
+   "ligand": "MWS",
+   "score": "stability",
+   "poses": 5,
+   "rho": 0.3
+  },
+  {
+   "ligand": "MWS",
+   "score": "dynamic_combined",
+   "poses": 5,
+   "rho": 0.205
+  },
+  {
+   "ligand": "MWS",
+   "score": "static_pharmacophore_model",
+   "poses": 5,
+   "rho": -0.4
+  },
+  {
+   "ligand": "MWV",
+   "score": "dynamic_pharmacophore",
+   "poses": 11,
+   "rho": 0.005
+  },
+  {
+   "ligand": "MWV",
+   "score": "stability",
+   "poses": 11,
+   "rho": 0.3
+  },
+  {
+   "ligand": "MWV",
+   "score": "dynamic_combined",
+   "poses": 11,
+   "rho": 0.26
+  },
+  {
+   "ligand": "MWV",
+   "score": "static_pharmacophore_model",
+   "poses": 11,
+   "rho": 0.264
+  },
+  {
+   "ligand": "PK9",
+   "score": "dynamic_pharmacophore",
+   "poses": 17,
+   "rho": -0.675
+  },
+  {
+   "ligand": "PK9",
+   "score": "stability",
+   "poses": 17,
+   "rho": 0.294
+  },
+  {
+   "ligand": "PK9",
+   "score": "dynamic_combined",
+   "poses": 17,
+   "rho": -0.3
+  },
+  {
+   "ligand": "PK9",
+   "score": "static_pharmacophore_model",
+   "poses": 17,
+   "rho": -0.751
+  },
+  {
+   "ligand": "TCI",
+   "score": "dynamic_pharmacophore",
+   "poses": 5,
+   "rho": -0.671
+  },
+  {
+   "ligand": "TCI",
+   "score": "stability",
+   "poses": 5,
+   "rho": 0.2
+  },
+  {
+   "ligand": "TCI",
+   "score": "dynamic_combined",
+   "poses": 5,
+   "rho": -0.051
+  },
+  {
+   "ligand": "TCI",
+   "score": "static_pharmacophore_model",
+   "poses": 5,
+   "rho": -0.564
+  },
+  {
+   "ligand": "TPF",
+   "score": "dynamic_pharmacophore",
+   "poses": 17,
+   "rho": 0.141
+  },
+  {
+   "ligand": "TPF",
+   "score": "stability",
+   "poses": 17,
+   "rho": 0.056
+  },
+  {
+   "ligand": "TPF",
+   "score": "dynamic_combined",
+   "poses": 17,
+   "rho": 0.188
+  },
+  {
+   "ligand": "TPF",
+   "score": "static_pharmacophore_model",
+   "poses": 17,
+   "rho": -0.039
+  },
+  {
+   "ligand": "YNV",
+   "score": "dynamic_pharmacophore",
+   "poses": 5,
+   "rho": 0.051
+  },
+  {
+   "ligand": "YNV",
+   "score": "stability",
+   "poses": 5,
+   "rho": -0.8
+  },
+  {
+   "ligand": "YNV",
+   "score": "dynamic_combined",
+   "poses": 5,
+   "rho": -0.3
+  },
+  {
+   "ligand": "YNV",
+   "score": "static_pharmacophore_model",
+   "poses": 5,
+   "rho": -0.051
+  }
+ ]
+}
