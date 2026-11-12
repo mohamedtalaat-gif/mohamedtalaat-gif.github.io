@@ -11,6 +11,18 @@ const W = 640;
 const L = 190; // label gutter
 const R = 24;
 const fmt = (v: number) => (Math.abs(v) < 0.1 && v !== 0 ? v.toFixed(3) : v.toFixed(2));
+
+/** Axis ticks at round values (1, 2, 2.5, or 5 times a power of ten), about five steps over the range, with the decimals that the step needs. */
+const niceTicks = (min: number, max: number) => {
+  const raw = (max - min) / 5;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((c) => c >= raw - 1e-12) ?? raw;
+  let decimals = 0;
+  while (decimals < 4 && Math.abs(step * 10 ** decimals - Math.round(step * 10 ** decimals)) > 1e-9) decimals += 1;
+  const ticks: number[] = [];
+  for (let t = Math.ceil(min / step - 1e-9) * step; t <= max + 1e-9; t += step) ticks.push(Math.round(t * 10 ** (decimals + 2)) / 10 ** (decimals + 2));
+  return { ticks, decimals };
+};
 ---
 
 {chart.type === 'bars' && (() => {
@@ -35,15 +47,14 @@ const fmt = (v: number) => (Math.abs(v) < 0.1 && v !== 0 ? v.toFixed(3) : v.toFi
 {chart.type === 'pairs' && (() => {
   const x = (v: number) => L + ((v - chart.min) / (chart.max - chart.min)) * (W - L - R);
   const H = 50 + chart.items.length * 52 + 30;
-  const n = 5;
-  const ticks = Array.from({ length: n + 1 }, (_, i) => chart.min + (i / n) * (chart.max - chart.min));
+  const { ticks, decimals } = niceTicks(chart.min, chart.max);
   return (
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
       <g class="legend">
         <circle cx={L} cy="14" r="6" class="dot-a" /><text x={L + 12} y="18">{chart.aLabel}</text>
         <circle cx={L + 200} cy="14" r="6" class="dot-b" /><text x={L + 212} y="18">{chart.bLabel}</text>
       </g>
-      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(chart.max <= 0.5 ? 2 : 1)}</text></g>))}
+      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(decimals)}</text></g>))}
       {chart.items.map((it, i) => {
         const cy = 62 + i * 52;
         return (
@@ -53,8 +64,19 @@ const fmt = (v: number) => (Math.abs(v) < 0.1 && v !== 0 ? v.toFixed(3) : v.toFi
             <line x1={x(it.a)} x2={x(it.b)} y1={cy} y2={cy} class="link" />
             <circle cx={x(it.a)} cy={cy} r="6.5" class="dot-a" />
             <circle cx={x(it.b)} cy={cy} r="6.5" class="dot-b" />
-            <text x={x(it.a)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.a)}</text>
-            <text x={x(it.b)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.b)}</text>
+            {it.a === it.b ? (
+              <text x={x(it.a)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.a)}</text>
+            ) : Math.abs(x(it.a) - x(it.b)) < 34 ? (
+              <>
+                <text x={Math.min(x(it.a), x(it.b)) - 3} y={cy - 13} text-anchor="end" class="val">{fmt(x(it.a) <= x(it.b) ? it.a : it.b)}</text>
+                <text x={Math.max(x(it.a), x(it.b)) + 3} y={cy - 13} text-anchor="start" class="val">{fmt(x(it.a) <= x(it.b) ? it.b : it.a)}</text>
+              </>
+            ) : (
+              <>
+                <text x={x(it.a)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.a)}</text>
+                <text x={x(it.b)} y={cy - 13} text-anchor="middle" class="val">{fmt(it.b)}</text>
+              </>
+            )}
           </g>
         );
       })}
@@ -65,11 +87,11 @@ const fmt = (v: number) => (Math.abs(v) < 0.1 && v !== 0 ? v.toFixed(3) : v.toFi
 {chart.type === 'intervals' && (() => {
   const x = (v: number) => L + ((v - chart.min) / (chart.max - chart.min)) * (W - L - R);
   const H = 50 + chart.items.length * 56 + 30;
-  const ticks = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6].filter((t) => t <= chart.max);
+  const { ticks, decimals } = niceTicks(chart.min, chart.max);
   return (
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt} class="rchart">
       <g class="legend"><circle cx={L} cy="14" r="6" class="dot-a" /><text x={L + 12} y="18">estimate with its interval</text><rect x={L + 230} y="8" width="3" height="12" class="refmark" /><text x={L + 242} y="18">{chart.refLabel}</text></g>
-      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(1)}</text></g>))}
+      {ticks.map((t) => (<g><line x1={x(t)} x2={x(t)} y1="34" y2={H - 28} class="grid" /><text x={x(t)} y={H - 10} text-anchor="middle">{t.toFixed(decimals)}</text></g>))}
       {chart.items.map((it, i) => {
         const cy = 66 + i * 56;
         return (
