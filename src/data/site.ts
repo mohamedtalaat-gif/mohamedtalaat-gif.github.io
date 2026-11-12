@@ -60,7 +60,7 @@ export const activities: Entry[] = [
     date: '2026-11-05',
     kind: 'result',
     title: 'OpenADMET CYP Inhibition Blind Challenge: final boards',
-    text: 'CYPMode placed 14th of 62 on time-dependent inhibition (macro MCC 0.372) and 15th of 38 on CYP3A4 structure prediction. The structure entry cannot be told apart from the published Boltz-2 baseline (LDDT-PLI 0.413 against 0.420).',
+    text: 'CYPMode placed 14th of 62 on the time-dependent inhibition track (macro Matthews correlation coefficient 0.372 ± 0.038) and 15th of 38 on the CYP3A4 structure track (local distance difference test for protein–ligand interfaces, LDDT-PLI, 0.413 ± 0.030). The structure entry cannot be told apart from the published Boltz-2 baseline, which scores 0.420.',
     href: 'https://github.com/mohamedtalaat-gif/CYPMode',
   },
   {
@@ -118,8 +118,8 @@ export const activities: Entry[] = [
   },
 ];
 
-// The Activities page lists the lasting record: papers, awards and events attended. Dated updates (News) come from the blog posts.
-export const record = activities.filter((a) => ['paper', 'award'].includes(a.kind));
+// The Activities page lists the lasting record: papers, awards, and competition results. Dated updates (News) come from the blog posts.
+export const record = activities.filter((a) => ['paper', 'award', 'result'].includes(a.kind));
 
 // Conferences and seminars attended.
 export const conferences = [
