@@ -9,6 +9,7 @@ if (root) start(root);
 function start(root) {
   const sections = [...root.querySelectorAll('details.mr-sec')];
   toolbar(sections);
+  syncEmbeds();
   root.querySelectorAll('table').forEach(enhanceTable);
   addLinks(root);
   openFromHash();
@@ -157,4 +158,49 @@ function openFromHash() {
   if (!target) return;
   for (let d = target.closest('details'); d; d = d.parentElement?.closest('details')) d.open = true;
   requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+}
+
+/** The map of the project is a page of the same site, so it can follow the theme of the site. Its stylesheet answers the theme of the device, so the variables of both themes are read from it and set again here
+ * whenever the theme of the site changes. A page that cannot be read (another origin, as on a local server) or that has no dark theme stays as it is. */
+function syncEmbeds() {
+  const frames = [...document.querySelectorAll('.mr-embed iframe')];
+  if (!frames.length) return;
+  const apply = (frame) => {
+    let doc;
+    try {
+      doc = frame.contentDocument;
+    } catch {
+      return;
+    }
+    if (!doc?.head) return;
+    const sets = { light: '', dark: '' };
+    for (const sheet of doc.styleSheets) {
+      let rules;
+      try {
+        rules = sheet.cssRules;
+      } catch {
+        continue;
+      }
+      for (const rule of rules) {
+        if (rule.selectorText === ':root') sets.light += rule.style.cssText;
+        else if (rule.media && /prefers-color-scheme:\s*dark/.test(rule.media.mediaText)) {
+          for (const inner of rule.cssRules) if (inner.selectorText === ':root') sets.dark += inner.style.cssText;
+        }
+      }
+    }
+    if (!sets.dark) return;
+    const chosen = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    let style = doc.getElementById('mr-theme');
+    if (!style) {
+      style = doc.createElement('style');
+      style.id = 'mr-theme';
+      doc.head.append(style);
+    }
+    style.textContent = `html:root { ${sets[chosen]} color-scheme: ${chosen}; }`;
+  };
+  frames.forEach((frame) => {
+    frame.addEventListener('load', () => apply(frame));
+    apply(frame);
+  });
+  new MutationObserver(() => frames.forEach(apply)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 }

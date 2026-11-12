@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { absoluteLinks, figureHtml, findFigureIds, insertFigures, longDate, looksLikeTheReport, numbered, parse, parseCatalog, plural, render, shortCaption, shortLabel, slugify, typographicMinus, words } from '../scripts/sync-method-report.mjs';
+import { absoluteLinks, figureHtml, findFigureIds, foldMermaid, insertFigures, insertMap, mapHtml, longDate, looksLikeTheReport, numbered, parse, parseCatalog, plural, render, shortCaption, shortLabel, slugify, typographicMinus, words } from '../scripts/sync-method-report.mjs';
 import { toNumber } from '../src/scripts/table-numbers.js';
 
 const REPORT = `# Method report: a title
@@ -156,4 +156,21 @@ test('the post counts its figures and carries them inside the section that names
   const { text, figures } = render('# Method report\n\n## 1. One\n\nThe figure `arch_a-light.png` shows it.\n\n## 2. Two\n\nText.\n', { figures: new Map([['arch_a', CATALOG.get('arch_a')]]) });
   assert.equal(figures, 1);
   assert.match(text, /two sections, zero tables, and one figure\./);
+});
+
+test('the map of the project follows the paragraph that describes the folder docs/map, once, and not inside a code fence', () => {
+  const text = 'Before.\n\n```\nThe folder `docs/map` is the map of the project.\n```\n\n**Where everything is.** The folder `docs/map` is the map of the project: its pages list the modules.\n\nThe folder `docs/map` is the map of the project, again.\n\nAfter.';
+  const out = insertMap(text);
+  assert.equal((out.match(/<figure class="mr-embed">/g) ?? []).length, 1);
+  assert.ok(out.indexOf('<figure class="mr-embed">') > out.indexOf('**Where everything is.**') && out.indexOf('<figure class="mr-embed">') < out.indexOf('again.'));
+  assert.ok(mapHtml().includes('loading="lazy"') && mapHtml().includes('target="_blank" rel="noopener"'));
+  assert.equal(insertMap('No map here.'), 'No map here.');
+});
+
+test('a Mermaid diagram is folded into a closed section that keeps its source, and the post embeds the map only when asked', () => {
+  const folded = foldMermaid('Text.\n\n```mermaid\nflowchart LR\n  a --> b\n```\n\nMore.');
+  assert.ok(folded.includes('<details class="mr-mermaid">') && folded.includes('flowchart LR\n  a --> b') && folded.includes('</details>') && !folded.includes('<details class="mr-mermaid" open'));
+  const report = '# Method report\n\n## 1. One\n\nThe folder `docs/map` is the map of the project.\n\n```mermaid\nflowchart LR\n```\n';
+  assert.ok(render(report, { embedMap: true }).text.includes('mr-embed'));
+  assert.ok(!render(report).text.includes('mr-embed') && render(report).text.includes('mr-mermaid'));
 });

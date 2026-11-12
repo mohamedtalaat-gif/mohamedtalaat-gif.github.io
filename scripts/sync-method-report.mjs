@@ -18,6 +18,7 @@ export const REPOSITORY = 'mohamedtalaat-gif/CYPMode';
 export const SOURCE_URL = `https://raw.githubusercontent.com/${REPOSITORY}/main/METHOD_REPORT.md`;
 export const BLOB_URL = `https://github.com/${REPOSITORY}/blob/main/`;
 export const RAW_URL = `https://raw.githubusercontent.com/${REPOSITORY}/main/`;
+export const MAP_URL = 'https://mohamedtalaat-gif.github.io/CYPMode/map/'; // the interactive map of the project, published by the Pages workflow of the repository
 export const PUBLISHED = '2026-11-12';
 export const WORDS_PER_MINUTE = 200;
 
@@ -178,6 +179,35 @@ export function insertFigures(markdown, figures) {
   return out.join('\n\n');
 }
 
+/** The interactive map of the project, in a frame, with a line that says what it does. */
+export function mapHtml() {
+  return `<figure class="mr-embed">\n<iframe src="${MAP_URL}" title="The interactive map of the project" loading="lazy"></iframe>\n<figcaption><strong>The interactive map of the project.</strong> Search for a word, open a module to see what it imports and what imports it, or open a job to see what it waits for. <a href="${MAP_URL}" target="_blank" rel="noopener">Open it in its own tab</a>.</figcaption>\n</figure>`;
+}
+
+/** Put the map after the first paragraph that describes the folder docs/map. Paragraphs inside a code fence are left alone. */
+export function insertMap(markdown) {
+  let fence = false;
+  let done = false;
+  const out = [];
+  for (const paragraph of markdown.split(/\n{2,}/)) {
+    out.push(paragraph);
+    const markers = (paragraph.match(/^\s*(```|~~~)/gm) ?? []).length;
+    const inside = fence;
+    if (markers % 2) fence = !fence;
+    if (inside || markers || done) continue;
+    if (paragraph.includes('`docs/map`') && /map of the project/i.test(paragraph)) {
+      out.push(mapHtml());
+      done = true;
+    }
+  }
+  return out.join('\n\n');
+}
+
+/** A Mermaid diagram is shown as a closed section with its source, because the page has no renderer for it; the interactive map above shows the same graphs. */
+export function foldMermaid(markdown) {
+  return markdown.replace(/^```mermaid\n([\s\S]*?)^```\s*$/gm, (_, source) => `<details class="mr-mermaid">\n<summary>Source of the diagram (Mermaid)</summary>\n\n\`\`\`mermaid\n${source}\`\`\`\n\n</details>`);
+}
+
 const countTables = (markdown) => (markdown.match(/^\|[ :\-|]+\|\s*$/gm) ?? []).length;
 const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 /** House style for counts in prose: words for one to nine, numerals with a thousands separator from ten. */
@@ -194,8 +224,9 @@ export const longDate = (iso) => {
  * heading, so that a reader can open one section at a time; the script of the page (src/scripts/method-report.js) adds the search, the
  * buttons, and the tools of the tables. Without the script every section still opens and closes.
  */
-export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT.md', figures = new Map() } = {}) {
-  const report = parse(typographicMinus(absoluteLinks(insertFigures(markdown, figures))));
+export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT.md', figures = new Map(), embedMap = false } = {}) {
+  const withMap = embedMap ? insertMap(markdown) : markdown;
+  const report = parse(typographicMinus(absoluteLinks(foldMermaid(insertFigures(withMap, figures)))));
   const used = new Set();
   const sections = report.sections.map((s) => {
     const { number, title } = numbered(s.title);
@@ -219,7 +250,7 @@ export function render(markdown, { revision = null, sourceLabel = 'METHOD_REPORT
   ];
   const from = revision ? ` at revision <a href="${BLOB_URL.replace('/blob/main/', '')}/commit/${revision.sha}"><code>${revision.sha.slice(0, 7)}</code></a>, committed on ${longDate(revision.date)}` : '';
   const body = [
-    `This is the interactive edition of the method report of CYPMode. The text is the report itself: this site reads [${sourceLabel}](${BLOB_URL}${sourceLabel}) from the repository whenever it is built, so a change to the report in the repository appears on this page without any further step. The sections open and close, the tables can be filtered and sorted, and the figures follow the light or dark theme of the site.`,
+    `This is the interactive edition of the method report of CYPMode. The text is the report itself: this site reads [${sourceLabel}](${BLOB_URL}${sourceLabel}) from the repository whenever it is built, so a change to the report in the repository appears on this page without any further step. The sections open and close, the tables can be filtered and sorted, the figures follow the light or dark theme of the site, and the map of the project is the live page.`,
     '',
     `<p class="mr-source">Source: <a href="${BLOB_URL}${sourceLabel}">${sourceLabel}</a>${from}. ${plural(totalWords, 'word')}, ${plural(sections.length, 'section')}, ${figures.size ? `${plural(countTables(markdown), 'table')}, and ${plural(figures.size, 'figure')}` : `and ${plural(countTables(markdown), 'table')}`}. The report is released under CC BY-NC-SA 4.0.</p>`,
     '',
@@ -303,6 +334,16 @@ async function loadFigures(markdown) {
   return available;
 }
 
+/** The map is embedded only when its page answers, so that a failed deploy of the repository never leaves an empty frame. */
+async function mapAvailable() {
+  try {
+    const response = await fetch(MAP_URL, { method: 'HEAD', signal: AbortSignal.timeout(15000) });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
 async function main() {
   const written = existsSync(OUTPUT) ? (await stat(OUTPUT)).mtimeMs : 0;
   const scriptChanged = (await stat(fileURLToPath(import.meta.url))).mtimeMs > written; // a change to this script rewrites the post at once
@@ -333,7 +374,7 @@ async function main() {
     console.warn('method report: no copy is available, the post is not written');
     return;
   }
-  const { text, sections, words: total, figures } = render(markdown, { revision, figures: await loadFigures(markdown) });
+  const { text, sections, words: total, figures } = render(markdown, { revision, figures: await loadFigures(markdown), embedMap: await mapAvailable() });
   await writeFile(OUTPUT, text);
   console.log(`method report: wrote the post (${total} words, ${sections.length} sections, ${figures} figures)`);
 }
