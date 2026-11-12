@@ -1,0 +1,245 @@
+{
+ "source": "data/structure_track/outputs/cyp3a4/logs/label_shift.log",
+ "rows": [
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.366,
+   "lo": 0.289,
+   "hi": 0.468,
+   "fold_spread": 0.06
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.352,
+   "lo": 0.274,
+   "hi": 0.451,
+   "fold_spread": 0.06
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.384,
+   "lo": 0.316,
+   "hi": 0.48,
+   "fold_spread": 0.06
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.348,
+   "lo": 0.262,
+   "hi": 0.445,
+   "fold_spread": 0.063
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.335,
+   "lo": 0.252,
+   "hi": 0.43,
+   "fold_spread": 0.063
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.372,
+   "lo": 0.295,
+   "hi": 0.467,
+   "fold_spread": 0.063
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.366,
+   "lo": 0.289,
+   "hi": 0.468,
+   "fold_spread": 0.058
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.365,
+   "lo": 0.284,
+   "hi": 0.461,
+   "fold_spread": 0.058
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.392,
+   "lo": 0.329,
+   "hi": 0.487,
+   "fold_spread": 0.058
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.348,
+   "lo": 0.262,
+   "hi": 0.445,
+   "fold_spread": 0.057
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.346,
+   "lo": 0.26,
+   "hi": 0.441,
+   "fold_spread": 0.057
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.382,
+   "lo": 0.312,
+   "hi": 0.469,
+   "fold_spread": 0.057
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.196,
+   "lo": 0.066,
+   "hi": 0.37,
+   "fold_spread": 0.07
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.135,
+   "lo": 0.043,
+   "hi": 0.286,
+   "fold_spread": 0.07
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.237,
+   "lo": 0.084,
+   "hi": 0.412,
+   "fold_spread": 0.07
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.135,
+   "lo": 0.048,
+   "hi": 0.341,
+   "fold_spread": 0.033
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.087,
+   "lo": 0.03,
+   "hi": 0.25,
+   "fold_spread": 0.033
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.199,
+   "lo": 0.06,
+   "hi": 0.352,
+   "fold_spread": 0.033
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.196,
+   "lo": 0.066,
+   "hi": 0.37,
+   "fold_spread": 0.054
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.094,
+   "lo": 0.027,
+   "hi": 0.214,
+   "fold_spread": 0.054
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A+fps_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.206,
+   "lo": 0.083,
+   "hi": 0.412,
+   "fold_spread": 0.054
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "All compounds",
+   "rate": 0.135,
+   "lo": 0.048,
+   "hi": 0.341,
+   "fold_spread": 0.023
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, by transfer",
+   "rate": 0.058,
+   "lo": 0.02,
+   "hi": 0.185,
+   "fold_spread": 0.023
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "classifier": "lgbm_A_deep",
+   "estimate_of": "Scored compounds, directly",
+   "rate": 0.182,
+   "lo": 0.068,
+   "hi": 0.358,
+   "fold_spread": 0.023
+  }
+ ]
+}

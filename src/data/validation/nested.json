@@ -1,0 +1,2205 @@
+{
+ "source": "explorer/public/oof_CYP3A4.csv.gz and oof_CYP2D6.csv.gz (AUC in each of the 15 outer folds of the stored out-of-fold predictions)",
+ "rows": [
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "atomjepa_head",
+   "family": "Atom-JEPA readout",
+   "mean_auc": 0.7607,
+   "min_auc": 0.7151,
+   "max_auc": 0.7964,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "chemeleon_minimol_mt_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7269,
+   "min_auc": 0.6561,
+   "max_auc": 0.7637,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "chemeleon_surrogate_mt_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7426,
+   "min_auc": 0.6965,
+   "max_auc": 0.7674,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "chemprop_mt_shift",
+   "family": "Chemprop, multitask",
+   "mean_auc": 0.711,
+   "min_auc": 0.6682,
+   "max_auc": 0.7537,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "committee_ei_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.731,
+   "min_auc": 0.6756,
+   "max_auc": 0.7696,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "committee_m_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.7326,
+   "min_auc": 0.6755,
+   "max_auc": 0.7668,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "committee_p_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.7329,
+   "min_auc": 0.6741,
+   "max_auc": 0.7675,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "emxblk_A+fps_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.7731,
+   "min_auc": 0.7432,
+   "max_auc": 0.803,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "emxblk_A_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.754,
+   "min_auc": 0.716,
+   "max_auc": 0.7851,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "extratrees_A",
+   "family": "extratrees",
+   "mean_auc": 0.7478,
+   "min_auc": 0.7173,
+   "max_auc": 0.7782,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "gs_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.7755,
+   "min_auc": 0.7527,
+   "max_auc": 0.8053,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "gs_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.7597,
+   "min_auc": 0.7186,
+   "max_auc": 0.7953,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "knn_tanimoto_k15",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.6293,
+   "min_auc": 0.582,
+   "max_auc": 0.6757,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "knn_tanimoto_k40",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.6459,
+   "min_auc": 0.6116,
+   "max_auc": 0.6776,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "knn_tanimoto_k5",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.5941,
+   "min_auc": 0.5699,
+   "max_auc": 0.6191,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ad_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7669,
+   "min_auc": 0.7419,
+   "max_auc": 0.8008,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7642,
+   "min_auc": 0.7306,
+   "max_auc": 0.7941,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+bc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7577,
+   "min_auc": 0.7187,
+   "max_auc": 0.798,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7549,
+   "min_auc": 0.7188,
+   "max_auc": 0.7948,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ctx_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7585,
+   "min_auc": 0.7212,
+   "max_auc": 0.7842,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ctx_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7594,
+   "min_auc": 0.7353,
+   "max_auc": 0.7935,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ext+xc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.759,
+   "min_auc": 0.733,
+   "max_auc": 0.7948,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ext+xt_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7563,
+   "min_auc": 0.7324,
+   "max_auc": 0.7934,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+ext_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7568,
+   "min_auc": 0.7369,
+   "max_auc": 0.7893,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ad_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.779,
+   "min_auc": 0.7537,
+   "max_auc": 0.8168,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7692,
+   "min_auc": 0.7359,
+   "max_auc": 0.7957,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+bc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7738,
+   "min_auc": 0.7433,
+   "max_auc": 0.7994,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7688,
+   "min_auc": 0.7295,
+   "max_auc": 0.7953,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ctx_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.775,
+   "min_auc": 0.7447,
+   "max_auc": 0.8022,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ctx_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7744,
+   "min_auc": 0.7423,
+   "max_auc": 0.8054,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ext+alerts_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.775,
+   "min_auc": 0.7545,
+   "max_auc": 0.8084,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ext+xc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7742,
+   "min_auc": 0.752,
+   "max_auc": 0.8038,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ext+xt_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7692,
+   "min_auc": 0.7471,
+   "max_auc": 0.7964,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+ext_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.774,
+   "min_auc": 0.7486,
+   "max_auc": 0.8013,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+hyp_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7717,
+   "min_auc": 0.7342,
+   "max_auc": 0.7975,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+hypperm_deep",
+   "family": "lgbm_clf, permuted-label control of the hypothesis model",
+   "mean_auc": 0.7717,
+   "min_auc": 0.7367,
+   "max_auc": 0.8011,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7784,
+   "min_auc": 0.7446,
+   "max_auc": 0.8178,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7715,
+   "min_auc": 0.7237,
+   "max_auc": 0.8058,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7752,
+   "min_auc": 0.7362,
+   "max_auc": 0.8062,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+physk20_deep",
+   "family": "lgbm_clf_select",
+   "mean_auc": 0.7742,
+   "min_auc": 0.7458,
+   "max_auc": 0.8056,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+pp2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7696,
+   "min_auc": 0.7295,
+   "max_auc": 0.8116,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+pp3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7689,
+   "min_auc": 0.7389,
+   "max_auc": 0.8042,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+st2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7731,
+   "min_auc": 0.746,
+   "max_auc": 0.814,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps+st3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7718,
+   "min_auc": 0.7473,
+   "max_auc": 0.8191,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7731,
+   "min_auc": 0.7419,
+   "max_auc": 0.7983,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7708,
+   "min_auc": 0.7382,
+   "max_auc": 0.804,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep_csoft",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7738,
+   "min_auc": 0.7457,
+   "max_auc": 0.8043,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep_knnfeat",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7712,
+   "min_auc": 0.7405,
+   "max_auc": 0.7982,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep_testlike0.5",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7721,
+   "min_auc": 0.7382,
+   "max_auc": 0.8029,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_deep_testlike1.0",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7716,
+   "min_auc": 0.7478,
+   "max_auc": 0.8029,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+fps_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7699,
+   "min_auc": 0.7384,
+   "max_auc": 0.8048,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+hyp_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7582,
+   "min_auc": 0.7253,
+   "max_auc": 0.8053,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+hypperm_deep",
+   "family": "lgbm_clf, permuted-label control of the hypothesis model",
+   "mean_auc": 0.7575,
+   "min_auc": 0.7241,
+   "max_auc": 0.7899,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7698,
+   "min_auc": 0.7337,
+   "max_auc": 0.8156,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+phys+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7694,
+   "min_auc": 0.7411,
+   "max_auc": 0.8095,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7623,
+   "min_auc": 0.7349,
+   "max_auc": 0.802,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7697,
+   "min_auc": 0.7516,
+   "max_auc": 0.8023,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+physk20_deep",
+   "family": "lgbm_clf_select",
+   "mean_auc": 0.7676,
+   "min_auc": 0.7429,
+   "max_auc": 0.8094,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+pp2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7571,
+   "min_auc": 0.7289,
+   "max_auc": 0.8005,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+pp3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7578,
+   "min_auc": 0.7296,
+   "max_auc": 0.8127,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+st2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7582,
+   "min_auc": 0.7147,
+   "max_auc": 0.8059,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A+st3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7589,
+   "min_auc": 0.7258,
+   "max_auc": 0.8137,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7559,
+   "min_auc": 0.7244,
+   "max_auc": 0.7927,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.756,
+   "min_auc": 0.7239,
+   "max_auc": 0.7924,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep_csoft",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7585,
+   "min_auc": 0.7257,
+   "max_auc": 0.7997,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep_knnfeat",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7544,
+   "min_auc": 0.7205,
+   "max_auc": 0.7966,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep_testlike0.5",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7569,
+   "min_auc": 0.7162,
+   "max_auc": 0.8018,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_deep_testlike1.0",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7558,
+   "min_auc": 0.7151,
+   "max_auc": 0.8016,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_A_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.755,
+   "min_auc": 0.7221,
+   "max_auc": 0.7972,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7108,
+   "min_auc": 0.674,
+   "max_auc": 0.7387,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7122,
+   "min_auc": 0.6744,
+   "max_auc": 0.7467,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_desc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7425,
+   "min_auc": 0.7086,
+   "max_auc": 0.7786,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_desc_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.744,
+   "min_auc": 0.7122,
+   "max_auc": 0.7909,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_mmp_A",
+   "family": "lgbm_mmp",
+   "mean_auc": 0.7577,
+   "min_auc": 0.7349,
+   "max_auc": 0.7922,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_mmp_A+fps",
+   "family": "lgbm_mmp",
+   "mean_auc": 0.7692,
+   "min_auc": 0.7287,
+   "max_auc": 0.8022,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7316,
+   "min_auc": 0.7067,
+   "max_auc": 0.7538,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6459,
+   "min_auc": 0.6174,
+   "max_auc": 0.7078,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.7245,
+   "min_auc": 0.6894,
+   "max_auc": 0.7635,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_arms_A",
+   "family": "lgbm_reg_arms",
+   "mean_auc": 0.7262,
+   "min_auc": 0.6895,
+   "max_auc": 0.7628,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_arms_A+fps",
+   "family": "lgbm_reg_arms",
+   "mean_auc": 0.731,
+   "min_auc": 0.6918,
+   "max_auc": 0.7706,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_arms_clip_A",
+   "family": "lgbm_reg_arms_clip",
+   "mean_auc": 0.7218,
+   "min_auc": 0.7006,
+   "max_auc": 0.7709,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_arms_clip_A+fps",
+   "family": "lgbm_reg_arms_clip",
+   "mean_auc": 0.7204,
+   "min_auc": 0.6999,
+   "max_auc": 0.7751,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_shift_A",
+   "family": "lgbm_reg_shift",
+   "mean_auc": 0.7379,
+   "min_auc": 0.6907,
+   "max_auc": 0.7618,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "lgbm_reg_shift_A+fps",
+   "family": "lgbm_reg_shift",
+   "mean_auc": 0.7478,
+   "min_auc": 0.7094,
+   "max_auc": 0.7742,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "mlp_multitask_aux_label",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7279,
+   "min_auc": 0.6868,
+   "max_auc": 0.7566,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "mlp_multitask_aux_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7573,
+   "min_auc": 0.7369,
+   "max_auc": 0.792,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "mlp_multitask_label",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7325,
+   "min_auc": 0.6906,
+   "max_auc": 0.7634,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "mlp_multitask_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7575,
+   "min_auc": 0.732,
+   "max_auc": 0.8028,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "ndneg_A+fps_deep",
+   "family": "lgbm_nodirect",
+   "mean_auc": 0.7692,
+   "min_auc": 0.7411,
+   "max_auc": 0.8053,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "ndneg_A_deep",
+   "family": "lgbm_nodirect",
+   "mean_auc": 0.7527,
+   "min_auc": 0.7211,
+   "max_auc": 0.7798,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "ndsoft_A+fps_deep",
+   "family": "lgbm_nodirect",
+   "mean_auc": 0.7737,
+   "min_auc": 0.7394,
+   "max_auc": 0.7977,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "ndsoft_A_deep",
+   "family": "lgbm_nodirect",
+   "mean_auc": 0.7625,
+   "min_auc": 0.7377,
+   "max_auc": 0.8008,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "pair_desc",
+   "family": "pair_lgbm",
+   "mean_auc": 0.7429,
+   "min_auc": 0.7077,
+   "max_auc": 0.7991,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "pair_desc+phys",
+   "family": "SAR pairs",
+   "mean_auc": 0.7669,
+   "min_auc": 0.7368,
+   "max_auc": 0.8139,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "pxrblk_A+fps_deep",
+   "family": "pxr block experiment",
+   "mean_auc": 0.7741,
+   "min_auc": 0.7499,
+   "max_auc": 0.8087,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "pxrblk_A_deep",
+   "family": "pxr block experiment",
+   "mean_auc": 0.7594,
+   "min_auc": 0.7262,
+   "max_auc": 0.8063,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "rf_A",
+   "family": "rf",
+   "mean_auc": 0.7371,
+   "min_auc": 0.7105,
+   "max_auc": 0.7785,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "scrblk_A+fps_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.7753,
+   "min_auc": 0.744,
+   "max_auc": 0.8014,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "scrblk_A_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.7641,
+   "min_auc": 0.7404,
+   "max_auc": 0.8017,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "svm_tanimoto_C0.3",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.6916,
+   "min_auc": 0.6615,
+   "max_auc": 0.7265,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "svm_tanimoto_C1",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.7104,
+   "min_auc": 0.6837,
+   "max_auc": 0.7353,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "svm_tanimoto_C3",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.6985,
+   "min_auc": 0.6611,
+   "max_auc": 0.7247,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tabicl_chemeleon",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7526,
+   "min_auc": 0.7234,
+   "max_auc": 0.7914,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tabicl_monroe",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7581,
+   "min_auc": 0.7317,
+   "max_auc": 0.8014,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tabicl_svd",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7543,
+   "min_auc": 0.7222,
+   "max_auc": 0.7887,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tabpfn_chemeleon",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.765,
+   "min_auc": 0.7264,
+   "max_auc": 0.8062,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tabpfn_svd",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.7672,
+   "min_auc": 0.7388,
+   "max_auc": 0.7921,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tgate_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.7026,
+   "min_auc": 0.6517,
+   "max_auc": 0.7427,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tgate_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.6981,
+   "min_auc": 0.6504,
+   "max_auc": 0.7375,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tshift_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.6824,
+   "min_auc": 0.6366,
+   "max_auc": 0.7253,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "tshift_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.6631,
+   "min_auc": 0.5968,
+   "max_auc": 0.7142,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "xiso_A+fps_deep",
+   "family": "lgbm_xiso",
+   "mean_auc": 0.7711,
+   "min_auc": 0.7439,
+   "max_auc": 0.807,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP3A4",
+   "candidate": "xiso_A_deep",
+   "family": "lgbm_xiso",
+   "mean_auc": 0.7576,
+   "min_auc": 0.72,
+   "max_auc": 0.7977,
+   "folds": 15,
+   "pool": 2334
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "atomjepa_head",
+   "family": "Atom-JEPA readout",
+   "mean_auc": 0.6115,
+   "min_auc": 0.5657,
+   "max_auc": 0.6659,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "chemprop_mt_shift",
+   "family": "Chemprop, multitask",
+   "mean_auc": 0.5333,
+   "min_auc": 0.4012,
+   "max_auc": 0.603,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "committee_ei_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.5729,
+   "min_auc": 0.5167,
+   "max_auc": 0.6311,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "committee_m_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.5776,
+   "min_auc": 0.5192,
+   "max_auc": 0.6372,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "committee_p_A+fps",
+   "family": "arm_committee",
+   "mean_auc": 0.5756,
+   "min_auc": 0.5232,
+   "max_auc": 0.6323,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "emxblk_A+fps_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.6126,
+   "min_auc": 0.537,
+   "max_auc": 0.6884,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "emxblk_A_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.5963,
+   "min_auc": 0.5213,
+   "max_auc": 0.6969,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "extratrees_A",
+   "family": "extratrees",
+   "mean_auc": 0.6263,
+   "min_auc": 0.5682,
+   "max_auc": 0.6916,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "gs_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.6081,
+   "min_auc": 0.5582,
+   "max_auc": 0.7013,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "gs_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.5972,
+   "min_auc": 0.5296,
+   "max_auc": 0.67,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "knn_tanimoto_k15",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.5996,
+   "min_auc": 0.5346,
+   "max_auc": 0.6785,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "knn_tanimoto_k40",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.5907,
+   "min_auc": 0.5262,
+   "max_auc": 0.652,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "knn_tanimoto_k5",
+   "family": "knn_tanimoto",
+   "mean_auc": 0.581,
+   "min_auc": 0.5095,
+   "max_auc": 0.6479,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ad_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6012,
+   "min_auc": 0.5153,
+   "max_auc": 0.743,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5931,
+   "min_auc": 0.5303,
+   "max_auc": 0.6713,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+bc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5975,
+   "min_auc": 0.4866,
+   "max_auc": 0.69,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.586,
+   "min_auc": 0.5187,
+   "max_auc": 0.6567,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ctx_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5936,
+   "min_auc": 0.5297,
+   "max_auc": 0.6749,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ctx_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6063,
+   "min_auc": 0.5465,
+   "max_auc": 0.7068,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ext+xc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5916,
+   "min_auc": 0.5052,
+   "max_auc": 0.7033,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ext+xt_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5961,
+   "min_auc": 0.5042,
+   "max_auc": 0.7065,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+ext_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5993,
+   "min_auc": 0.5365,
+   "max_auc": 0.6768,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ad_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.616,
+   "min_auc": 0.541,
+   "max_auc": 0.6939,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6088,
+   "min_auc": 0.5732,
+   "max_auc": 0.6658,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+bc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6201,
+   "min_auc": 0.5447,
+   "max_auc": 0.6891,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6124,
+   "min_auc": 0.533,
+   "max_auc": 0.6778,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ctx_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6089,
+   "min_auc": 0.5408,
+   "max_auc": 0.673,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ctx_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6261,
+   "min_auc": 0.5829,
+   "max_auc": 0.6919,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ext+alerts_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6174,
+   "min_auc": 0.5638,
+   "max_auc": 0.6845,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ext+xc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6088,
+   "min_auc": 0.5416,
+   "max_auc": 0.691,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ext+xt_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6111,
+   "min_auc": 0.5487,
+   "max_auc": 0.6733,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+ext_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6096,
+   "min_auc": 0.5451,
+   "max_auc": 0.6968,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+hyp_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6106,
+   "min_auc": 0.5221,
+   "max_auc": 0.6866,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+hypperm_deep",
+   "family": "lgbm_clf, permuted-label control of the hypothesis model",
+   "mean_auc": 0.6063,
+   "min_auc": 0.5303,
+   "max_auc": 0.683,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6206,
+   "min_auc": 0.5685,
+   "max_auc": 0.7105,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6153,
+   "min_auc": 0.5173,
+   "max_auc": 0.6843,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6173,
+   "min_auc": 0.5499,
+   "max_auc": 0.6652,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+physk20_deep",
+   "family": "lgbm_clf_select",
+   "mean_auc": 0.6138,
+   "min_auc": 0.5565,
+   "max_auc": 0.6823,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+pp2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6193,
+   "min_auc": 0.5351,
+   "max_auc": 0.6866,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+pp3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6274,
+   "min_auc": 0.5615,
+   "max_auc": 0.6922,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+st2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6189,
+   "min_auc": 0.5127,
+   "max_auc": 0.6987,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps+st3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6147,
+   "min_auc": 0.5228,
+   "max_auc": 0.7062,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.609,
+   "min_auc": 0.5557,
+   "max_auc": 0.692,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6306,
+   "min_auc": 0.5804,
+   "max_auc": 0.7132,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep_csoft",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6139,
+   "min_auc": 0.5526,
+   "max_auc": 0.6766,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep_knnfeat",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6112,
+   "min_auc": 0.533,
+   "max_auc": 0.7,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep_testlike0.5",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6207,
+   "min_auc": 0.5726,
+   "max_auc": 0.6982,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_deep_testlike1.0",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6109,
+   "min_auc": 0.5457,
+   "max_auc": 0.6785,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+fps_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6121,
+   "min_auc": 0.5156,
+   "max_auc": 0.6968,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+hyp_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5948,
+   "min_auc": 0.5137,
+   "max_auc": 0.6842,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+hypperm_deep",
+   "family": "lgbm_clf, permuted-label control of the hypothesis model",
+   "mean_auc": 0.5992,
+   "min_auc": 0.5296,
+   "max_auc": 0.6827,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6123,
+   "min_auc": 0.5529,
+   "max_auc": 0.6678,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+phys+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5957,
+   "min_auc": 0.5044,
+   "max_auc": 0.6749,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5973,
+   "min_auc": 0.5269,
+   "max_auc": 0.6624,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6091,
+   "min_auc": 0.5314,
+   "max_auc": 0.6936,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+physk20_deep",
+   "family": "lgbm_clf_select",
+   "mean_auc": 0.5942,
+   "min_auc": 0.5128,
+   "max_auc": 0.6723,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+pp2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6033,
+   "min_auc": 0.5016,
+   "max_auc": 0.6778,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+pp3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6092,
+   "min_auc": 0.5363,
+   "max_auc": 0.6818,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+st2d6_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6019,
+   "min_auc": 0.5223,
+   "max_auc": 0.6898,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A+st3a4_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5995,
+   "min_auc": 0.5003,
+   "max_auc": 0.7033,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6006,
+   "min_auc": 0.5337,
+   "max_auc": 0.6749,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep_cdrop10",
+   "family": "lgbm_clf",
+   "mean_auc": 0.603,
+   "min_auc": 0.5557,
+   "max_auc": 0.6865,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep_csoft",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6024,
+   "min_auc": 0.5378,
+   "max_auc": 0.69,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep_knnfeat",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5998,
+   "min_auc": 0.5321,
+   "max_auc": 0.6809,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep_testlike0.5",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6012,
+   "min_auc": 0.5263,
+   "max_auc": 0.6845,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_deep_testlike1.0",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5966,
+   "min_auc": 0.5261,
+   "max_auc": 0.7027,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_A_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5846,
+   "min_auc": 0.4907,
+   "max_auc": 0.6679,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_aj_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5608,
+   "min_auc": 0.4788,
+   "max_auc": 0.6039,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_chem_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5609,
+   "min_auc": 0.5143,
+   "max_auc": 0.6096,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_desc_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5814,
+   "min_auc": 0.523,
+   "max_auc": 0.6498,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_desc_shallow",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5696,
+   "min_auc": 0.4856,
+   "max_auc": 0.6441,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_mmp_A",
+   "family": "lgbm_mmp",
+   "mean_auc": 0.5997,
+   "min_auc": 0.5152,
+   "max_auc": 0.693,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_mmp_A+fps",
+   "family": "lgbm_mmp",
+   "mean_auc": 0.6061,
+   "min_auc": 0.5258,
+   "max_auc": 0.6949,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_mon_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.6076,
+   "min_auc": 0.5451,
+   "max_auc": 0.6583,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_physB_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.514,
+   "min_auc": 0.4763,
+   "max_auc": 0.5719,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_phys_deep",
+   "family": "lgbm_clf",
+   "mean_auc": 0.5759,
+   "min_auc": 0.5127,
+   "max_auc": 0.631,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_arms_A",
+   "family": "lgbm_reg_arms",
+   "mean_auc": 0.5809,
+   "min_auc": 0.4921,
+   "max_auc": 0.6377,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_arms_A+fps",
+   "family": "lgbm_reg_arms",
+   "mean_auc": 0.5784,
+   "min_auc": 0.5226,
+   "max_auc": 0.6543,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_arms_clip_A",
+   "family": "lgbm_reg_arms_clip",
+   "mean_auc": 0.5731,
+   "min_auc": 0.4792,
+   "max_auc": 0.6792,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_arms_clip_A+fps",
+   "family": "lgbm_reg_arms_clip",
+   "mean_auc": 0.5733,
+   "min_auc": 0.507,
+   "max_auc": 0.6474,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_shift_A",
+   "family": "lgbm_reg_shift",
+   "mean_auc": 0.5667,
+   "min_auc": 0.4859,
+   "max_auc": 0.6799,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "lgbm_reg_shift_A+fps",
+   "family": "lgbm_reg_shift",
+   "mean_auc": 0.571,
+   "min_auc": 0.5022,
+   "max_auc": 0.6624,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "mlp_multitask_aux_label",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6139,
+   "min_auc": 0.5403,
+   "max_auc": 0.6665,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "mlp_multitask_aux_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6035,
+   "min_auc": 0.5447,
+   "max_auc": 0.6542,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "mlp_multitask_label",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6171,
+   "min_auc": 0.5381,
+   "max_auc": 0.6933,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "mlp_multitask_shift",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6087,
+   "min_auc": 0.5463,
+   "max_auc": 0.662,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "pair_desc",
+   "family": "pair_lgbm",
+   "mean_auc": 0.5554,
+   "min_auc": 0.4652,
+   "max_auc": 0.6239,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "pair_desc+phys",
+   "family": "SAR pairs",
+   "mean_auc": 0.5856,
+   "min_auc": 0.4798,
+   "max_auc": 0.6555,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "pxrblk_A+fps_deep",
+   "family": "pxr block experiment",
+   "mean_auc": 0.607,
+   "min_auc": 0.518,
+   "max_auc": 0.6966,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "pxrblk_A_deep",
+   "family": "pxr block experiment",
+   "mean_auc": 0.5984,
+   "min_auc": 0.5262,
+   "max_auc": 0.6831,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "rf_A",
+   "family": "rf",
+   "mean_auc": 0.6099,
+   "min_auc": 0.5445,
+   "max_auc": 0.6576,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "scrblk_A+fps_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.6151,
+   "min_auc": 0.5401,
+   "max_auc": 0.6834,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "scrblk_A_deep",
+   "family": "lgbm_aux",
+   "mean_auc": 0.6057,
+   "min_auc": 0.5263,
+   "max_auc": 0.7177,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "svm_tanimoto_C0.3",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.5955,
+   "min_auc": 0.5219,
+   "max_auc": 0.6615,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "svm_tanimoto_C1",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.608,
+   "min_auc": 0.5495,
+   "max_auc": 0.7,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "svm_tanimoto_C3",
+   "family": "svm_tanimoto",
+   "mean_auc": 0.6048,
+   "min_auc": 0.5657,
+   "max_auc": 0.6757,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tabicl_chemeleon",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.5859,
+   "min_auc": 0.4822,
+   "max_auc": 0.6586,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tabicl_monroe",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6067,
+   "min_auc": 0.5295,
+   "max_auc": 0.6816,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tabicl_svd",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.5896,
+   "min_auc": 0.5105,
+   "max_auc": 0.6836,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tabpfn_chemeleon",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.5989,
+   "min_auc": 0.5084,
+   "max_auc": 0.6537,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tabpfn_svd",
+   "family": "cached, made in the torch environment",
+   "mean_auc": 0.6022,
+   "min_auc": 0.5263,
+   "max_auc": 0.6714,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tgate_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.5016,
+   "min_auc": 0.4509,
+   "max_auc": 0.5686,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tgate_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.5077,
+   "min_auc": 0.4431,
+   "max_auc": 0.566,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tshift_A+fps_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.6077,
+   "min_auc": 0.5555,
+   "max_auc": 0.7015,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "tshift_A_deep",
+   "family": "lgbm_gate_shift",
+   "mean_auc": 0.5968,
+   "min_auc": 0.5281,
+   "max_auc": 0.6688,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "xiso_A+fps_deep",
+   "family": "lgbm_xiso",
+   "mean_auc": 0.6173,
+   "min_auc": 0.5433,
+   "max_auc": 0.6941,
+   "folds": 15,
+   "pool": 1493
+  },
+  {
+   "enzyme": "CYP2D6",
+   "candidate": "xiso_A_deep",
+   "family": "lgbm_xiso",
+   "mean_auc": 0.5919,
+   "min_auc": 0.5294,
+   "max_auc": 0.674,
+   "folds": 15,
+   "pool": 1493
+  }
+ ]
+}

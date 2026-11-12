@@ -5,12 +5,17 @@ import agreement from './agreement.json';
 import applicability from './applicability.json';
 import board from './board.json';
 import calibration from './calibration.json';
+import committee from './committee.json';
 import dynamics from './dynamics.json';
 import firstEntry from './first_entry.json';
 import holdout from './holdout.json';
 import integrity from './integrity.json';
+import labelShift from './label_shift.json';
+import nested from './nested.json';
+import permutation from './permutation.json';
 import ledger from './ledger.json';
 import relaxation from './relaxation.json';
+import selection from './selection.json';
 import threshold from './threshold.json';
 
 const options = (values: string[], all?: string) => [...(all ? [{ value: '*', label: all }] : []), ...values.map((v) => ({ value: v, label: v }))];
@@ -60,6 +65,98 @@ const stackRows = [
 ].map(([stack, n, cut, auc, mcc, diff, p]) => ({ stack, candidates: n, cut, auc, mcc, difference: diff, p, default_auc: cut === 'z0 = 1.0' ? 0.817 : 0.8443 }));
 
 export const explores: Record<string, any> = {
+  'permutation-control': {
+    title: 'Explore the negative control',
+    lede: 'The outer-loop result on the real labels and on labels that were permuted over the whole pool before the nested procedure ran. The line is the range over the permutations.',
+    noun: 'results',
+    source: 'data/structure_track/outputs/cyp3a4/logs/permutation_control_CYP3A4.log and permutation_control_CYP2D6.log',
+    columns: [col('enzyme', 'Enzyme'), col('cut', 'Confidence cut'), col('pool', 'Compounds in the pool'), col('permutations', 'Permutations'), col('real_auc', 'AUC, real labels', 4), col('perm_auc', 'AUC, permuted', 4), col('perm_lo', 'Permuted, lowest', 4), col('perm_hi', 'Permuted, highest', 4), col('real_mcc', 'MCC, real labels', 4), col('perm_mcc', 'MCC, permuted', 4), col('mcc_lo', 'MCC permuted, lowest', 4), col('mcc_hi', 'MCC permuted, highest', 4)],
+    rows: permutation.rows,
+    controls: [
+      { id: 'enzyme', type: 'filter', key: 'enzyme', label: 'Enzyme', options: options(uniq(permutation.rows, 'enzyme'), 'Both enzymes') },
+      { id: 'metric', type: 'view', label: 'Show', options: [{ value: 'AUC', label: 'AUC' }, { value: 'MCC', label: 'MCC' }] },
+    ],
+    charts: [
+      { when: { metric: 'AUC' }, type: 'pairs', label: '{enzyme}, {cut}', a: 'perm_auc', b: 'real_auc', lo: 'perm_lo', hi: 'perm_hi', aLabel: 'permuted labels', bLabel: 'real labels', min: 0.4, max: 1, tip: '{enzyme}, {cut}: AUC {real_auc:4} on the real labels; {perm_auc:4} on permuted labels (range {perm_lo:4} to {perm_hi:4} over {permutations} permutations of the {pool} labels)' },
+      { when: { metric: 'MCC' }, type: 'pairs', label: '{enzyme}, {cut}', a: 'perm_mcc', b: 'real_mcc', lo: 'mcc_lo', hi: 'mcc_hi', aLabel: 'permuted labels', bLabel: 'real labels', min: -0.1, max: 0.5, tip: '{enzyme}, {cut}: MCC {real_mcc:4} on the real labels; {perm_mcc:4} on permuted labels (range {mcc_lo:4} to {mcc_hi:4} over {permutations} permutations)' },
+    ],
+  },
+
+  'committee-uncertainty': {
+    title: 'Explore the committee',
+    lede: 'Adding the committee of models to the final stack, at the two confidence cuts, and the calibration of the probability of the committee as it comes out. The gate was a corrected p below 0.05 at both cuts.',
+    noun: 'results',
+    source: 'data/structure_track/outputs/cyp3a4/logs/committee_label_model_CYP3A4.log and committee_label_model_CYP2D6.log',
+    columns: [col('enzyme', 'Enzyme'), col('cut', 'Confidence cut'), col('change', 'Change in AUC of the stack', 4), col('p', 'p', 3), col('better', 'Folds with a gain'), col('auc_m', 'AUC, member m', 4), col('auc_p', 'AUC, member p', 4), col('auc_ei', 'AUC, member ei', 4), col('ece', 'Expected calibration error', 4), col('brier', 'Brier score', 4), col('slope', 'Slope', 3), col('mean_pred', 'Mean predicted', 3), col('mean_obs', 'Mean observed', 3)],
+    rows: committee.rows,
+    controls: [
+      { id: 'enzyme', type: 'filter', key: 'enzyme', label: 'Enzyme', options: options(uniq(committee.rows, 'enzyme'), 'Both enzymes') },
+      { id: 'metric', type: 'view', label: 'Show', options: [{ value: 'change', label: 'Change in AUC of the stack' }, { value: 'ece', label: 'Calibration of the committee' }] },
+    ],
+    charts: [
+      { when: { metric: 'change' }, type: 'diverging', span: 0.01, label: '{enzyme}, {cut}', value: 'change', tip: '{enzyme}, {cut}: the AUC of the stack changes by {change:4} (p {p:3}; a gain in {better} outer folds); the AUC of the members is {auc_m:3}, {auc_p:3}, and {auc_ei:3}' },
+      { when: { metric: 'ece' }, type: 'bars', label: '{enzyme}, {cut}', value: 'ece', max: 0.4, ref: { value: 0.05, label: 'limit' }, tip: '{enzyme}, {cut}: expected calibration error {ece:4}, Brier {brier:4}, slope {slope:3}; mean predicted {mean_pred:3} against observed {mean_obs:3}' },
+    ],
+  },
+
+  'label-shift': {
+    title: 'Explore the estimates',
+    lede: 'The estimate of the positive rate from a classifier that reads no board, for all compounds and for the scored ones, with its 95% interval. The mark is the rate that the public boards give.',
+    noun: 'estimates',
+    source: 'data/structure_track/outputs/cyp3a4/logs/label_shift.log',
+    columns: [col('enzyme', 'Enzyme'), col('cut', 'Confidence cut'), col('classifier', 'Classifier'), col('estimate_of', 'Estimate of'), col('rate', 'Positive rate', 3), col('lo', 'Interval, low', 3), col('hi', 'Interval, high', 3), col('fold_spread', 'Spread over folds', 3)],
+    rows: labelShift.rows,
+    controls: [
+      { id: 'enzyme', type: 'filter', key: 'enzyme', label: 'Enzyme', options: options(['CYP2D6', 'CYP3A4']) },
+      { id: 'cut', type: 'filter', key: 'cut', label: 'Confidence cut', options: options(['z0 = 1.0', 'z0 = 1.96']) },
+      { id: 'classifier', type: 'filter', key: 'classifier', label: 'Classifier', options: options(['lgbm_A+fps_deep', 'lgbm_A_deep']) },
+    ],
+    charts: [
+      { when: { enzyme: 'CYP2D6' }, type: 'intervals', label: '{estimate_of}', est: 'rate', lo: 'lo', hi: 'hi', ref: 0.059, min: 0, max: 0.6, refLabel: 'rate from the boards', tip: '{enzyme}, {cut}, {classifier}: {estimate_of} {rate:3} ({lo:3} to {hi:3}); spread over folds {fold_spread:3}' },
+      { when: { enzyme: 'CYP3A4' }, type: 'intervals', label: '{estimate_of}', est: 'rate', lo: 'lo', hi: 'hi', ref: 0.31, min: 0, max: 0.6, refLabel: 'rate from the boards', tip: '{enzyme}, {cut}, {classifier}: {estimate_of} {rate:3} ({lo:3} to {hi:3}); spread over folds {fold_spread:3}' },
+    ],
+  },
+
+  'selection-aware-cyp2d6': {
+    title: 'Explore the dependence on the scored set',
+    lede: `A weight of 1.0 is a scored set that holds as many never-promoted compounds as the training panel, and a lower weight holds fewer. The estimate for the blinded compounds is ${selection.meta.estimate} (95%: ${selection.meta.lo} to ${selection.meta.hi}). Where the lines cross, the hits-only stack is better than the selection-aware one.`,
+    noun: 'weights',
+    source: 'METHOD_REPORT.md, section 7',
+    columns: [col('cut', 'Confidence cut'), col('weight', 'Non-hit weight', 2), col('s0_auc', 'AUC, hits-only', 3), col('s1_auc', 'AUC, + gate', 3), col('s2_auc', 'AUC, + two-part', 3), col('s3_auc', 'AUC, + end-to-end', 3), col('s0_mcc', 'MCC, hits-only', 3), col('s1_mcc', 'MCC, + gate', 3), col('s2_mcc', 'MCC, + two-part', 3), col('s3_mcc', 'MCC, + end-to-end', 3)],
+    rows: selection.rows,
+    controls: [
+      { id: 'cut', type: 'filter', key: 'cut', label: 'Confidence cut', options: options(['z0 = 1.0', 'z0 = 1.96']) },
+      { id: 'stack', type: 'view', label: 'Selection-aware stack', options: [{ value: 's3', label: 'End-to-end (S3)' }, { value: 's2', label: 'Two-part (S2)' }, { value: 's1', label: 'With the gate (S1)' }] },
+    ],
+    charts: ['s3', 's2', 's1'].map((v) => ({
+      when: { stack: v },
+      type: 'pairs',
+      label: 'Non-hit weight {weight:2}',
+      a: 's0_auc',
+      b: `${v}_auc`,
+      aLabel: 'hits-only stack',
+      bLabel: v === 's3' ? 'end-to-end stack' : v === 's2' ? 'two-part stack' : 'stack with the gate',
+      min: 0.5,
+      max: 0.8,
+      tip: `Non-hit weight {weight:2}, {cut}: AUC {s0_auc:3} hits-only, {s1_auc:3} with the gate, {s2_auc:3} two-part, {s3_auc:3} end-to-end`,
+    })),
+  },
+
+  'tdi-nested-cv': {
+    position: 'after',
+    title: 'Explore the candidates',
+    lede: 'The AUC of each single candidate over the whole pool, as the mean of its 15 outer folds of the stored out-of-fold predictions (the line is the lowest and the highest fold). The final stack is measured on the scored population and is higher; this is the ground that it was built from.',
+    noun: 'candidates',
+    source: 'explorer/public/oof_CYP3A4.csv.gz and oof_CYP2D6.csv.gz',
+    columns: [col('enzyme', 'Enzyme'), col('candidate', 'Candidate'), col('family', 'Family'), col('mean_auc', 'AUC, mean of 15 folds', 4), col('min_auc', 'Lowest fold', 4), col('max_auc', 'Highest fold', 4), col('pool', 'Compounds in the pool')],
+    rows: nested.rows,
+    controls: [
+      { id: 'enzyme', type: 'filter', key: 'enzyme', label: 'Enzyme', options: options(['CYP3A4', 'CYP2D6']) },
+      { id: 'family', type: 'filter', key: 'family', label: 'Family', options: options([...new Set(nested.rows.map((r) => r.family as string))].sort(), 'All families') },
+      { id: 'sort', type: 'sort', label: 'Order', options: [{ value: '-mean_auc', label: 'Highest AUC first' }, { value: 'mean_auc', label: 'Lowest AUC first' }, { value: 'candidate', label: 'Name' }] },
+    ],
+    charts: [{ type: 'intervals', limit: 15, label: '{candidate}', est: 'mean_auc', lo: 'min_auc', hi: 'max_auc', ref: 0.5, min: 0.4, max: 1, refLabel: 'chance (0.50)', tip: '{enzyme}, {candidate} ({family}): AUC {mean_auc:4} over 15 outer folds, from {min_auc:4} to {max_auc:4}' }],
+  },
   calibration: {
     title: 'Explore the calibration',
     lede: 'The methods that were tried for each enzyme, at the gate that a probability had to meet: an expected calibration error of at most 0.05 and a slope between 0.8 and 1.2.',

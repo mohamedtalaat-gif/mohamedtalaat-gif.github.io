@@ -1,0 +1,65 @@
+{
+ "source": "data/structure_track/outputs/cyp3a4/logs/committee_label_model_CYP3A4.log and committee_label_model_CYP2D6.log",
+ "rows": [
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "auc_m": 0.7631,
+   "auc_p": 0.7633,
+   "auc_ei": 0.7623,
+   "change": 0.0023,
+   "p": 0.405,
+   "better": "11 of 15",
+   "ece": 0.141,
+   "brier": 0.1942,
+   "slope": 1.494,
+   "mean_pred": 0.449,
+   "mean_obs": 0.31
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "auc_m": 0.795,
+   "auc_p": 0.795,
+   "auc_ei": 0.793,
+   "change": 0.0033,
+   "p": 0.394,
+   "better": "10 of 15",
+   "ece": 0.1345,
+   "brier": 0.1838,
+   "slope": 1.727,
+   "mean_pred": 0.444,
+   "mean_obs": 0.315
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "auc_m": 0.6411,
+   "auc_p": 0.6394,
+   "auc_ei": 0.6328,
+   "change": -0.007,
+   "p": 0.615,
+   "better": "6 of 15",
+   "ece": 0.3059,
+   "brier": 0.1266,
+   "slope": 4.215,
+   "mean_pred": 0.338,
+   "mean_obs": 0.039
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "auc_m": 0.6764,
+   "auc_p": 0.6761,
+   "auc_ei": 0.6698,
+   "change": -0.0059,
+   "p": 0.758,
+   "better": "8 of 15",
+   "ece": 0.3125,
+   "brier": 0.1259,
+   "slope": 5.496,
+   "mean_pred": 0.338,
+   "mean_obs": 0.041
+  }
+ ]
+}

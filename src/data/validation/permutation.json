@@ -1,0 +1,61 @@
+{
+ "source": "data/structure_track/outputs/cyp3a4/logs/permutation_control_CYP3A4.log and permutation_control_CYP2D6.log",
+ "rows": [
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.0",
+   "pool": 2334,
+   "permutations": 3,
+   "real_auc": 0.8007,
+   "real_mcc": 0.4111,
+   "perm_auc": 0.5096,
+   "perm_lo": 0.4802,
+   "perm_hi": 0.5351,
+   "perm_mcc": 0.002,
+   "mcc_lo": -0.0376,
+   "mcc_hi": 0.0287
+  },
+  {
+   "enzyme": "CYP3A4",
+   "cut": "z0 = 1.96",
+   "pool": 2334,
+   "permutations": 3,
+   "real_auc": 0.8282,
+   "real_mcc": 0.4652,
+   "perm_auc": 0.5096,
+   "perm_lo": 0.4942,
+   "perm_hi": 0.5201,
+   "perm_mcc": -0.0043,
+   "mcc_lo": -0.0374,
+   "mcc_hi": 0.0404
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.0",
+   "pool": 1493,
+   "permutations": 3,
+   "real_auc": 0.7514,
+   "real_mcc": 0.1592,
+   "perm_auc": 0.5012,
+   "perm_lo": 0.477,
+   "perm_hi": 0.5265,
+   "perm_mcc": 0.0196,
+   "mcc_lo": -0.0069,
+   "mcc_hi": 0.0509
+  },
+  {
+   "enzyme": "CYP2D6",
+   "cut": "z0 = 1.96",
+   "pool": 1493,
+   "permutations": 3,
+   "real_auc": 0.779,
+   "real_mcc": 0.2648,
+   "perm_auc": 0.4987,
+   "perm_lo": 0.4434,
+   "perm_hi": 0.5392,
+   "perm_mcc": -0.0045,
+   "mcc_lo": -0.038,
+   "mcc_hi": 0.0602
+  }
+ ]
+}

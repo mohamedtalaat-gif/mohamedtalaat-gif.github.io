@@ -43,8 +43,9 @@ export function rowsOf(explore, values) {
 }
 
 /** The chart specification for these rows: the first variant of `charts` whose `when` fits the values of the controls. */
-export function chartOf(explore, values, rows) {
+export function chartOf(explore, values, allRows) {
   const spec = explore.charts.find((v) => matches(v.when, values)) ?? explore.charts[0];
+  const rows = spec.limit ? allRows.slice(0, spec.limit) : allRows; // a long table is drawn by its first rows, and the table below keeps them all
   const tipOf = (row) => (spec.tip ? fill(spec.tip, row) : undefined);
   switch (spec.type) {
     case 'intervals':

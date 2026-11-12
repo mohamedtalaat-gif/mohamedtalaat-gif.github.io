@@ -113,7 +113,7 @@ export const reports: Report[] = [
       'Which file to submit was decided by a rule written before any upload. A hedged blend of the hits-only and selection-aware stacks was tried as well and did not pass its gate.',
     ],
     chart: { type: 'pairs', min: 0.5, max: 1, aLabel: 'without the selection model', bLabel: 'with it', items: [{ label: 'CYP2D6', a: 0.5618, b: 0.7278 }] },
-    caption: 'AUC on a scored set that resembles the training panel.',
+    caption: 'AUC of the hits-only stack and of the selection-aware stack on scored sets with different shares of never-promoted compounds. Choose the confidence cut and the stack above.',
     source: { label: 'CYPMode README', href: `${CYP}#readme` },
   },
   {
@@ -155,7 +155,7 @@ export const reports: Report[] = [
       'A pipeline that tunes many choices can find signal in noise. The control permutes the labels of the pool and repeats the entire nested procedure, including model selection. A result near 0.5 shows that the procedure itself does not leak.',
     ],
     chart: { type: 'bars', max: 1, ref: { value: 0.5, label: 'chance' }, items: [{ label: 'CYP3A4', value: 0.5096 }, { label: 'CYP2D6', value: 0.5012 }] },
-    caption: 'Outer AUC on permuted labels at z0 = 1.0.',
+    caption: 'Outer-loop AUC or MCC on the real labels and on labels permuted over the whole pool. The line is the range over the permutations; choose the enzyme and the metric above.',
     source: { label: 'CYPMode method report', href: `${CYP}/blob/main/METHOD_REPORT.md` },
   },
   {
@@ -176,7 +176,7 @@ export const reports: Report[] = [
       'Under the rule fixed before the first run, both verdicts are NOT INFORMATIVE. Each interval contains the board-derived rate, so the check neither supports nor contradicts it.',
     ],
     chart: { type: 'intervals', min: 0, max: 0.6, refLabel: 'rate from the boards', items: [{ label: 'CYP2D6', est: 0.135, lo: 0.043, hi: 0.286, ref: 0.059 }, { label: 'CYP3A4', est: 0.352, lo: 0.274, hi: 0.451, ref: 0.31 }] },
-    caption: 'Estimated positive rate with its interval, against the rate recovered from the boards.',
+    caption: 'Estimated positive rate with its 95% interval, against the rate recovered from the boards. Choose the enzyme, the confidence cut, and the classifier above.',
     source: { label: 'CYPMode README', href: `${CYP}#readme` },
   },
   {
@@ -430,7 +430,7 @@ export const reports: Report[] = [
         { label: 'CYP2D6', value: 0.3059 },
       ],
     },
-    caption: 'Expected calibration error of the committee probability at z0 = 1.0, used exactly as it comes out. The line is the limit of 0.05 that a probability had to meet.',
+    caption: 'The change in the AUC of the final stack when the committee is added, and the calibration of its probability as it comes out. Choose what to show above.',
     source: { label: 'CYPMode method report, innovation summary', href: `${CYP}/blob/main/METHOD_REPORT.md` },
   },
   {

@@ -102,14 +102,15 @@ function diverging(c, alt) {
   const half = (W - L - R) / 2;
   const x = (v) => zero + (v / span) * half;
   const H = 30 + n * step + 26;
-  const unit = span <= 0.5 ? 0.2 : 0.4;
+  const unit = span * 0.4;
   const marks = [-2, -1, 0, 1, 2].map((k) => k * unit);
-  const grid = marks.map((t) => `<g><line x1="${x(t)}" x2="${x(t)}" y1="10" y2="${H - 26}" class="${t === 0 ? 'refline' : 'grid'}"/><text x="${x(t)}" y="${H - 8}" text-anchor="middle">${t.toFixed(1).replace('-', '\u2212')}</text></g>`).join('');
+  const decimals = unit >= 0.1 ? 1 : unit >= 0.01 ? 2 : 3;
+  const grid = marks.map((t) => `<g><line x1="${x(t)}" x2="${x(t)}" y1="10" y2="${H - 26}" class="${t === 0 ? 'refline' : 'grid'}"/><text x="${x(t)}" y="${H - 8}" text-anchor="middle">${t.toFixed(decimals).replace('-', '\u2212')}</text></g>`).join('');
   const rows = c.items
     .map((it, i) => {
       const y = 30 + i * step;
       const text = it.tip ?? `${it.label}: ${sign(it.value, 3)}`;
-      return `<g${tip(text)}><rect x="0" y="${y - 4}" width="${W}" height="${step - 4}" class="hit"/><text x="${L - 12}" y="${y + step / 2 - 6}" text-anchor="end" class="lbl">${esc(shorten(it.label))}</text><rect x="${Math.min(zero, x(it.value))}" y="${y}" width="${Math.abs(x(it.value) - zero)}" height="${Math.min(22, step - 6)}" rx="2" class="${it.value < 0 ? 'bar neg' : 'bar'}"/><text x="${it.value < 0 ? x(it.value) - 8 : x(it.value) + 8}" y="${y + step / 2 - 6}" text-anchor="${it.value < 0 ? 'end' : 'start'}" class="val">${sign(it.value, 2)}</text></g>`;
+      return `<g${tip(text)}><rect x="0" y="${y - 4}" width="${W}" height="${step - 4}" class="hit"/><text x="${L - 12}" y="${y + step / 2 - 6}" text-anchor="end" class="lbl">${esc(shorten(it.label))}</text><rect x="${Math.min(zero, x(it.value))}" y="${y}" width="${Math.abs(x(it.value) - zero)}" height="${Math.min(22, step - 6)}" rx="2" class="${it.value < 0 ? 'bar neg' : 'bar'}"/><text x="${it.value < 0 ? x(it.value) - 8 : x(it.value) + 8}" y="${y + step / 2 - 6}" text-anchor="${it.value < 0 ? 'end' : 'start'}" class="val">${sign(it.value, span < 0.1 ? 4 : 2)}</text></g>`;
     })
     .join('');
   const ref = c.ref ? `<g><line x1="${x(c.ref.value)}" x2="${x(c.ref.value)}" y1="10" y2="${H - 26}" class="refline refline--bar"/><text x="${x(c.ref.value) + 5}" y="22" class="refl">${esc(c.ref.label)}</text></g>` : '';
