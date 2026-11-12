@@ -1,0 +1,19 @@
+{
+ "source": "data/post_deadline/outputs/tdi_question2a_agreement.csv",
+ "rows": [
+  {
+   "isoform": "CYP3A4",
+   "labelled": 750,
+   "agree": 747,
+   "disagree": 0,
+   "not_computable": 3
+  },
+  {
+   "isoform": "CYP2D6",
+   "labelled": 748,
+   "agree": 741,
+   "disagree": 0,
+   "not_computable": 7
+  }
+ ]
+}

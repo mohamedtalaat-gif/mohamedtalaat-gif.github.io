@@ -1,8 +1,10 @@
 // The interactive part of the validation reports: for each report that has a table of its own, the rows (read from the CYPMode repository by scripts/extract-validation-data.py), the controls that filter and
 // sort them, and the way that the rows that remain are drawn. The engine is src/lib/explore.js. A report that is not listed here shows the values of its chart as a table.
 
+import agreement from './agreement.json';
 import applicability from './applicability.json';
 import board from './board.json';
+import calibration from './calibration.json';
 import dynamics from './dynamics.json';
 import firstEntry from './first_entry.json';
 import holdout from './holdout.json';
@@ -58,6 +60,50 @@ const stackRows = [
 ].map(([stack, n, cut, auc, mcc, diff, p]) => ({ stack, candidates: n, cut, auc, mcc, difference: diff, p, default_auc: cut === 'z0 = 1.0' ? 0.817 : 0.8443 }));
 
 export const explores: Record<string, any> = {
+  calibration: {
+    title: 'Explore the calibration',
+    lede: 'The methods that were tried for each enzyme, at the gate that a probability had to meet: an expected calibration error of at most 0.05 and a slope between 0.8 and 1.2.',
+    noun: 'methods',
+    count: { key: 'gate_met', value: 'yes', label: 'meet the gate' },
+    source: 'data/structure_track/outputs/cyp3a4/logs/calibration.log',
+    columns: [col('isoform', 'Enzyme'), col('method', 'Method'), col('ece', 'Expected calibration error', 4), col('brier', 'Brier score', 4), col('slope', 'Slope', 3), col('intercept', 'Intercept', 3), col('mean_pred', 'Mean predicted', 3), col('mean_obs', 'Mean observed', 3), col('gate_met', 'Gate met')],
+    rows: calibration.rows,
+    controls: [
+      { id: 'isoform', type: 'filter', key: 'isoform', label: 'Enzyme', options: options(uniq(calibration.rows, 'isoform')) },
+      { id: 'metric', type: 'view', label: 'Show', options: [{ value: 'ECE', label: 'Expected calibration error' }, { value: 'Brier', label: 'Brier score' }] },
+    ],
+    charts: [
+      { when: { metric: 'ECE' }, type: 'bars', label: '{method}', value: 'ece', max: 0.4, ref: { value: 0.05, label: 'gate limit' }, tip: '{isoform}, {method}: ECE {ece:4}, Brier {brier:4}, slope {slope:3}, intercept {intercept:3}; mean predicted {mean_pred:3} against observed {mean_obs:3}; gate met: {gate_met}' },
+      { when: { metric: 'Brier' }, type: 'bars', label: '{method}', value: 'brier', max: 0.25, tip: '{isoform}, {method}: Brier {brier:4}, ECE {ece:4}, slope {slope:3}; mean predicted {mean_pred:3} against observed {mean_obs:3}' },
+    ],
+  },
+
+  'structure-entry': {
+    position: 'after',
+    title: 'Explore the 20 ligands',
+    lede: 'The submitted pose of each ligand against the pose of the organisers\u2019 baseline or against the best pose of the pool of the project. The ligands are numbered 1 to 20 and carry no name.',
+    noun: 'ligands',
+    source: 'explorer/full/data/pd_ligands.csv (data/post_deadline/outputs/structure_submitted_per_compound.csv)',
+    columns: [col('ligand', 'Ligand'), col('submitted_pli', 'LDDT-PLI, submitted', 3), col('baseline_pli', 'LDDT-PLI, baseline', 3), col('pool_best', 'Best pose of the pool', 3), col('pool_mean', 'Mean pose of the pool', 3), col('pool_poses', 'Poses in the pool')],
+    rows: firstEntry.rows.map((r) => ({ ligand: r.ligand, submitted_pli: r.submitted_pli, baseline_pli: r.baseline_pli, pool_best: r.pool_best, pool_mean: r.pool_mean, pool_poses: r.pool_poses, gain_baseline: gap(r.submitted_pli, r.baseline_pli), gap_best: gap(r.pool_best, r.submitted_pli) })),
+    controls: [
+      { id: 'other', type: 'view', label: 'Compare with', options: [{ value: 'baseline', label: 'The organisers\u2019 baseline' }, { value: 'pool', label: 'The best pose of the pool' }] },
+      { id: 'sort', type: 'sort', label: 'Order', options: [{ value: 'order', label: 'By ligand number' }, { value: '-gain_baseline', label: 'Gain over the baseline, largest first' }, { value: 'gain_baseline', label: 'Gain over the baseline, smallest first' }, { value: '-gap_best', label: 'Gap to the best pose, largest first' }] },
+    ],
+    charts: [
+      { when: { other: 'baseline' }, type: 'pairs', label: 'Ligand {ligand}', a: 'submitted_pli', b: 'baseline_pli', aLabel: 'submitted pose', bLabel: 'organisers\u2019 baseline', min: 0, max: 1, tip: 'Ligand {ligand}: submitted {submitted_pli:3}, baseline {baseline_pli:3}; best of {pool_poses} poses of the pool {pool_best:3}' },
+      { when: { other: 'pool' }, type: 'pairs', label: 'Ligand {ligand}', a: 'submitted_pli', b: 'pool_best', aLabel: 'submitted pose', bLabel: 'best pose of the pool', min: 0, max: 1, tip: 'Ligand {ligand}: submitted {submitted_pli:3}; best of {pool_poses} poses of the pool {pool_best:3}, mean {pool_mean:3}' },
+    ],
+  },
+
+  'label-rule-agreement': {
+    noun: 'enzymes',
+    source: 'data/post_deadline/outputs/tdi_question2a_agreement.csv',
+    columns: [col('isoform', 'Enzyme'), col('labelled', 'Labelled test compounds'), col('agree', 'Same label'), col('disagree', 'Different label'), col('not_computable', 'Rule not applicable')],
+    rows: agreement.rows,
+    controls: [],
+    charts: [],
+  },
   'iron-contact-structures': {
     title: 'Explore the four compounds',
     lede: 'Filter the compounds by whether the iron contact was found. The line is the cut-off of 2.6 \u00c5 for a dative bond.',

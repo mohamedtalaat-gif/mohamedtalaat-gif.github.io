@@ -177,5 +177,25 @@ def board() -> None:
     write("board", {"source": "explorer/full/data/pd_gate.csv (data/post_deadline/outputs/tdi_gate.json and structure_gate.json)", "rows": rows})
 
 
-for step in (applicability, holdout, dynamics, ledger, first_entry, threshold, relaxation, integrity, board):
+def calibration() -> None:
+    lines = (LOGS / "calibration.log").read_text().splitlines()
+    start = next(i for i, line in enumerate(lines) if line.split()[:3] == ["isoform", "method", "ece"])
+    rows = []
+    for line in lines[start + 1 :]:
+        parts = line.split()
+        if len(parts) != 9 or parts[0] not in ("CYP3A4", "CYP2D6"):
+            break
+        rows.append({"isoform": parts[0], "method": parts[1], "ece": float(parts[2]), "brier": float(parts[3]), "slope": float(parts[4]), "intercept": float(parts[5]), "mean_pred": float(parts[6]), "mean_obs": float(parts[7]), "gate_met": "yes" if parts[8] == "True" else "no"})
+    assert len(rows) == 6, len(rows)
+    write("calibration", {"source": "data/structure_track/outputs/cyp3a4/logs/calibration.log", "rows": rows})
+
+
+def agreement() -> None:
+    with (ROOT / "data/post_deadline/outputs/tdi_question2a_agreement.csv").open() as handle:
+        rows = [{"isoform": r["isoform"], "labelled": int(r["labelled"]), "agree": int(r["agree"]), "disagree": int(r["disagree"]), "not_computable": int(r["not_computable"])} for r in csv.DictReader(handle)]
+    assert len(rows) == 2 and all(r["labelled"] == r["agree"] + r["disagree"] + r["not_computable"] for r in rows)
+    write("agreement", {"source": "data/post_deadline/outputs/tdi_question2a_agreement.csv", "rows": rows})
+
+
+for step in (applicability, holdout, dynamics, ledger, first_entry, threshold, relaxation, integrity, board, calibration, agreement):
     step()
