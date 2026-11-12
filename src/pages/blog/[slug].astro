@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ItemMeta from '../../components/ItemMeta.astro';
+import PostMain from '../../components/PostMain.astro';
+import Toc from '../../components/Toc.astro';
+import ReportTools from '../../components/ReportTools.astro';
 import { posts } from '../../lib/posts';
 
 export function getStaticPaths() {
@@ -20,30 +22,31 @@ const info = posts.find((p) => p.slug === slug)!;
 const i = posts.findIndex((p) => p.slug === slug);
 const newer = posts[i - 1];
 const older = posts[i + 1];
+// A post that mirrors a report (`report: true`, with its `sections`) gets the catalogue on the right and the tools of the report.
+const isReport = frontmatter.report === true;
+const toc: { id: string; label: string }[] = frontmatter.sections ?? [];
 ---
 
 <Base title={frontmatter.title} description={frontmatter.summary}>
-  <article class="page post">
-    <p class="meta"><a href="/blog/">Blog</a> / {info.date} &nbsp; <ItemMeta kind={info.topic ?? 'post'} minutes={info.minutes} /></p>
-    <h1 class="post-title">{frontmatter.title}</h1>
-    <div class="prose">
-      <Content />
-    </div>
-    <nav class="pager" aria-label="Other posts">
-      {newer && (
-        <a class="pager__link pager__link--newer" href={`/blog/${newer.slug}/`} rel="prev">
-          <span class="pager__dir">Newer</span>
-          <span class="pager__title">{newer.title}</span>
-        </a>
-      )}
-      {older && (
-        <a class="pager__link pager__link--older" href={`/blog/${older.slug}/`} rel="next">
-          <span class="pager__dir">Older</span>
-          <span class="pager__title">{older.title}</span>
-        </a>
-      )}
-    </nav>
-  </article>
+  {isReport ? (
+    <Fragment>
+      <div class="page page--toc">
+        <article class="post post--report">
+          <PostMain title={frontmatter.title} date={info.date} kind={info.topic ?? 'post'} minutes={info.minutes} newer={newer} older={older}>
+            <Content />
+          </PostMain>
+        </article>
+        <Toc items={toc} />
+      </div>
+      <ReportTools />
+    </Fragment>
+  ) : (
+    <article class="page post">
+      <PostMain title={frontmatter.title} date={info.date} kind={info.topic ?? 'post'} minutes={info.minutes} newer={newer} older={older}>
+        <Content />
+      </PostMain>
+    </article>
+  )}
 </Base>
 
 <style is:global>

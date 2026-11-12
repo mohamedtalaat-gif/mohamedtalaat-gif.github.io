@@ -81,4 +81,5 @@ export function buildNews({ posts = [], activities = [], courses = [], conferenc
 }
 
 /** A short label for the kind of an item, for the line under its summary. */
-export const kindLabel = (item) => (item.kind === 'report' ? 'Validation report' : item.kind[0].toUpperCase() + item.kind.slice(1));
+const KIND_LABELS = { report: 'Validation report', method: 'Method report' };
+export const kindLabel = (item) => KIND_LABELS[item.kind] ?? item.kind[0].toUpperCase() + item.kind.slice(1);

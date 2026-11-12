@@ -1,0 +1,33 @@
+---
+import ItemMeta from './ItemMeta.astro';
+
+interface Props {
+  title: string;
+  date: string;
+  kind: string;
+  minutes: number;
+  newer?: { slug: string; title: string };
+  older?: { slug: string; title: string };
+}
+const { title, date, kind, minutes, newer, older } = Astro.props;
+---
+
+<p class="meta"><a href="/blog/">Blog</a> / {date} &nbsp; <ItemMeta kind={kind} minutes={minutes} /></p>
+<h1 class="post-title">{title}</h1>
+<div class="prose">
+  <slot />
+</div>
+<nav class="pager" aria-label="Other posts">
+  {newer && (
+    <a class="pager__link pager__link--newer" href={`/blog/${newer.slug}/`} rel="prev">
+      <span class="pager__dir">Newer</span>
+      <span class="pager__title">{newer.title}</span>
+    </a>
+  )}
+  {older && (
+    <a class="pager__link pager__link--older" href={`/blog/${older.slug}/`} rel="next">
+      <span class="pager__dir">Older</span>
+      <span class="pager__title">{older.title}</span>
+    </a>
+  )}
+</nav>

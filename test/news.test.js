@@ -94,6 +94,8 @@ test('validation reports make one line for each day, or a line of their own when
   assert.match(n[0].summary, /First; Second/);
   assert.equal(n[1].href, '/validation/c/');
   assert.equal(kindLabel(n[0]), 'Validation report');
+  assert.equal(kindLabel({ kind: 'method' }), 'Method report'); // the interactive method report is a post, not a validation report
+  assert.equal(kindLabel({ kind: 'release' }), 'Release');
 });
 
 test('on the same date posts come before activities, and everything else by title', () => {
